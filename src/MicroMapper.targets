@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- Build sequence modification -->
+  <Target Name="CopyMicroMapperAssembly"
+          AfterTargets="ResolveAssemblyReferences">
+    <CreateItem Include="%(ReferencePath.FullPath)"
+                Condition="$([System.String]::new('%(ReferencePath.Filename)').StartsWith('MicroMapper.'))">
+      <Output TaskParameter="Include"
+              ItemName="_MicroMapperReference"/>
+    </CreateItem>
+
+    <Message Importance="low" Text="MicroMapper Platform Extension Assembly: %(_MicroMapperReference.FullPath)"/>
+
+    <ItemGroup>
+      <None Include="$([MSBuild]::MakeRelative($(MSBuildProjectDirectory), %(_MicroMapperReference.FullPath)))" Condition="'%(_MicroMapperReference.FullPath)' != ''">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+  </Target>
+</Project>

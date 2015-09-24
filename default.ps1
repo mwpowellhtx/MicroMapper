@@ -9,7 +9,7 @@ properties {
     $test_dir = "$build_dir\Test"
     $result_dir = "$build_dir\Results"
     $lib_dir = "$base_dir\lib"
-    $pkgVersion = if ($env:build_number -ne $NULL) { $env:build_number } else { '5.0.0' }
+    $pkgVersion = if ($env:build_number -ne $NULL) { $env:build_number } else { '5.1.0' }
     $assemblyVersion = $pkgVersion -replace "\-.*$", ".0"
     $assemblyFileVersion = $pkgVersion -replace "-[^0-9]*", "."
     $global:config = "debug"
@@ -33,9 +33,9 @@ task release {
 
 task compile -depends clean { 
     exec { dnu restore }
-    exec { dnu build $source_dir\AutoMapper --configuration $config}
-    exec { & $source_dir\.nuget\Nuget.exe restore $source_dir\AutoMapper.sln }
-    exec { msbuild /t:Clean /t:Build /p:Configuration=$config /v:q /p:NoWarn=1591 /nologo $source_dir\AutoMapper.sln }
+    exec { dnu build $source_dir\MicroMapper --configuration $config}
+    exec { & $source_dir\.nuget\Nuget.exe restore $source_dir\MicroMapper.sln }
+    exec { msbuild /t:Clean /t:Build /p:Configuration=$config /v:q /p:NoWarn=1591 /nologo $source_dir\MicroMapper.sln }
 }
 
 task commonAssemblyInfo {
@@ -147,8 +147,8 @@ function global:create-nuspec($version, $fileName)
   <metadata>
     <id>AutoMapper</id>
     <version>$version</version>
-    <authors>Jimmy Bogard</authors>
-    <owners>Jimmy Bogard</owners>
+    <authors>Michael W. Powell</authors>
+    <owners>Michael W. Powell</owners>
     <licenseUrl>https://github.com/AutoMapper/AutoMapper/blob/master/LICENSE.txt</licenseUrl>
     <projectUrl>http://automapper.org</projectUrl>
     <iconUrl>https://s3.amazonaws.com/automapper/icon.png</iconUrl>
