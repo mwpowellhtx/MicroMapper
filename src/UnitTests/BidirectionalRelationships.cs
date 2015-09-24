@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using Should;
-
 using Xunit;
 
 namespace AutoMapper.UnitTests
@@ -250,32 +248,30 @@ namespace AutoMapper.UnitTests
 
 				public ParentDto Convert(ResolutionContext resolutionContext)
 				{
-					int childId = (int) resolutionContext.SourceValue;
-					ParentModel parentModel = _parentModels[childId];
-					MappingEngine mappingEngine = (MappingEngine)Mapper.Engine;
-					return mappingEngine.Map<ParentModel, ParentDto>(resolutionContext, parentModel);
+                    var childId = (int)resolutionContext.SourceValue;
+                    var parentModel = _parentModels[childId];
+                    return Mapper.Map<ParentModel, ParentDto>(resolutionContext, parentModel);
 				}
 			}
 
-			public class ParentIdToChildDtoListConverter : ITypeConverter<int, List<ChildDto>>
-			{
-				private readonly IList<ChildModel> _childModels;
+		    public class ParentIdToChildDtoListConverter : ITypeConverter<int, List<ChildDto>>
+		    {
+		        private readonly IList<ChildModel> _childModels;
 
-				public ParentIdToChildDtoListConverter(IList<ChildModel> childModels)
-				{
-					_childModels = childModels;
-				}
+		        public ParentIdToChildDtoListConverter(IList<ChildModel> childModels)
+		        {
+		            _childModels = childModels;
+		        }
 
-				public List<ChildDto> Convert(ResolutionContext resolutionContext)
-				{
-					int childId = (int)resolutionContext.SourceValue;
-					List<ChildModel> childModels = _childModels.Where(x => x.Parent.ID == childId).ToList();
-					MappingEngine mappingEngine = (MappingEngine)Mapper.Engine;
-					return mappingEngine.Map<List<ChildModel>, List<ChildDto>>(resolutionContext, childModels);
-				}
-			}
+		        public List<ChildDto> Convert(ResolutionContext resolutionContext)
+		        {
+		            var childId = (int) resolutionContext.SourceValue;
+		            var childModels = _childModels.Where(x => x.Parent.ID == childId).ToList();
+		            return Mapper.Map<List<ChildModel>, List<ChildDto>>(resolutionContext, childModels);
+		        }
+		    }
 
-			public class ParentModel
+		    public class ParentModel
 			{
 				public int ID { get; set; }
 			}

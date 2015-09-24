@@ -12,6 +12,7 @@ _ReSharper*
 *.cache
 TestResult.xml
 AppPackages/
+TestResults/
 *.bak
 packages
 *.orig
@@ -20,3 +21,4 @@ packages
 .nuget
 project.lock.json
 .vs
+UpgradeLog*.htm

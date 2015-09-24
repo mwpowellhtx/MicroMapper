@@ -8,7 +8,9 @@ namespace AutoMapper
     /// </summary>
 	public interface IMappingEngineRunner
 	{
-		object Map(ResolutionContext context);
+        TDestination Map<TSource, TDestination>(ResolutionContext parentContext, TSource source);
+
+        object Map(ResolutionContext context);
 		object CreateObject(ResolutionContext context);
 		IConfigurationProvider ConfigurationProvider { get; }
 	    bool ShouldMapSourceValueAsNull(ResolutionContext context);

@@ -7,6 +7,10 @@ namespace AutoMapper.Mappers
     using System.Reflection;
     using Internal;
 
+    /*
+    TODO: what's the difference between 'ObjectCreator' and 'LazyFactory' ?
+    may consider consolidating efforts into a commonly themed object-factory...
+    */
     /// <summary>
     /// Instantiates objects
     /// </summary>
@@ -63,11 +67,12 @@ namespace AutoMapper.Mappers
         }
     }
 
+    //TODO: additionally, what's this doing hanging out here? should potentially be refactored...
     internal static class ArrayExtensions
     {
         public static int[] GetLengths(this Array array)
         {
-            return Enumerable.Range(0, array.Rank).Select(dimension => array.GetLength(dimension)).ToArray();
+            return Enumerable.Range(0, array.Rank).Select(array.GetLength).ToArray();
         }
     }
 }

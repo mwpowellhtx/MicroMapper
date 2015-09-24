@@ -7,18 +7,18 @@ namespace AutoMapper.Mappers
 
     public class CollectionMapper : IObjectMapper
     {
-        public object Map(ResolutionContext context, IMappingEngineRunner mapper)
+        private Type EnumerableMapperType { get; } = typeof (EnumerableMapper<,>);
+
+        public object Map(ResolutionContext context)
         {
-            Type genericType = typeof (EnumerableMapper<,>);
-
             var collectionType = context.DestinationType;
-            var elementType = TypeHelper.GetElementType(context.DestinationType);
+            var elementType = context.DestinationType.GetNullEnumerableElementType();
 
-            var enumerableMapper = genericType.MakeGenericType(collectionType, elementType);
+            var enumerableMapper = EnumerableMapperType.MakeGenericType(collectionType, elementType);
 
             var objectMapper = (IObjectMapper) Activator.CreateInstance(enumerableMapper);
 
-            return objectMapper.Map(context, mapper);
+            return objectMapper.Map(context);
         }
 
         public bool IsMatch(ResolutionContext context)
@@ -50,16 +50,9 @@ namespace AutoMapper.Mappers
 
             protected override TCollection CreateDestinationObjectBase(Type destElementType, int sourceLength)
             {
-                Object collection;
-
-                if (typeof (TCollection).IsInterface())
-                {
-                    collection = new List<TElement>();
-                }
-                else
-                {
-                    collection = ObjectCreator.CreateDefaultValue(typeof (TCollection));
-                }
+                var collection = typeof (TCollection).IsInterface()
+                    ? new List<TElement>()
+                    : ObjectCreator.CreateDefaultValue(typeof (TCollection));
 
                 return (TCollection) collection;
             }

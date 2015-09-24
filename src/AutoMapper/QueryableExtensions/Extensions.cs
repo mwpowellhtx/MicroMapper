@@ -6,6 +6,7 @@ namespace AutoMapper.QueryableExtensions
     using System.Linq.Expressions;
     using System.Reflection;
     using Impl;
+    using ObjectDictionary = System.Collections.Generic.IDictionary<string, object>;
 
     /// <summary>
     /// Queryable extensions for AutoMapper
@@ -49,42 +50,44 @@ namespace AutoMapper.QueryableExtensions
         }
 
         /// <summary>
-        /// Maps a queryable expression of a source type to a queryable expression of a destination type
+        /// Maps a queryable expression of a source type to a queryable expression of a destination type.
         /// </summary>
         /// <typeparam name="TSource">Source type</typeparam>
         /// <typeparam name="TDestination">Destination type</typeparam>
         /// <param name="sourceQuery">Source queryable</param>
-        /// <param name="destQuery">Destination queryable</param>
+        /// <param name="destinationQuery">Destination queryable</param>
         /// <returns>Mapped destination queryable</returns>
         public static IQueryable<TDestination> Map<TSource, TDestination>(this IQueryable<TSource> sourceQuery,
-            IQueryable<TDestination> destQuery)
+            IQueryable<TDestination> destinationQuery)
         {
-            return sourceQuery.Map(destQuery, Mapper.Engine);
+            return sourceQuery.Map(destinationQuery, Mapper.Context.Engine);
         }
 
         /// <summary>
-        /// Maps a queryable expression of a source type to a queryable expression of a destination type
+        /// Maps a queryable expression of a source type to a queryable expression of a destination type.
         /// </summary>
         /// <typeparam name="TSource">Source type</typeparam>
         /// <typeparam name="TDestination">Destination type</typeparam>
         /// <param name="sourceQuery">Source queryable</param>
-        /// <param name="destQuery">Destination queryable</param>
+        /// <param name="destinationQuery">Destination queryable</param>
         /// <param name="mappingEngine">Mapping engine instance</param>
         /// <returns>Mapped destination queryable</returns>
         public static IQueryable<TDestination> Map<TSource, TDestination>(this IQueryable<TSource> sourceQuery,
-            IQueryable<TDestination> destQuery, IMappingEngine mappingEngine)
+            IQueryable<TDestination> destinationQuery, IMappingEngine mappingEngine)
         {
-            return QueryMapperVisitor.Map<TSource, TDestination>(sourceQuery, destQuery, mappingEngine);
+            return mappingEngine.MapQuery(sourceQuery, destinationQuery);
         }
 
-        public static IQueryDataSourceInjection<TSource> UseAsDataSource<TSource>(this IQueryable<TSource> dataSource)
+        public static IQueryDataSourceInjection<TSource> UseAsDataSource<TSource>(
+            this IQueryable<TSource> dataSource)
         {
-            return dataSource.UseAsDataSource(Mapper.Engine);
+            return dataSource.UseAsDataSource(Mapper.Context.Engine);
         }
 
-        public static IQueryDataSourceInjection<TSource> UseAsDataSource<TSource>(this IQueryable<TSource> dataSource, IMappingEngine mappingEngine)
+        public static IQueryDataSourceInjection<TSource> UseAsDataSource<TSource>(
+            this IQueryable<TSource> dataSource, IMappingEngine mappingEngine)
         {
-            return new QueryDataSourceInjection<TSource>(dataSource, mappingEngine);
+            return mappingEngine.UseAsDataSource(dataSource);
         }
 
         /// <summary>
@@ -96,10 +99,9 @@ namespace AutoMapper.QueryableExtensions
         /// <param name="source">Queryable source</param>
         /// <returns>Expression to project into</returns>
         [Obsolete("Use ProjectTo instead")]
-        public static IProjectionExpression Project<TSource>(
-            this IQueryable<TSource> source)
+        public static IProjectionExpression Project<TSource>(this IQueryable<TSource> source)
         {
-            return source.Project(Mapper.Engine);
+            return source.Project(Mapper.Context.Engine);
         }
 
         /// <summary>
@@ -112,48 +114,10 @@ namespace AutoMapper.QueryableExtensions
         /// <param name="mappingEngine">Mapping engine instance</param>
         /// <returns>Expression to project into</returns>
         [Obsolete("Use ProjectTo instead")]
-        public static IProjectionExpression Project<TSource>(
-            this IQueryable<TSource> source, IMappingEngine mappingEngine)
+        public static IProjectionExpression Project<TSource>(this IQueryable<TSource> source,
+            IMappingEngine mappingEngine)
         {
-            return new ProjectionExpression(source, mappingEngine);
-        }
-
-        /// <summary>
-        /// Extension method to project from a queryable using the provided mapping engine
-        /// </summary>
-        /// <remarks>Projections are only calculated once and cached</remarks>
-        /// <typeparam name="TDestination">Destination type</typeparam>
-        /// <param name="source">Queryable source</param>
-        /// <param name="mappingEngine">Mapping engine instance</param>
-        /// <param name="parameters">Optional parameter object for parameterized mapping expressions</param>
-        /// <param name="membersToExpand">Explicit members to expand</param>
-        /// <returns>Expression to project into</returns>
-        public static IQueryable<TDestination> ProjectTo<TDestination>(
-            this IQueryable source,
-            object parameters,
-            IMappingEngine mappingEngine,
-            params Expression<Func<TDestination, object>>[] membersToExpand
-            )
-        {
-            return new ProjectionExpression(source, mappingEngine).To(parameters, membersToExpand);
-        }
-
-        /// <summary>
-        /// Extension method to project from a queryable using the provided mapping engine
-        /// </summary>
-        /// <remarks>Projections are only calculated once and cached</remarks>
-        /// <typeparam name="TDestination">Destination type</typeparam>
-        /// <param name="source">Queryable source</param>
-        /// <param name="parameters">Optional parameter object for parameterized mapping expressions</param>
-        /// <param name="membersToExpand">Explicit members to expand</param>
-        /// <returns>Expression to project into</returns>
-        public static IQueryable<TDestination> ProjectTo<TDestination>(
-            this IQueryable source,
-            object parameters,
-            params Expression<Func<TDestination, object>>[] membersToExpand
-            )
-        {
-            return source.ProjectTo(parameters, Mapper.Engine, membersToExpand);
+            return mappingEngine.ProjectQuery(source);
         }
 
         /// <summary>
@@ -164,8 +128,7 @@ namespace AutoMapper.QueryableExtensions
         /// <param name="source">Queryable source</param>
         /// <param name="membersToExpand">Explicit members to expand</param>
         /// <returns>Expression to project into</returns>
-        public static IQueryable<TDestination> ProjectTo<TDestination>(
-            this IQueryable source,
+        public static IQueryable<TDestination> ProjectTo<TDestination>(this IQueryable source,
             params Expression<Func<TDestination, object>>[] membersToExpand
             )
         {
@@ -173,6 +136,39 @@ namespace AutoMapper.QueryableExtensions
         }
 
         /// <summary>
+        /// Extension method to project from a queryable using the provided mapping engine
+        /// </summary>
+        /// <remarks>Projections are only calculated once and cached</remarks>
+        /// <typeparam name="TDestination">Destination type</typeparam>
+        /// <param name="source">Queryable source</param>
+        /// <param name="parameters">Optional parameter object for parameterized mapping expressions</param>
+        /// <param name="membersToExpand">Explicit members to expand</param>
+        /// <returns>Expression to project into</returns>
+        public static IQueryable<TDestination> ProjectTo<TDestination>(this IQueryable source,
+            object parameters, params Expression<Func<TDestination, object>>[] membersToExpand
+            )
+        {
+            return source.ProjectTo(parameters, Mapper.Context.Engine, membersToExpand);
+        }
+
+        /// <summary>
+        /// Extension method to project from a queryable using the provided mapping engine
+        /// </summary>
+        /// <remarks>Projections are only calculated once and cached</remarks>
+        /// <typeparam name="TDestination">Destination type</typeparam>
+        /// <param name="source">Queryable source</param>
+        /// <param name="mappingEngine">Mapping engine instance</param>
+        /// <param name="parameters">Optional parameter object for parameterized mapping expressions</param>
+        /// <param name="membersToExpand">Explicit members to expand</param>
+        /// <returns>Expression to project into</returns>
+        public static IQueryable<TDestination> ProjectTo<TDestination>(this IQueryable source,
+            object parameters, IMappingEngine mappingEngine,
+            params Expression<Func<TDestination, object>>[] membersToExpand)
+        {
+            return mappingEngine.ProjectTo(source, parameters, membersToExpand);
+        }
+
+        /// <summary>
         /// Projects the source type to the destination type given the mapping configuration
         /// </summary>
         /// <typeparam name="TDestination">Destination type to map to</typeparam>
@@ -182,12 +178,10 @@ namespace AutoMapper.QueryableExtensions
         /// <param name="membersToExpand">Explicit members to expand</param>
         /// <returns>Queryable result, use queryable extension methods to project and execute result</returns>
         public static IQueryable<TDestination> ProjectTo<TDestination>(this IQueryable source,
-            IDictionary<string, object> parameters,
-            IMappingEngine mappingEngine,
-            params string[] membersToExpand
-            )
+            ObjectDictionary parameters, IMappingEngine mappingEngine,
+            params string[] membersToExpand)
         {
-            return new ProjectionExpression(source, mappingEngine).To<TDestination>(parameters, membersToExpand);
+            return mappingEngine.ProjectTo<TDestination>(source, parameters, membersToExpand);
         }
 
         /// <summary>
@@ -199,11 +193,9 @@ namespace AutoMapper.QueryableExtensions
         /// <param name="membersToExpand">Explicit members to expand</param>
         /// <returns>Queryable result, use queryable extension methods to project and execute result</returns>
         public static IQueryable<TDestination> ProjectTo<TDestination>(this IQueryable source,
-            IDictionary<string, object> parameters,
-            params string[] membersToExpand
-            )
+            ObjectDictionary parameters, params string[] membersToExpand)
         {
-            return source.ProjectTo<TDestination>(parameters, Mapper.Engine, membersToExpand);
+            return source.ProjectTo<TDestination>(parameters, Mapper.Context.Engine, membersToExpand);
         }
     }
 }

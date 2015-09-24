@@ -71,7 +71,7 @@ namespace AutoMapper.UnitTests.Bug
                 .Include<MailOrder, MailOrderDto>();
             Mapper.CreateMap<OnlineOrder, OnlineOrderDto>();
             Mapper.CreateMap<MailOrder, MailOrderDto>();
-            Mapper.Configuration.Seal();
+            Mapper.Context.Configuration.Seal();
 
             //Mapper.AssertConfigurationIsValid();
 

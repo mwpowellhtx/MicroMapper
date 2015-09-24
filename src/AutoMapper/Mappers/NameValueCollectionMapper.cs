@@ -5,7 +5,7 @@ namespace AutoMapper.Mappers
 
     public class NameValueCollectionMapper : IObjectMapper
     {
-        public object Map(ResolutionContext context, IMappingEngineRunner mapper)
+        public object Map(ResolutionContext context)
         {
             if (!IsMatch(context) || context.SourceValue == null)
                 return null;
@@ -20,9 +20,8 @@ namespace AutoMapper.Mappers
 
         public bool IsMatch(ResolutionContext context)
         {
-            return
-                context.SourceType == typeof (NameValueCollection) &&
-                context.DestinationType == typeof (NameValueCollection);
+            return context.SourceType == typeof (NameValueCollection)
+                   && context.DestinationType == typeof (NameValueCollection);
         }
     }
 }

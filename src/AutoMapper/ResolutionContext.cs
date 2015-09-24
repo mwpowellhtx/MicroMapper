@@ -70,21 +70,26 @@ namespace AutoMapper
         /// </summary>
         public Dictionary<ResolutionContext, object> InstanceCache { get; }
 
+        ///// <summary>
+        ///// Current mapping engine
+        ///// </summary>
+        //public IMappingEngine Engine { get; }
+
         /// <summary>
-        /// Current mapping engine
+        /// Current mapper context
         /// </summary>
-        public IMappingEngine Engine { get; }
+        public IMapperContext MapperContext { get; }
 
         private ResolutionContext()
         {
         }
 
-        private ResolutionContext(ResolutionContext context, object sourceValue, object destinationValue, Type sourceType, 
-            Type destinationType = null, TypeMap typeMap = null)
+        private ResolutionContext(ResolutionContext context, object sourceValue, object destinationValue,
+            Type sourceType, Type destinationType = null, TypeMap typeMap = null)
         {
-            if(context != Empty)
+            if (context != Empty)
             {
-                if(context == null)
+                if (context == null)
                 {
                     throw new ArgumentNullException(nameof(context));
                 }
@@ -94,14 +99,14 @@ namespace AutoMapper
                 DestinationType = context.DestinationType;
                 InstanceCache = context.InstanceCache;
                 Options = context.Options;
-                Engine = context.Engine;
+                MapperContext = context.MapperContext;
             }
             SourceValue = sourceValue;
             DestinationValue = destinationValue;
             InitialSourceType = sourceType;
             InitialDestinationType = destinationType;
             TypeMap = typeMap;
-            if(typeMap != null)
+            if (typeMap != null)
             {
                 SourceType = typeMap.SourceType;
                 DestinationType = typeMap.DestinationType;
@@ -113,33 +118,49 @@ namespace AutoMapper
             }
         }
 
-        public ResolutionContext(TypeMap typeMap, object source, Type sourceType, Type destinationType,
-            MappingOperationOptions options, IMappingEngine engine)
-            : this(typeMap, source, null, sourceType, destinationType, options, engine)
+        public ResolutionContext(TypeMap typeMap, object sourceValue, Type sourceType, Type destinationType,
+            MappingOperationOptions options, IMapperContext mapperContext)
+            : this(typeMap, sourceValue, null, sourceType, destinationType, options, mapperContext)
         {
         }
 
-        public ResolutionContext(TypeMap typeMap, object source, object destination, Type sourceType,
-            Type destinationType, MappingOperationOptions options, IMappingEngine engine)
-            : this(Empty, source, destination, sourceType, destinationType, typeMap)
+        public ResolutionContext(TypeMap typeMap, object sourceValue, object destinationValue, Type sourceType,
+            Type destinationType, MappingOperationOptions options, IMapperContext mapperContext)
         {
+            TypeMap = typeMap;
+            SourceValue = sourceValue;
+            DestinationValue = destinationValue;
+            if (typeMap != null)
+            {
+                SourceType = typeMap.SourceType;
+                DestinationType = typeMap.DestinationType;
+            }
+            else
+            {
+                SourceType = sourceType;
+                DestinationType = destinationType;
+            }
+            InitialSourceType = sourceType;
+            InitialDestinationType = destinationType;
             InstanceCache = new Dictionary<ResolutionContext, object>();
             Options = options;
-            Engine = engine;
+            MapperContext = mapperContext;
         }
 
-        private ResolutionContext(ResolutionContext context, object sourceValue, Type sourceType) : this(context, sourceValue, context.DestinationValue, sourceType)
+        private ResolutionContext(ResolutionContext context, object sourceValue, Type sourceType)
+            : this(context, sourceValue, context.DestinationValue, sourceType)
         {
         }
 
-        private ResolutionContext(ResolutionContext context, TypeMap memberTypeMap, object sourceValue,
-            object destinationValue, Type sourceType, Type destinationType) 
+        private ResolutionContext(ResolutionContext context, TypeMap memberTypeMap,
+            object sourceValue, object destinationValue, Type sourceType, Type destinationType) 
             : this(context, sourceValue, destinationValue, sourceType, destinationType, memberTypeMap)
         {
         }
 
         private ResolutionContext(ResolutionContext context, object sourceValue, object destinationValue,
-            TypeMap memberTypeMap, PropertyMap propertyMap) : this(context, sourceValue, destinationValue, null, null, memberTypeMap)
+            TypeMap memberTypeMap, PropertyMap propertyMap)
+            : this(context, sourceValue, destinationValue, null, null, memberTypeMap)
         {
             if(memberTypeMap == null)
             {
@@ -261,8 +282,11 @@ namespace AutoMapper
 
         public static ResolutionContext New<TSource>(TSource sourceValue)
         {
+            //return new ResolutionContext(null, sourceValue, typeof (TSource), null, new MappingOperationOptions(),
+            //    Mapper.Engine);
+            //TODO: add Mapper.Context, or new MapperContext, eventually...
             return new ResolutionContext(null, sourceValue, typeof (TSource), null, new MappingOperationOptions(),
-                Mapper.Engine);
+                null);
         }
 
         internal void BeforeMap(object destination)

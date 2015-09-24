@@ -3,10 +3,10 @@
     namespace NestedAndArraysTests
     {
         using System.Collections.Generic;
-        using QueryableExtensions;
-        using Xunit;
         using System.Linq;
+        using QueryableExtensions;
         using Should.Core.Assertions;
+        using Xunit;
 
         public class LinqTests
         {
@@ -16,6 +16,7 @@
                 public int EntityID { get; set; }
                 public string Title { get; set; }
                 public ICollection<SubEntity> SubEntities { get; set; }
+
                 public Entity()
                 {
                     SubEntities = new HashSet<SubEntity>();
@@ -52,16 +53,16 @@
                 Mapper.CreateMap<Entity, EntityViewModel>()
                     .ForMember(m => m.SubEntityNames, o => o.MapFrom(f => f.SubEntities.Select(e => e.Name)));
 
-                var expression = Mapper.Engine.CreateMapExpression<Entity, EntityViewModel>();
+                var expression = Mapper.Context.Engine.CreateMapExpression<Entity, EntityViewModel>();
 
                 var entity = new Entity
                 {
                     EntityID = 1,
                     SubEntities =
-                                     {
-                                         new SubEntity {Name = "First", Description = "First Description"},
-                                         new SubEntity {Name = "Second", Description = "First Description"},
-                                     },
+                    {
+                        new SubEntity {Name = "First", Description = "First Description"},
+                        new SubEntity {Name = "Second", Description = "First Description"},
+                    },
                     Title = "Entities"
                 };
 
@@ -74,7 +75,6 @@
 
             }
 
-
             [Fact]
             public void SubMap()
             {
@@ -84,27 +84,26 @@
 
                 Mapper.CreateMap<Entity, EntityDetailledViewModel>();
 
-                var expression = Mapper.Engine.CreateMapExpression<Entity, EntityDetailledViewModel>();
+                var expression = Mapper.Context.Engine.CreateMapExpression<Entity, EntityDetailledViewModel>();
 
                 var entity = new Entity
                 {
                     EntityID = 1,
                     SubEntities =
-                                     {
-                                         new SubEntity {Name = "First", Description = "First Description"},
-                                         new SubEntity {Name = "Second", Description = "First Description"},
-                                     },
+                    {
+                        new SubEntity {Name = "First", Description = "First Description"},
+                        new SubEntity {Name = "Second", Description = "First Description"},
+                    },
                     Title = "Entities"
                 };
 
                 var viewModel = expression.Compile()(entity);
 
                 Assert.Equal(viewModel.EntityID, entity.EntityID);
-                Assert.True(entity.SubEntities.All(subEntity => viewModel.SubEntities.Any(s => s.Description == subEntity.Description)));
-
-
+                Assert.True(
+                    entity.SubEntities.All(
+                        subEntity => viewModel.SubEntities.Any(s => s.Description == subEntity.Description)));
             }
-
         }
     }
 }

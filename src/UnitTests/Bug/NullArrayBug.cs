@@ -10,10 +10,10 @@
 
         protected override void Establish_context()
         {
-            Mapper.Configuration.AllowNullCollections = false;
+            Mapper.Context.Configuration.AllowNullCollections = false;
             Mapper.CreateMap<Source, Destination>();
 
-            _source = new Source { Name = null, Data = null };
+            _source = new Source {Name = null, Data = null};
         }
 
         protected override void Because_of()

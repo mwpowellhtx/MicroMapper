@@ -8,19 +8,20 @@ namespace AutoMapper.Mappers
 
     public class TypeConverterMapper : IObjectMapper
     {
-        public object Map(ResolutionContext context, IMappingEngineRunner mapper)
+        public object Map(ResolutionContext context)
         {
+            var runner = context.MapperContext.Runner;
             if (context.SourceValue == null)
             {
-                return mapper.CreateObject(context);
+                return runner.CreateObject(context);
             }
-            Func<object> converter = GetConverter(context);
+            var converter = GetConverter(context);
             return converter?.Invoke();
         }
 
         private static Func<object> GetConverter(ResolutionContext context)
         {
-            TypeConverter typeConverter = GetTypeConverter(context.SourceType);
+            var typeConverter = GetTypeConverter(context.SourceType);
             if (typeConverter.CanConvertTo(context.DestinationType))
                 return () => typeConverter.ConvertTo(context.SourceValue, context.DestinationType);
             if (context.DestinationType.IsNullableType() &&

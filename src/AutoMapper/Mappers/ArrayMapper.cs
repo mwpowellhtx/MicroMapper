@@ -7,7 +7,8 @@ namespace AutoMapper.Mappers
     {
         public override bool IsMatch(ResolutionContext context)
         {
-            return (context.DestinationType.IsArray) && (context.SourceType.IsEnumerableType());
+            return context.DestinationType.IsArray
+                   && context.SourceType.IsEnumerableType();
         }
 
         protected override void ClearEnumerable(Array enumerable)
@@ -25,7 +26,7 @@ namespace AutoMapper.Mappers
             throw new NotImplementedException();
         }
 
-        protected override object GetOrCreateDestinationObject(ResolutionContext context, IMappingEngineRunner mapper,
+        protected override object GetOrCreateDestinationObject(ResolutionContext context,
             Type destElementType, int sourceLength)
         {
             return ObjectCreator.CreateArray(destElementType, sourceLength);

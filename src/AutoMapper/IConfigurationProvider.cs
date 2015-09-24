@@ -90,11 +90,12 @@ namespace AutoMapper
         /// <typeparam name="TProfile">Profile type</typeparam>
         void AssertConfigurationIsValid<TProfile>() where TProfile : Profile, new();
 
-        /// <summary>
-        /// Get all configured mappers
-        /// </summary>
-        /// <returns>List of mappers</returns>
-        IObjectMapper[] GetMappers();
+        //TODO: what was this here for?
+        ///// <summary>
+        ///// Get all configured mappers
+        ///// </summary>
+        ///// <returns>List of mappers</returns>
+        //IObjectMapper[] GetMappers();
 
         /// <summary>
         /// Creates a <see cref="TypeMap"/> based on a source and destination type

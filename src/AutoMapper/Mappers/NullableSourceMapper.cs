@@ -4,14 +4,16 @@ namespace AutoMapper.Mappers
 
     public class NullableSourceMapper : IObjectMapper
     {
-        public object Map(ResolutionContext context, IMappingEngineRunner mapper)
+        public object Map(ResolutionContext context)
         {
-            return context.SourceValue ?? mapper.CreateObject(context);
+            return context.SourceValue
+                   ?? context.MapperContext.Runner.CreateObject(context);
         }
 
         public bool IsMatch(ResolutionContext context)
         {
-            return context.SourceType.IsNullableType() && !context.DestinationType.IsNullableType();
+            return context.SourceType.IsNullableType()
+                   && !context.DestinationType.IsNullableType();
         }
     }
 }

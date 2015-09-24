@@ -6,23 +6,25 @@ namespace AutoMapper.Mappers
 
     public class EnumMapper : IObjectMapper
     {
-        private static readonly INullableConverterFactory NullableConverterFactory =
-            PlatformAdapter.Resolve<INullableConverterFactory>();
+        private static INullableConverterFactory NullableConverterFactory { get; }
+            = PlatformAdapter.Resolve<INullableConverterFactory>();
 
-        private static readonly IEnumNameValueMapperFactory EnumNameValueMapperFactory =
-            PlatformAdapter.Resolve<IEnumNameValueMapperFactory>();
+        private static IEnumNameValueMapperFactory EnumNameValueMapperFactory { get; }
+            = PlatformAdapter.Resolve<IEnumNameValueMapperFactory>();
 
-        public object Map(ResolutionContext context, IMappingEngineRunner mapper)
+        public object Map(ResolutionContext context)
         {
-            bool toEnum = false;
-            Type enumSourceType = TypeHelper.GetEnumerationType(context.SourceType);
-            Type enumDestinationType = TypeHelper.GetEnumerationType(context.DestinationType);
+            var runner = context.MapperContext.Runner;
+
+            var toEnum = false;
+            var enumSourceType = TypeHelper.GetEnumerationType(context.SourceType);
+            var enumDestinationType = TypeHelper.GetEnumerationType(context.DestinationType);
 
             if (EnumToStringMapping(context, ref toEnum))
             {
                 if (context.SourceValue == null)
                 {
-                    return mapper.CreateObject(context);
+                    return runner.CreateObject(context);
                 }
 
                 if (toEnum)
@@ -30,7 +32,7 @@ namespace AutoMapper.Mappers
                     var stringValue = context.SourceValue.ToString();
                     if (string.IsNullOrEmpty(stringValue))
                     {
-                        return mapper.CreateObject(context);
+                        return runner.CreateObject(context);
                     }
 
                     return Enum.Parse(enumDestinationType, stringValue, true);
@@ -41,10 +43,10 @@ namespace AutoMapper.Mappers
             {
                 if (context.SourceValue == null)
                 {
-                    if (mapper.ShouldMapSourceValueAsNull(context) && context.DestinationType.IsNullableType())
+                    if (runner.ShouldMapSourceValueAsNull(context) && context.DestinationType.IsNullableType())
                         return null;
 
-                    return mapper.CreateObject(context);
+                    return runner.CreateObject(context);
                 }
 
                 if (!Enum.IsDefined(enumSourceType, context.SourceValue))

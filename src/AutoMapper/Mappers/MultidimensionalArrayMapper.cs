@@ -1,16 +1,17 @@
 namespace AutoMapper.Mappers
 {
     using System;
-    using System.Collections;
-    using System.Linq;
     using Internal;
 
     public class MultidimensionalArrayMapper : EnumerableMapperBase<Array>
     {
-        MultidimensionalArrayFiller filler;
+        //TODO: this one is entirely new
+
         public override bool IsMatch(ResolutionContext context)
         {
-            return context.DestinationType.IsArray && context.DestinationType.GetArrayRank() > 1 && context.SourceType.IsEnumerableType();
+            return context.DestinationType.IsArray
+                && context.DestinationType.GetArrayRank() > 1
+                && context.SourceType.IsEnumerableType();
         }
 
         protected override void ClearEnumerable(Array enumerable)
@@ -18,9 +19,11 @@ namespace AutoMapper.Mappers
             // no op
         }
 
+        private MultidimensionalArrayFiller _filler;
+
         protected override void SetElementValue(Array destination, object mappedValue, int index)
         {
-            filler.NewValue(mappedValue);
+            _filler.NewValue(mappedValue);
         }
 
         protected override Array CreateDestinationObjectBase(Type destElementType, int sourceLength)
@@ -28,7 +31,7 @@ namespace AutoMapper.Mappers
             throw new NotImplementedException();
         }
 
-        protected override object GetOrCreateDestinationObject(ResolutionContext context, IMappingEngineRunner mapper,
+        protected override object GetOrCreateDestinationObject(ResolutionContext context,
             Type destElementType, int sourceLength)
         {
             var sourceArray = context.SourceValue as Array;
@@ -37,45 +40,45 @@ namespace AutoMapper.Mappers
                 return ObjectCreator.CreateArray(destElementType, sourceLength);
             }
             var destinationArray = ObjectCreator.CreateArray(destElementType, sourceArray);
-            filler = new MultidimensionalArrayFiller(destinationArray);
+            _filler = new MultidimensionalArrayFiller(destinationArray);
             return destinationArray;
         }
     }
 
     public class MultidimensionalArrayFiller
     {
-        int[] indices;
-        Array destination;
+        private readonly int[] _indeces;
+        private readonly Array _destination;
 
         public MultidimensionalArrayFiller(Array destination)
         {
-            indices = new int[destination.Rank];
-            this.destination = destination;
+            _indeces = new int[destination.Rank];
+            _destination = destination;
         }
 
         public void NewValue(object value)
         {
-            int dimension = destination.Rank - 1;
-            bool changedDimension = false;
-            while(indices[dimension] == destination.GetLength(dimension))
+            var dimension = _destination.Rank - 1;
+            var changedDimension = false;
+            while(_indeces[dimension] == _destination.GetLength(dimension))
             {
-                indices[dimension] = 0;
+                _indeces[dimension] = 0;
                 dimension--;
                 if(dimension < 0)
                 {
-                    throw new InvalidOperationException("Not enough room in destination array " + destination);
+                    throw new InvalidOperationException("Not enough room in _destination array " + _destination);
                 }
-                indices[dimension]++;
+                _indeces[dimension]++;
                 changedDimension = true;
             }
-            destination.SetValue(value, indices);
+            _destination.SetValue(value, _indeces);
             if(changedDimension)
             {
-                indices[dimension+1]++;
+                _indeces[dimension+1]++;
             }
             else
             {
-                indices[dimension]++;
+                _indeces[dimension]++;
             }
         }
     }

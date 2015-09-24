@@ -14,16 +14,18 @@ namespace AutoMapper.UnitTests.Projection
             public void Should_not_fail()
             {
                 Mapper.CreateMap<UserModel, UserDto>()
-                                .ForMember(dto => dto.FullName, opt => opt.MapFrom(src => src.LastName + " " + src.FirstName));
+                    .ForMember(dto => dto.FullName, opt => opt.MapFrom(src => src.LastName + " " + src.FirstName));
 
-                typeof(NullReferenceException).ShouldNotBeThrownBy(() => Mapper.Engine.CreateMapExpression<UserModel, UserDto>()); //null reference exception here
+                //null reference exception here
+                typeof (NullReferenceException).ShouldNotBeThrownBy(
+                    () => Mapper.Context.Engine.CreateMapExpression<UserModel, UserDto>());
             }
 
             [Fact]
             public void Should_map_from_String()
             {
                 Mapper.CreateMap<UserModel, UserDto>()
-                                .ForMember(dto => dto.FullName, opt => opt.MapFrom<string>("FirstName"));
+                    .ForMember(dto => dto.FullName, opt => opt.MapFrom<string>("FirstName"));
 
                 var um = new UserModel();
                 um.FirstName = "Hallo";
@@ -33,6 +35,7 @@ namespace AutoMapper.UnitTests.Projection
                 u.FullName.ShouldEqual(um.FirstName);
             }
         }
+
         public class UserModel
         {
             public string FirstName { get; set; }

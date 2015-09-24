@@ -6,7 +6,7 @@ namespace AutoMapper.Mappers
 
     public class ImplicitConversionOperatorMapper : IObjectMapper
     {
-        public object Map(ResolutionContext context, IMappingEngineRunner mapper)
+        public object Map(ResolutionContext context)
         {
             var implicitOperator = GetImplicitConversionOperator(context);
 
@@ -22,6 +22,7 @@ namespace AutoMapper.Mappers
 
         private static MethodInfo GetImplicitConversionOperator(ResolutionContext context)
         {
+            //TODO: this too is a little different from before but is probably okay...
             var destinationType = context.DestinationType;
             if(destinationType.IsNullableType())
             {

@@ -53,7 +53,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\AutoMapper.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\MicroMapper.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
@@ -76,6 +76,7 @@
     <None Include="..\AutoMapper.snk">
       <Link>AutoMapper.snk</Link>
     </None>
+    <None Include="MicroMapper.snk" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

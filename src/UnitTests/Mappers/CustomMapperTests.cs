@@ -9,7 +9,7 @@
         {
             protected override void Establish_context()
             {
-                MapperRegistry.Mappers.Insert(0, new TestObjectMapper());
+                Mapper.Context.ObjectMappers.Insert(0, new TestObjectMapper());
 
                 Mapper.CreateMap<ClassA, ClassB>()
                     .ForMember(dest => dest.Destination, opt => opt.MapFrom(src => src.Source));
@@ -18,20 +18,22 @@
             [Fact]
             public void Should_have_valid_configuration()
             {
-                typeof(AutoMapperConfigurationException).ShouldNotBeThrownBy(Mapper.AssertConfigurationIsValid);
+                typeof (AutoMapperConfigurationException)
+                    .ShouldNotBeThrownBy(Mapper.AssertConfigurationIsValid);
             }
 
 
             public class TestObjectMapper : IObjectMapper
             {
-                public object Map(ResolutionContext context, IMappingEngineRunner mapper)
+                public object Map(ResolutionContext context)
                 {
                     return new DestinationType();
                 }
 
                 public bool IsMatch(ResolutionContext context)
                 {
-                    return context.SourceType == typeof(SourceType) && context.DestinationType == typeof(DestinationType);
+                    return context.SourceType == typeof (SourceType)
+                           && context.DestinationType == typeof (DestinationType);
                 }
             }
 
@@ -55,6 +57,5 @@
                 public bool Value { get; set; }
             }
         }
-
     }
 }

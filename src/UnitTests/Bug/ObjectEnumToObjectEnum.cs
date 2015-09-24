@@ -1,13 +1,11 @@
-﻿using System;
-using Should;
-using AutoMapper.Mappers;
-using Xunit;
-
-namespace AutoMapper.UnitTests.Bug
+﻿namespace AutoMapper.UnitTests.Bug
 {
+    using Should;
+    using Xunit;
+
     public class ObjectEnumToObjectEnum : AutoMapperSpecBase
     {
-        MappingEngine _mapper;
+        private IMapperContext _context;
         Target _target;
 
         public enum SourceEnumValue
@@ -34,15 +32,15 @@ namespace AutoMapper.UnitTests.Bug
 
         protected override void Establish_context()
         {
-            var configuration = new ConfigurationStore(new TypeMapFactory(), MapperRegistry.Mappers);
-            _mapper = new MappingEngine(configuration);
-            var parentMapping = configuration.CreateMap<Source, Target>();
-            parentMapping.ForMember(dest => dest.Value, opt => opt.MapFrom(s => (TargetEnumValue)s.Value));
+
+            _context = new MapperContext();
+            var parentMapping = _context.CreateMap<Source, Target>();
+            parentMapping.ForMember(dest => dest.Value, opt => opt.MapFrom(s => (TargetEnumValue) s.Value));
         }
 
         protected override void Because_of()
         {
-            _target = _mapper.Map<Target>(new Source { Value = SourceEnumValue.Mule });
+            _target = _context.Map<Target>(new Source { Value = SourceEnumValue.Mule });
         }
 
         [Fact]

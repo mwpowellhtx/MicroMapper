@@ -1,21 +1,20 @@
 $framework = '4.5.1x86'
 
 properties {
-	$base_dir = resolve-path .
-	$build_dir = "$base_dir\build"
-	$dist_dir = "$base_dir\release"
-	$source_dir = "$base_dir\src"
-	$tools_dir = "$base_dir\tools"
-	$test_dir = "$build_dir\test"
-	$result_dir = "$build_dir\results"
-	$lib_dir = "$base_dir\lib"
-	$pkgVersion = if ($env:build_number -ne $NULL) { $env:build_number } else { '4.1.0' }
-	$assemblyVersion = $pkgVersion -replace "\-.*$", ".0"
-	$assemblyFileVersion = $pkgVersion -replace "-[^0-9]*", "."
-	$global:config = "debug"
-	$framework_dir = Get-FrameworkDirectory
+    $base_dir = resolve-path .
+    $build_dir = "$base_dir\Build"
+    $dist_dir = "$base_dir\Release"
+    $source_dir = "$base_dir\src"
+    $tools_dir = "$base_dir\tools"
+    $test_dir = "$build_dir\Test"
+    $result_dir = "$build_dir\Results"
+    $lib_dir = "$base_dir\lib"
+    $pkgVersion = if ($env:build_number -ne $NULL) { $env:build_number } else { '5.0.0' }
+    $assemblyVersion = $pkgVersion -replace "\-.*$", ".0"
+    $assemblyFileVersion = $pkgVersion -replace "-[^0-9]*", "."
+    $global:config = "debug"
+    $framework_dir = Get-FrameworkDirectory
 }
-
 
 task default -depends local
 task local -depends compile, test
@@ -24,12 +23,12 @@ task full -depends local, dist
 task ci -depends clean, release, commonAssemblyInfo, local, dist
 
 task clean {
-	delete_directory "$build_dir"
-	delete_directory "$dist_dir"
+   delete_directory "$build_dir"
+   delete_directory "$dist_dir"
 }
 
 task release {
-    $global:config = "release"
+    $global:config = "Release"
 }
 
 task compile -depends clean { 
@@ -45,7 +44,7 @@ task commonAssemblyInfo {
 }
 
 task test {
-	create_directory "$build_dir\results"
+    create_directory "$build_dir\results"
     exec { & $source_dir\packages\Fixie.1.0.0.3\lib\Net45\Fixie.Console.exe --xUnitXml $result_dir\AutoMapper.UnitTests.Net4.xml $source_dir/UnitTests/bin/NET4/$config/AutoMapper.UnitTests.Net4.dll }
     exec { & $tools_dir\statlight\statlight.exe -x $source_dir/UnitTests/bin/SL5/$config/AutoMapper.UnitTests.xap -d $source_dir/UnitTests/bin/SL5/$config/AutoMapper.UnitTests.SL5.dll --ReportOutputFile=$result_dir\AutoMapper.UnitTests.SL5.xml --ReportOutputFileType=NUnit }
     exec { & $source_dir\packages\xunit.runners.2.0.0-beta5-build2785\tools\xunit.console.x86.exe $source_dir/UnitTests/bin/WinRT/$config/AutoMapper.UnitTests.WinRT.dll -xml $result_dir\AutoMapper.UnitTests.WinRT.xml -parallel none }
@@ -53,26 +52,26 @@ task test {
 }
 
 task test-lite {
-	create_directory "$build_dir\results"
+    create_directory "$build_dir\results"
     exec { & $source_dir\packages\Fixie.1.0.0.3\lib\Net45\Fixie.Console.exe --xUnitXml $result_dir\AutoMapper.UnitTests.Net4.xml $source_dir/UnitTests/bin/NET4/$config/AutoMapper.UnitTests.Net4.dll }
 }
 
 task dist {
-	create_directory $build_dir
-	create_directory $dist_dir
-	copy_files "$source_dir\artifacts\bin\AutoMapper\$config\net45" "$dist_dir\net45"
-	copy_files "$source_dir\artifacts\bin\AutoMapper\$config\net40" "$dist_dir\net40"
-	copy_files "$source_dir\artifacts\bin\AutoMapper\$config\portable-net45+win+wpa81+wp80+MonoAndroid10+Xamarin.iOS10+MonoTouch10" "$dist_dir\Portable"
-	copy_files "$source_dir\artifacts\bin\AutoMapper\$config\sl50" "$dist_dir\sl50"
-	copy_files "$source_dir\artifacts\bin\AutoMapper\$config\wp80" "$dist_dir\wp80"
-	copy_files "$source_dir\artifacts\bin\AutoMapper\$config\wpa81" "$dist_dir\wpa81"
-	copy_files "$source_dir\artifacts\bin\AutoMapper\$config\win" "$dist_dir\win"
-	copy_files "$source_dir\AutoMapper.Android\bin\$config" "$dist_dir\MonoAndroid"
-	copy_files "$source_dir\AutoMapper.iOS\bin\$config" "$dist_dir\MonoTouch"
-	copy_files "$source_dir\AutoMapper.iOS10\bin\$config" "$dist_dir\Xamarin.iOS10"
-	copy_files "$source_dir\artifacts\bin\AutoMapper\$config\dotnet" "$dist_dir\dotnet"
+    create_directory $build_dir
+    create_directory $dist_dir
+    copy_files "$source_dir\artifacts\bin\AutoMapper\$config\net45" "$dist_dir\net45"
+    copy_files "$source_dir\artifacts\bin\AutoMapper\$config\net40" "$dist_dir\net40"
+    copy_files "$source_dir\artifacts\bin\AutoMapper\$config\portable-net45+win+wpa81+wp80+MonoAndroid10+Xamarin.iOS10+MonoTouch10" "$dist_dir\Portable"
+    copy_files "$source_dir\artifacts\bin\AutoMapper\$config\sl50" "$dist_dir\sl50"
+    copy_files "$source_dir\artifacts\bin\AutoMapper\$config\wp80" "$dist_dir\wp80"
+    copy_files "$source_dir\artifacts\bin\AutoMapper\$config\wpa81" "$dist_dir\wpa81"
+    copy_files "$source_dir\artifacts\bin\AutoMapper\$config\win" "$dist_dir\win"
+    copy_files "$source_dir\AutoMapper.Android\bin\$config" "$dist_dir\MonoAndroid"
+    copy_files "$source_dir\AutoMapper.iOS\bin\$config" "$dist_dir\MonoTouch"
+    copy_files "$source_dir\AutoMapper.iOS10\bin\$config" "$dist_dir\Xamarin.iOS10"
+    copy_files "$source_dir\artifacts\bin\AutoMapper\$config\dotnet" "$dist_dir\dotnet"
     create-nuspec "$pkgVersion" "AutoMapper.nuspec"
-	exec { & $base_dir\RefGen.exe ".NETPlatform,Version=v5.0" "dotnet" "$base_dir\AutoMapper.nuspec" "$source_dir\AutoMapper\AutoMapper.xproj" "$dist_dir\dotnet\AutoMapper.dll" }
+    exec { & $base_dir\RefGen.exe ".NETPlatform,Version=v5.0" "dotnet" "$base_dir\AutoMapper.nuspec" "$source_dir\AutoMapper\AutoMapper.xproj" "$dist_dir\dotnet\AutoMapper.dll" }
 }
 
 # -------------------------------------------------------------------------------------------------------------
@@ -114,7 +113,7 @@ function global:copy_files($source, $destination, $exclude = @()) {
 
 function global:create-commonAssemblyInfo($commit, $filename)
 {
-	$date = Get-Date
+    $date = Get-Date
     "using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -132,11 +131,12 @@ using System.Runtime.InteropServices;
 [assembly: CLSCompliant(true)]
 [assembly: AssemblyVersionAttribute(""$assemblyVersion"")]
 [assembly: AssemblyFileVersionAttribute(""$assemblyFileVersion"")]
-[assembly: AssemblyCopyrightAttribute(""Copyright Jimmy Bogard 2008-" + $date.Year + """)]
+// Initially adopted for support in the year 2015
+[assembly: AssemblyCopyrightAttribute(""Copyright © Michael Powell " + $date.Year + """)]
 [assembly: AssemblyProductAttribute(""AutoMapper"")]
 [assembly: AssemblyTrademarkAttribute(""AutoMapper"")]
 [assembly: AssemblyCompanyAttribute("""")]
-[assembly: AssemblyConfigurationAttribute(""release"")]
+[assembly: AssemblyConfigurationAttribute(""Release"")]
 [assembly: AssemblyInformationalVersionAttribute(""$commit"")]"  | out-file $filename -encoding "ASCII"    
 }
 
@@ -207,29 +207,29 @@ function global:create-nuspec($version, $fileName)
       <frameworkAssembly assemblyName=""System.Runtime.Extensions"" targetFramework="".NETCore4.5"" />
       <frameworkAssembly assemblyName=""System.Threading"" targetFramework="".NETCore4.5"" />
     </frameworkAssemblies>
-	  <dependencies>
-		<group targetFramework=""portable-net45+win+wpa81+wp80+MonoAndroid10+Xamarin.iOS10+MonoTouch10"">
-		</group>
-		<group targetFramework=""net45"">
-		</group>
-		<group targetFramework=""net40"">
-	      <dependency id=""Microsoft.Bcl"" version=""1.1.9"" />
-		</group>
-		<group targetFramework=""sl50"">
-		</group>
-		<group targetFramework=""wp80"">
-		</group>
-		<group targetFramework=""wpa81"">
-		</group>
-		<group targetFramework=""win"">
-		</group>
-		<group targetFramework=""MonoAndroid"">
-		</group>
-		<group targetFramework=""MonoTouch"">
-		</group>
-		<group targetFramework=""Xamarin.iOS10"">
-		</group>
-	  </dependencies>
+    <dependencies>
+      <group targetFramework=""portable-net45+win+wpa81+wp80+MonoAndroid10+Xamarin.iOS10+MonoTouch10"">
+      </group>
+      <group targetFramework=""net45"">
+      </group>
+      <group targetFramework=""net40"">
+        <dependency id=""Microsoft.Bcl"" version=""1.1.9"" />
+      </group>
+      <group targetFramework=""sl50"">
+      </group>
+      <group targetFramework=""wp80"">
+      </group>
+      <group targetFramework=""wpa81"">
+      </group>
+      <group targetFramework=""win"">
+      </group>
+      <group targetFramework=""MonoAndroid"">
+      </group>
+      <group targetFramework=""MonoTouch"">
+      </group>
+      <group targetFramework=""Xamarin.iOS10"">
+      </group>
+    </dependencies>
   </metadata>
   <files>
     <file src=""$dist_dir\Portable\AutoMapper.dll"" target=""lib\portable-net45+win+wpa81+wp80+MonoAndroid10+Xamarin.iOS10+MonoTouch10"" />

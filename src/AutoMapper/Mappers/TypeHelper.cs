@@ -7,8 +7,23 @@ namespace AutoMapper.Mappers
     using System.Reflection;
     using Internal;
 
+    /// <summary>
+    /// Type helper extension methods.
+    /// </summary>
     public static class TypeHelper
     {
+        /// <summary>
+        /// Returns the <see cref="GetElementType(Type,IEnumerable)"/> corresponding to the
+        /// <paramref name="enumerableType"/>.
+        /// </summary>
+        /// <param name="enumerableType"></param>
+        /// <returns></returns>
+        /// <remarks>Avoid confusion with the <see cref="Type.GetElementType"/> function.</remarks>
+        public static Type GetNullEnumerableElementType(this Type enumerableType)
+        {
+            return GetElementType(enumerableType, null);
+        }
+
         public static Type GetElementType(Type enumerableType)
         {
             return GetElementType(enumerableType, null);
@@ -41,6 +56,19 @@ namespace AutoMapper.Mappers
             }
 
             throw new ArgumentException($"Unable to find the element type for type '{enumerableType}'.", nameof(enumerableType));
+        }
+
+        /// <summary>
+        /// Returns whether the <paramref name="type"/> HasAttribute <typeparamref name="TAttribute"/>.
+        /// </summary>
+        /// <typeparam name="TAttribute"></typeparam>
+        /// <param name="type"></param>
+        /// <param name="inherit"></param>
+        /// <returns></returns>
+        public static bool HasAttribute<TAttribute>(Type type, bool inherit = false)
+            where TAttribute : Attribute
+        {
+            return type.GetCustomAttributes(typeof (TAttribute), inherit).Any();
         }
 
         public static Type GetEnumerationType(Type enumType)

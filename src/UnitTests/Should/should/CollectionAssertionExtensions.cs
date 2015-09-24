@@ -51,14 +51,17 @@ namespace Should
         }
 
         /// <summary>
-        /// Verifies that a collection is not empty.
+        /// Verifies that a <paramref name="collection"/> is not empty.
         /// </summary>
         /// <param name="collection">The collection to be inspected</param>
+        /// <returns>The <paramref name="collection"/></returns>
         /// <exception cref="ArgumentNullException">Thrown when a null collection is passed</exception>
         /// <exception cref="NotEmptyException">Thrown when the collection is empty</exception>
-        public static void ShouldNotBeEmpty(this IEnumerable collection)
+        public static TEnumerable ShouldNotBeEmpty<TEnumerable>(this TEnumerable collection)
+            where TEnumerable : IEnumerable
         {
             Assert.NotEmpty(collection);
+            return collection;
         }
 
         /// <summary>

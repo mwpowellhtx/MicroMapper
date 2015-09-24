@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using AutoMapper;
-using AutoMapper.Mappers;
 using Should;
 using Xunit;
 
@@ -34,28 +32,31 @@ namespace AutoMapper.UnitTests.Bug
 			return result;
 		}
 	}
-	public class AutoMapperBugTest
-	{
-		[Fact]
-		public void ShouldMapOneToTwo()
-		{
-            var config = new ConfigurationStore(new TypeMapFactory(), MapperRegistry.Mappers);
-			config.CreateMap<One, Two>();
 
-			config.CreateMap<IEnumerable<string>, IEnumerable<Item>>().ConvertUsing<StringToItemConverter>();
+    public class AutoMapperBugTest
+    {
+        [Fact]
+        public void ShouldMapOneToTwo()
+        {
+            //TODO: may want to run this through MapperContextFactory, at least PlatformAdapter ...
+            var context = new MapperContext();
 
-			config.AssertConfigurationIsValid();
+            context.Configuration.CreateMap<One, Two>();
 
-			var engine = new MappingEngine(config);
-			var one = new One
-			{
-				Stuff = new List<string> { "hi", "", "mom" }
-			};
+            context.Configuration.CreateMap<IEnumerable<string>, IEnumerable<Item>>()
+                .ConvertUsing<StringToItemConverter>();
 
-			var two = engine.Map<One, Two>(one);
+            context.AssertConfigurationIsValid();
 
-			two.ShouldNotBeNull();
-			two.Stuff.Count().ShouldEqual(2);
-		}
-	}
+            var one = new One
+            {
+                Stuff = new List<string> {"hi", "", "mom"}
+            };
+
+            var two = context.Engine.Map<One, Two>(one);
+
+            two.ShouldNotBeNull();
+            two.Stuff.Count().ShouldEqual(2);
+        }
+    }
 }

@@ -8,7 +8,7 @@ namespace AutoMapper.Mappers
 
     public class ReadOnlyCollectionMapper : IObjectMapper
     {
-        public object Map(ResolutionContext context, IMappingEngineRunner mapper)
+        public object Map(ResolutionContext context)
         {
             Type genericType = typeof (EnumerableMapper<>);
 
@@ -24,7 +24,7 @@ namespace AutoMapper.Mappers
                         context.PropertyMap)
                     : context;
 
-            return objectMapper.Map(nullDestinationValueSoTheReadOnlyCollectionMapperWorks, mapper);
+            return objectMapper.Map(nullDestinationValueSoTheReadOnlyCollectionMapperWorks);
         }
 
         public bool IsMatch(ResolutionContext context)
@@ -41,7 +41,7 @@ namespace AutoMapper.Mappers
 
         private class EnumerableMapper<TElement> : EnumerableMapperBase<IList<TElement>>
         {
-            private readonly IList<TElement> inner = new List<TElement>();
+            private readonly IList<TElement> _inner = new List<TElement>();
 
             public override bool IsMatch(ResolutionContext context)
             {
@@ -50,12 +50,12 @@ namespace AutoMapper.Mappers
 
             protected override void SetElementValue(IList<TElement> elements, object mappedValue, int index)
             {
-                inner.Add((TElement) mappedValue);
+                _inner.Add((TElement) mappedValue);
             }
 
             protected override IList<TElement> GetEnumerableFor(object destination)
             {
-                return inner;
+                return _inner;
             }
 
             protected override IList<TElement> CreateDestinationObjectBase(Type destElementType, int sourceLength)
@@ -64,9 +64,9 @@ namespace AutoMapper.Mappers
             }
 
             protected override object CreateDestinationObject(ResolutionContext context, Type destinationElementType,
-                int count, IMappingEngineRunner mapper)
+                int count, IMappingEngineRunner runner)
             {
-                return new ReadOnlyCollection<TElement>(inner);
+                return new ReadOnlyCollection<TElement>(_inner);
             }
         }
 

@@ -1,3 +1,6 @@
+using LambdaExpression = System.Linq.Expressions.LambdaExpression;
+using ExpressionRequest = AutoMapper.QueryableExtensions.ExpressionRequest;
+
 namespace AutoMapper
 {
     using System;
@@ -10,13 +13,21 @@ namespace AutoMapper
     using Mappers;
     using QueryableExtensions;
     using QueryableExtensions.Impl;
+    using ObjectDictionary = System.Collections.Generic.IDictionary<string, object>;
+    using ExpressionDictionary = Internal.IDictionary<ExpressionRequest, LambdaExpression>;
 
     public class MappingEngine : IMappingEngine, IMappingEngineRunner
     {
+        /// <summary>
+        /// Gets the runner.
+        /// </summary>
+        public IMappingEngineRunner Runner => this;
+
         private static readonly IDictionaryFactory DictionaryFactory = PlatformAdapter.Resolve<IDictionaryFactory>();
 
         private static readonly IProxyGeneratorFactory ProxyGeneratorFactory = PlatformAdapter.Resolve<IProxyGeneratorFactory>();
 
+        // Refactored from Extensions.
         private static readonly IExpressionResultConverter[] ExpressionResultConverters =
         {
             new MemberGetterExpressionResultConverter(),
@@ -34,35 +45,41 @@ namespace AutoMapper
             new StringExpressionBinder()
         };
 
-
         private bool _disposed;
-        private readonly IObjectMapper[] _mappers;
-        private readonly Internal.IDictionary<TypePair, IObjectMapper> _objectMapperCache;
-        private readonly Internal.IDictionary<ExpressionRequest, LambdaExpression> _expressionCache;
 
-        private readonly Func<Type, object> _serviceCtor;
+        private Internal.IDictionary<TypePair, IObjectMapper> ObjectMapperCache { get; }
 
-        public MappingEngine(IConfigurationProvider configurationProvider)
+        /// <summary>
+        /// Gets the cache.
+        /// </summary>
+        public ExpressionDictionary ExpressionCache { get; }
+            = DictionaryFactory.CreateDictionary<ExpressionRequest, LambdaExpression>();
+
+        private Func<Type, object> ServiceCtor { get; }
+
+        private readonly IMapperContext _mapperContext;
+
+        public IConfigurationProvider ConfigurationProvider => _mapperContext.ConfigurationProvider;
+
+        public MappingEngine(IMapperContext mapperContext)
             : this(
-                configurationProvider,
+                mapperContext,
                 DictionaryFactory.CreateDictionary<TypePair, IObjectMapper>(),
-                DictionaryFactory.CreateDictionary<ExpressionRequest, LambdaExpression>(),
-                configurationProvider.ServiceCtor)
+                mapperContext.ConfigurationProvider.ServiceCtor)
         {
         }
 
-        public MappingEngine(IConfigurationProvider configurationProvider, Internal.IDictionary<TypePair, IObjectMapper> objectMapperCache, Internal.IDictionary<ExpressionRequest, LambdaExpression> expressionCache,
+        public MappingEngine(IMapperContext mapperContext,
+            Internal.IDictionary<TypePair, IObjectMapper> objectMapperCache,
             Func<Type, object> serviceCtor)
         {
-            ConfigurationProvider = configurationProvider;
-            _objectMapperCache = objectMapperCache;
-            _expressionCache = expressionCache;
-            _serviceCtor = serviceCtor;
-            _mappers = configurationProvider.GetMappers();
-            ConfigurationProvider.TypeMapCreated += ClearTypeMap;
+            /* Never, ever carry a previously configured engine forward:
+            that's the whole point of facilitating micro-mapping. */
+            _mapperContext = mapperContext;
+            ObjectMapperCache = objectMapperCache;
+            ServiceCtor = serviceCtor;
+            _mapperContext.ConfigurationProvider.TypeMapCreated += ClearTypeMap;
         }
-
-        public IConfigurationProvider ConfigurationProvider { get; }
 
         public void Dispose()
         {
@@ -104,8 +121,8 @@ namespace AutoMapper
 
         public TDestination Map<TSource, TDestination>(TSource source)
         {
-            Type modelType = typeof (TSource);
-            Type destinationType = typeof (TDestination);
+            var modelType = typeof (TSource);
+            var destinationType = typeof (TDestination);
 
             return (TDestination) Map(source, modelType, destinationType, DefaultMappingOptions);
         }
@@ -113,8 +130,8 @@ namespace AutoMapper
         public TDestination Map<TSource, TDestination>(TSource source,
             Action<IMappingOperationOptions<TSource, TDestination>> opts)
         {
-            Type modelType = typeof (TSource);
-            Type destinationType = typeof (TDestination);
+            var modelType = typeof (TSource);
+            var destinationType = typeof (TDestination);
 
             var options = new MappingOperationOptions<TSource, TDestination>();
             opts(options);
@@ -130,8 +147,8 @@ namespace AutoMapper
         public TDestination Map<TSource, TDestination>(TSource source, TDestination destination,
             Action<IMappingOperationOptions<TSource, TDestination>> opts)
         {
-            Type modelType = typeof (TSource);
-            Type destinationType = typeof (TDestination);
+            var modelType = typeof (TSource);
+            var destinationType = typeof (TDestination);
 
             var options = new MappingOperationOptions<TSource, TDestination>();
             opts(options);
@@ -155,9 +172,9 @@ namespace AutoMapper
 
         private object MapCore(object source, Type sourceType, Type destinationType, MappingOperationOptions options)
         {
-            TypeMap typeMap = ConfigurationProvider.ResolveTypeMap(source, null, sourceType, destinationType);
+            var typeMap = ConfigurationProvider.ResolveTypeMap(source, null, sourceType, destinationType);
 
-            var context = new ResolutionContext(typeMap, source, sourceType, destinationType, options, this);
+            var context = new ResolutionContext(typeMap, source, sourceType, destinationType, options, _mapperContext);
 
             return ((IMappingEngineRunner) this).Map(context);
         }
@@ -180,9 +197,9 @@ namespace AutoMapper
         private object MapCore(object source, object destination, Type sourceType, Type destinationType,
             MappingOperationOptions options)
         {
-            TypeMap typeMap = ConfigurationProvider.ResolveTypeMap(source, destination, sourceType, destinationType);
+            var typeMap = ConfigurationProvider.ResolveTypeMap(source, destination, sourceType, destinationType);
 
-            var context = new ResolutionContext(typeMap, source, destination, sourceType, destinationType, options, this);
+            var context = new ResolutionContext(typeMap, source, destination, sourceType, destinationType, options, _mapperContext);
 
             return ((IMappingEngineRunner) this).Map(context);
         }
@@ -190,24 +207,24 @@ namespace AutoMapper
 
         public TDestination DynamicMap<TSource, TDestination>(TSource source)
         {
-            Type modelType = typeof (TSource);
-            Type destinationType = typeof (TDestination);
+            var modelType = typeof (TSource);
+            var destinationType = typeof (TDestination);
 
             return (TDestination) DynamicMap(source, modelType, destinationType);
         }
 
         public void DynamicMap<TSource, TDestination>(TSource source, TDestination destination)
         {
-            Type modelType = typeof (TSource);
-            Type destinationType = typeof (TDestination);
+            var modelType = typeof (TSource);
+            var destinationType = typeof (TDestination);
 
             DynamicMap(source, destination, modelType, destinationType);
         }
 
         public TDestination DynamicMap<TDestination>(object source)
         {
-            Type modelType = source?.GetType() ?? typeof (object);
-            Type destinationType = typeof (TDestination);
+            var modelType = source?.GetType() ?? typeof (object);
+            var destinationType = typeof (TDestination);
 
             return (TDestination) DynamicMap(source, modelType, destinationType);
         }
@@ -220,7 +237,7 @@ namespace AutoMapper
                 new MappingOperationOptions
                 {
                     CreateMissingTypeMaps = true
-                }, this);
+                }, _mapperContext);
 
             return ((IMappingEngineRunner) this).Map(context);
         }
@@ -230,29 +247,27 @@ namespace AutoMapper
             var typeMap = ConfigurationProvider.ResolveTypeMap(source, destination, sourceType, destinationType);
 
             var context = new ResolutionContext(typeMap, source, destination, sourceType, destinationType,
-                new MappingOperationOptions
-                {
-                    CreateMissingTypeMaps = true
-                }, this);
+                new MappingOperationOptions {CreateMissingTypeMaps = true}, _mapperContext);
 
             ((IMappingEngineRunner) this).Map(context);
         }
 
         public TDestination Map<TSource, TDestination>(ResolutionContext parentContext, TSource source)
         {
-            Type destinationType = typeof (TDestination);
-            Type sourceType = typeof (TSource);
-            TypeMap typeMap = ConfigurationProvider.ResolveTypeMap(source, null, sourceType, destinationType);
+            var destinationType = typeof (TDestination);
+            var sourceType = typeof (TSource);
+            var typeMap = ConfigurationProvider.ResolveTypeMap(source, null, sourceType, destinationType);
             var context = parentContext.CreateTypeContext(typeMap, source, null, sourceType, destinationType);
             return (TDestination) ((IMappingEngineRunner) this).Map(context);
         }
 
-        public Expression CreateMapExpression(Type sourceType, Type destinationType, System.Collections.Generic.IDictionary<string, object> parameters = null, params MemberInfo[] membersToExpand)
+        public Expression CreateMapExpression(Type sourceType, Type destinationType, ObjectDictionary parameters = null, params MemberInfo[] membersToExpand)
         {
+            //TODO: this appears to be very definitely new
             parameters = parameters ?? new Dictionary<string, object>();
 
             var cachedExpression =
-                _expressionCache.GetOrAdd(new ExpressionRequest(sourceType, destinationType, membersToExpand),
+                ExpressionCache.GetOrAdd(new ExpressionRequest(sourceType, destinationType, membersToExpand),
                     tp => CreateMapExpression(tp, DictionaryFactory.CreateDictionary<ExpressionRequest, int>()));
 
             if (!parameters.Any())
@@ -361,7 +376,7 @@ namespace AutoMapper
                 var matchingExpressionConverter =
                     ExpressionResultConverters.FirstOrDefault(c => c.CanGetExpressionResolutionResult(result, resolver));
                 if (matchingExpressionConverter == null)
-                    throw new Exception("Can't resolve this to Queryable Expression");
+                    throw new ArgumentException($"Unable to resolve {{{currentType}}} this to Queryable Expression", nameof(currentType));
                 result = matchingExpressionConverter.GetExpressionResolutionResult(result, propertyMap, resolver);
             }
             return result;
@@ -399,9 +414,9 @@ namespace AutoMapper
                 var contextTypePair = new TypePair(context.SourceType, context.DestinationType);
 
                 Func<TypePair, IObjectMapper> missFunc =
-                    tp => _mappers.FirstOrDefault(mapper => mapper.IsMatch(context));
+                    tp => _mapperContext.ObjectMappers.FirstOrDefault(mapper => mapper.IsMatch(context));
 
-                IObjectMapper mapperToUse = _objectMapperCache.GetOrAdd(contextTypePair, missFunc);
+                var mapperToUse = ObjectMapperCache.GetOrAdd(contextTypePair, missFunc);
                 if (mapperToUse == null || (context.Options.CreateMissingTypeMaps && !mapperToUse.IsMatch(context)))
                 {
                     if (context.Options.CreateMissingTypeMaps)
@@ -413,7 +428,7 @@ namespace AutoMapper
                         {
                             throw new AutoMapperMappingException(context, "Unsupported mapping.");
                         }
-                        _objectMapperCache.AddOrUpdate(contextTypePair, mapperToUse, (tp, mapper) => mapperToUse);
+                        ObjectMapperCache.AddOrUpdate(contextTypePair, mapperToUse, (tp, mapper) => mapperToUse);
                     }
                     else
                     {
@@ -425,7 +440,7 @@ namespace AutoMapper
                     }
                 }
 
-                return mapperToUse.Map(context, this);
+                return mapperToUse.Map(context);
             }
             catch (AutoMapperMappingException)
             {
@@ -486,12 +501,43 @@ namespace AutoMapper
         {
             IObjectMapper existing;
 
-            _objectMapperCache.TryRemove(new TypePair(e.TypeMap.SourceType, e.TypeMap.DestinationType), out existing);
+            ObjectMapperCache.TryRemove(new TypePair(e.TypeMap.SourceType, e.TypeMap.DestinationType), out existing);
         }
 
         private void DefaultMappingOptions(IMappingOperationOptions opts)
         {
-            opts.ConstructServicesUsing(_serviceCtor);
+            opts.ConstructServicesUsing(ServiceCtor);
+        }
+
+        public IQueryable<TDestination> MapQuery<TSource, TDestination>(IQueryable<TSource> sourceQuery,
+            IQueryable<TDestination> destinationQuery)
+        {
+            return QueryMapperVisitor.Map(sourceQuery, destinationQuery, this);
+        }
+
+        public IQueryDataSourceInjection<TSource> UseAsDataSource<TSource>(IQueryable<TSource> dataSource)
+        {
+            return new QueryDataSourceInjection<TSource>(dataSource, this);
+        }
+
+        [Obsolete("Use ProjectTo instead")]
+        public IProjectionExpression ProjectQuery<TSource>(IQueryable<TSource> source)
+        {
+            return new ProjectionExpression(source, this);
+        }
+
+        public IQueryable<TDestination> ProjectTo<TDestination>(IQueryable source, object parameters,
+            params Expression<Func<TDestination, object>>[] membersToExpand)
+        {
+            return new ProjectionExpression(source, this).To(parameters, membersToExpand);
+
+        }
+
+        public IQueryable<TDestination> ProjectTo<TDestination>(IQueryable source,
+            ObjectDictionary parameters, params string[] membersToExpand)
+        {
+            return new ProjectionExpression(source, this)
+                .To<TDestination>(parameters, membersToExpand);
         }
     }
 }

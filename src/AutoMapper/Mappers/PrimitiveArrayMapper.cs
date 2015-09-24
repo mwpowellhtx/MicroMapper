@@ -5,20 +5,21 @@
 
     public class PrimitiveArrayMapper : IObjectMapper
     {
-        public object Map(ResolutionContext context, IMappingEngineRunner mapper)
+        public object Map(ResolutionContext context)
         {
-            if (context.IsSourceValueNull && mapper.ShouldMapSourceCollectionAsNull(context))
+            var runner = context.MapperContext.Runner;
+            if (context.IsSourceValueNull && runner.ShouldMapSourceCollectionAsNull(context))
             {
                 return null;
             }
 
-            Type sourceElementType = TypeHelper.GetElementType(context.SourceType);
-            Type destElementType = TypeHelper.GetElementType(context.DestinationType);
+            var sourceElementType = TypeHelper.GetElementType(context.SourceType);
+            var destElementType = TypeHelper.GetElementType(context.DestinationType);
 
-            Array sourceArray = (Array) context.SourceValue ?? ObjectCreator.CreateArray(sourceElementType, 0);
+            var sourceArray = (Array) context.SourceValue ?? ObjectCreator.CreateArray(sourceElementType, 0);
 
-            int sourceLength = sourceArray.Length;
-            Array destArray = ObjectCreator.CreateArray(destElementType, sourceLength);
+            var sourceLength = sourceArray.Length;
+            var destArray = ObjectCreator.CreateArray(destElementType, sourceLength);
 
             Array.Copy(sourceArray, destArray, sourceLength);
 
@@ -29,8 +30,8 @@
         {
             if (type.IsArray)
             {
-                Type elementType = TypeHelper.GetElementType(type);
-                return elementType.IsPrimitive() || elementType.Equals(typeof (string));
+                var elementType = TypeHelper.GetElementType(type);
+                return elementType.IsPrimitive() || elementType == typeof (string);
             }
 
             return false;
@@ -38,10 +39,11 @@
 
         public bool IsMatch(ResolutionContext context)
         {
-            return IsPrimitiveArrayType(context.DestinationType) &&
-                   IsPrimitiveArrayType(context.SourceType) &&
-                   (TypeHelper.GetElementType(context.DestinationType)
-                       .Equals(TypeHelper.GetElementType(context.SourceType)));
+            var destinationType = context.DestinationType;
+            var sourceType = context.SourceType;
+            return IsPrimitiveArrayType(destinationType)
+                   && IsPrimitiveArrayType(sourceType)
+                   && TypeHelper.GetElementType(destinationType) == TypeHelper.GetElementType(sourceType);
         }
     }
 }

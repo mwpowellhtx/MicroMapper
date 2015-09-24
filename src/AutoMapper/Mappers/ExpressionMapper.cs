@@ -10,7 +10,7 @@
 
     public class ExpressionMapper : IObjectMapper
     {
-        public object Map(ResolutionContext context, IMappingEngineRunner mapper)
+        public object Map(ResolutionContext context)
         {
             var sourceDelegateType = context.SourceType.GetGenericArguments()[0];
             var destDelegateType = context.DestinationType.GetGenericArguments()[0];
@@ -28,6 +28,8 @@
 
             var typeMap = Mapper.FindTypeMapFor(destArgType, sourceArgType);
 
+            //TODO: caution silent failures?
+            //TODO: the changes here are probably fine, but it has changes significantly from the last time I saw it
             var parentMasterVisitor = new MappingVisitor(destDelegateType.GetGenericArguments());
             var typeMapVisitor = new MappingVisitor(typeMap, expression.Parameters[0], Expression.Parameter(destDelegateType.GetGenericArguments()[0], expression.Parameters[0].Name), parentMasterVisitor, destDelegateType.GetGenericArguments());
             

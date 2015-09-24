@@ -1,18 +1,17 @@
 namespace AutoMapper.Mappers
 {
     using System;
-    using System.Linq;
-    using System.Reflection;
 
     public class FlagsEnumMapper : IObjectMapper
     {
-        public object Map(ResolutionContext context, IMappingEngineRunner mapper)
+        public object Map(ResolutionContext context)
         {
-            Type enumDestType = TypeHelper.GetEnumerationType(context.DestinationType);
+            var runner = context.MapperContext.Runner;
+            var enumDestType = TypeHelper.GetEnumerationType(context.DestinationType);
 
             if (context.SourceValue == null)
             {
-                return mapper.CreateObject(context);
+                return runner.CreateObject(context);
             }
 
             return Enum.Parse(enumDestType, context.SourceValue.ToString(), true);
@@ -23,10 +22,9 @@ namespace AutoMapper.Mappers
             var sourceEnumType = TypeHelper.GetEnumerationType(context.SourceType);
             var destEnumType = TypeHelper.GetEnumerationType(context.DestinationType);
 
-            return sourceEnumType != null
-                   && destEnumType != null
-                   && sourceEnumType.GetCustomAttributes(typeof (FlagsAttribute), false).Any()
-                   && destEnumType.GetCustomAttributes(typeof (FlagsAttribute), false).Any();
+            return !(sourceEnumType == null || destEnumType == null)
+                   && TypeHelper.HasAttribute<FlagsAttribute>(sourceEnumType)
+                   && TypeHelper.HasAttribute<FlagsAttribute>(destEnumType);
         }
     }
 }

@@ -1,14 +1,16 @@
 namespace AutoMapper.Mappers
 {
+    using System;
     using System.Reflection;
 
     public class AssignableArrayMapper : IObjectMapper
     {
-        public object Map(ResolutionContext context, IMappingEngineRunner mapper)
+        public object Map(ResolutionContext context)
         {
-            if (context.SourceValue == null && !mapper.ShouldMapSourceCollectionAsNull(context))
+            var runner = context.MapperContext.Runner;
+            if (context.SourceValue == null && !runner.ShouldMapSourceCollectionAsNull(context))
             {
-                return mapper.CreateObject(context);
+                return runner.CreateObject(context);
             }
 
             return context.SourceValue;
@@ -16,17 +18,21 @@ namespace AutoMapper.Mappers
 
         public bool IsMatch(ResolutionContext context)
         {
-            return context.DestinationType.IsAssignableFrom(context.SourceType)
-                   && context.DestinationType.IsArray
-                   && context.SourceType.IsArray
-                   && !ElementsExplicitlyMapped(context);
+            var sourceType = context.SourceType;
+            var destinationType = context.DestinationType;
+            return context.DestinationType.IsAssignableFrom(sourceType)
+                   && destinationType.IsArray && sourceType.IsArray
+                   && !AreElementsExplicitlyMapped(context.MapperContext.Engine,
+                       sourceType, destinationType);
         }
 
-        private bool ElementsExplicitlyMapped(ResolutionContext context)
+        private static bool AreElementsExplicitlyMapped(IMappingEngine engine,
+            Type sourceType, Type destinationType)
         {
-            var sourceElementType = context.SourceType.GetElementType();
-            var destinationElementType = context.DestinationType.GetElementType();
-            return context.Engine.ConfigurationProvider.FindTypeMapFor(sourceElementType, destinationElementType) != null;
+            var sourceElementType = sourceType.GetElementType();
+            var destinationElementType = destinationType.GetElementType();
+            return engine.ConfigurationProvider.FindTypeMapFor(
+                sourceElementType, destinationElementType) != null;
         }
     }
 }

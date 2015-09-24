@@ -1,10 +1,8 @@
-﻿using Xunit;
-using Should;
-using System;
-using AutoMapper.Mappers;
-
-namespace AutoMapper.UnitTests.Bug
+﻿namespace AutoMapper.UnitTests.Bug
 {
+    using Should;
+    using Xunit;
+
     public class InitialTypes : AutoMapperSpecBase
     {
         MyObjectMapper _mapper = new MyObjectMapper();
@@ -28,7 +26,7 @@ namespace AutoMapper.UnitTests.Bug
         {
             public ResolutionContext Context;
 
-            public object Map(ResolutionContext context, IMappingEngineRunner mapper)
+            public object Map(ResolutionContext context)
             {
                 Context = context;
                 return context.DestinationValue;
@@ -36,7 +34,8 @@ namespace AutoMapper.UnitTests.Bug
 
             public bool IsMatch(ResolutionContext context)
             {
-                return context.SourceType == typeof(Base) && context.DestinationType == typeof(Base);
+                return context.SourceType == typeof (Base)
+                       && context.DestinationType == typeof (Base);
             }
         }
 
@@ -44,7 +43,7 @@ namespace AutoMapper.UnitTests.Bug
         {
             Mapper.Initialize(cfg =>
             {
-                MapperRegistry.Mappers.Insert(0, _mapper);
+                cfg.ObjectMappers.Insert(0, _mapper);
                 cfg.CreateMap<Base, Base>();
             });
         }

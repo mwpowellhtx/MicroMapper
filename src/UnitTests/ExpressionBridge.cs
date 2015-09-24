@@ -123,9 +123,9 @@ namespace AutoMapper.UnitTests
                         .ConvertUsing<ProductTypeConverter>();
                 });
 
-                _simpleProductConversionLinq = Mapper.Engine.CreateMapExpression<Product, SimpleProductDto>();
-                _extendedProductConversionLinq = Mapper.Engine.CreateMapExpression<Product, ExtendedProductDto>();
-                _abstractProductConversionLinq = Mapper.Engine.CreateMapExpression<Product, AbstractProductDto>();
+                _simpleProductConversionLinq = Mapper.Context.Engine.CreateMapExpression<Product, SimpleProductDto>();
+                _extendedProductConversionLinq = Mapper.Context.Engine.CreateMapExpression<Product, ExtendedProductDto>();
+                _abstractProductConversionLinq = Mapper.Context.Engine.CreateMapExpression<Product, AbstractProductDto>();
 
                 _products = new List<Product>()
                 {

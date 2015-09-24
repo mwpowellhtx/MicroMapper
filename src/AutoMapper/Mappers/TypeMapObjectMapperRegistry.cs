@@ -3,29 +3,35 @@ namespace AutoMapper.Mappers
     using System;
     using System.Collections.Generic;
 
+    /*
+    TODO: couple of concerns: does this need to be static, per se?
+    would it be more appropriate for this to be a read only collection?
+    why not just 'declare' it in the now-objectmappercollection (formerly 'MapperRegistry') ?
+    */
     public static class TypeMapObjectMapperRegistry
     {
         /// <summary>
-        /// Extension point for mappers matching based on types configured by CreateMap
+        /// Provides default set of Mappers for <see cref="TypeMapMapper"/>.
         /// </summary>
-        public static IList<ITypeMapObjectMapper> Mappers { get; } = new List<ITypeMapObjectMapper>
-        {
-            new SubstutitionMapperStrategy(),
-            new CustomMapperStrategy(),
-            new NullMappingStrategy(),
-            new CacheMappingStrategy(),
-            new NewObjectPropertyMapMappingStrategy(),
-            new ExistingObjectMappingStrategy()
-        };
+        public static IEnumerable<ITypeMapObjectMapper> Mappers { get; }
+            = new ITypeMapObjectMapper[]
+            {
+                new SubstutitionMapperStrategy(),
+                new CustomMapperStrategy(),
+                new NullMappingStrategy(),
+                new CacheMappingStrategy(),
+                new NewObjectPropertyMapMappingStrategy(),
+                new ExistingObjectMappingStrategy()
+            };
 
         private class CustomMapperStrategy : ITypeMapObjectMapper
         {
-            public object Map(ResolutionContext context, IMappingEngineRunner mapper)
+            public object Map(ResolutionContext context)
             {
                 return context.TypeMap.CustomMapper(context);
             }
 
-            public bool IsMatch(ResolutionContext context, IMappingEngineRunner mapper)
+            public bool IsMatch(ResolutionContext context)
             {
                 return context.TypeMap.CustomMapper != null;
             }
@@ -33,18 +39,19 @@ namespace AutoMapper.Mappers
 
         private class SubstutitionMapperStrategy : ITypeMapObjectMapper
         {
-            public object Map(ResolutionContext context, IMappingEngineRunner mapper)
+            public object Map(ResolutionContext context)
             {
+                var runner = context.MapperContext.Runner;
                 var newSource = context.TypeMap.Substitution(context.SourceValue);
-                var typeMap = mapper.ConfigurationProvider.ResolveTypeMap(newSource.GetType(), context.DestinationType);
+                var typeMap = runner.ConfigurationProvider.ResolveTypeMap(newSource.GetType(), context.DestinationType);
 
                 var substitutionContext = context.CreateTypeContext(typeMap, newSource, context.DestinationValue,
                     newSource.GetType(), context.DestinationType);
 
-                return mapper.Map(substitutionContext);
+                return runner.Map(substitutionContext);
             }
 
-            public bool IsMatch(ResolutionContext context, IMappingEngineRunner mapper)
+            public bool IsMatch(ResolutionContext context)
             {
                 return context.TypeMap.Substitution != null;
             }
@@ -52,46 +59,47 @@ namespace AutoMapper.Mappers
 
         private class NullMappingStrategy : ITypeMapObjectMapper
         {
-            public object Map(ResolutionContext context, IMappingEngineRunner mapper)
+            public object Map(ResolutionContext context)
             {
                 return null;
             }
 
-            public bool IsMatch(ResolutionContext context, IMappingEngineRunner mapper)
+            public bool IsMatch(ResolutionContext context)
             {
-                var profileConfiguration = mapper.ConfigurationProvider.GetProfileConfiguration(context.TypeMap.Profile);
+                var runner = context.MapperContext.Runner;
+                var profileConfiguration = runner.ConfigurationProvider.GetProfileConfiguration(context.TypeMap.Profile);
                 return (context.SourceValue == null && profileConfiguration.MapNullSourceValuesAsNull);
             }
         }
 
         private class CacheMappingStrategy : ITypeMapObjectMapper
         {
-            public object Map(ResolutionContext context, IMappingEngineRunner mapper)
+            public object Map(ResolutionContext context)
             {
                 return context.InstanceCache[context];
             }
 
-            public bool IsMatch(ResolutionContext context, IMappingEngineRunner mapper)
+            public bool IsMatch(ResolutionContext context)
             {
-                return !context.Options.DisableCache && context.DestinationValue == null &&
-                       context.InstanceCache.ContainsKey(context);
+                return !context.Options.DisableCache && context.DestinationValue == null
+                       && context.InstanceCache.ContainsKey(context);
             }
         }
 
         private abstract class PropertyMapMappingStrategy : ITypeMapObjectMapper
         {
-            public object Map(ResolutionContext context, IMappingEngineRunner mapper)
+            public object Map(ResolutionContext context)
             {
-                var mappedObject = GetMappedObject(context, mapper);
+                var mappedObject = GetMappedObject(context);
                 if (context.SourceValue != null && !context.Options.DisableCache)
                     context.InstanceCache[context] = mappedObject;
 
                 context.TypeMap.BeforeMap(context.SourceValue, mappedObject);
                 context.BeforeMap(mappedObject);
 
-                foreach (PropertyMap propertyMap in context.TypeMap.GetPropertyMaps())
+                foreach (var propertyMap in context.TypeMap.GetPropertyMaps())
                 {
-                    MapPropertyValue(context.CreatePropertyMapContext(propertyMap), mapper, mappedObject, propertyMap);
+                    MapPropertyValue(context.CreatePropertyMapContext(propertyMap), mappedObject, propertyMap);
                 }
                 mappedObject = ReassignValue(context, mappedObject);
 
@@ -106,13 +114,13 @@ namespace AutoMapper.Mappers
                 return o;
             }
 
-            public abstract bool IsMatch(ResolutionContext context, IMappingEngineRunner mapper);
+            public abstract bool IsMatch(ResolutionContext context);
 
-            protected abstract object GetMappedObject(ResolutionContext context, IMappingEngineRunner mapper);
+            protected abstract object GetMappedObject(ResolutionContext context);
 
-            private void MapPropertyValue(ResolutionContext context, IMappingEngineRunner mapper, object mappedObject,
-                PropertyMap propertyMap)
+            private void MapPropertyValue(ResolutionContext context, object mappedObject, PropertyMap propertyMap)
             {
+                var runner = context.MapperContext.Runner;
                 if (!propertyMap.CanResolveValue() || !propertyMap.ShouldAssignValuePreResolving(context))
                     return;
 
@@ -131,25 +139,23 @@ namespace AutoMapper.Mappers
                 {
                     var errorContext = CreateErrorContext(context, propertyMap, null);
                     resolvingExc = new AutoMapperMappingException(errorContext, ex);
-
                     result = new ResolutionResult(context);
                 }
 
                 if (result.ShouldIgnore)
                     return;
 
-                object destinationValue = propertyMap.GetDestinationValue(mappedObject);
+                var destinationValue = propertyMap.GetDestinationValue(mappedObject);
 
                 var sourceType = result.Type;
                 var destinationType = propertyMap.DestinationProperty.MemberType;
 
-                var typeMap = mapper.ConfigurationProvider.ResolveTypeMap(result, destinationType);
+                var typeMap = runner.ConfigurationProvider.ResolveTypeMap(result, destinationType);
 
-                Type targetSourceType = typeMap != null ? typeMap.SourceType : sourceType;
+                var targetSourceType = typeMap != null ? typeMap.SourceType : sourceType;
 
                 var newContext = context.CreateMemberContext(typeMap, result.Value, destinationValue,
-                    targetSourceType,
-                    propertyMap);
+                    targetSourceType, propertyMap);
 
                 if (!propertyMap.ShouldAssignValue(newContext))
                     return;
@@ -160,8 +166,7 @@ namespace AutoMapper.Mappers
 
                 try
                 {
-                    object propertyValueToAssign = mapper.Map(newContext);
-
+                    var propertyValueToAssign = runner.Map(newContext);
                     AssignValue(propertyMap, mappedObject, propertyValueToAssign);
                 }
                 catch (AutoMapperMappingException)
@@ -195,17 +200,18 @@ namespace AutoMapper.Mappers
 
         private class NewObjectPropertyMapMappingStrategy : PropertyMapMappingStrategy
         {
-            public override bool IsMatch(ResolutionContext context, IMappingEngineRunner mapper)
+            public override bool IsMatch(ResolutionContext context)
             {
                 return context.DestinationValue == null;
             }
 
-            protected override object GetMappedObject(ResolutionContext context, IMappingEngineRunner mapper)
+            protected override object GetMappedObject(ResolutionContext context)
             {
-                var result = mapper.CreateObject(context);
-                if(result == null)
+                var runner = context.MapperContext.Runner;
+                var result = runner.CreateObject(context);
+                if (result == null)
                 {
-                    throw new InvalidOperationException("Cannot create destination object. " + context);
+                    throw new InvalidOperationException($"Cannot create destination object. {context}");
                 }
                 return result;
             }
@@ -213,12 +219,12 @@ namespace AutoMapper.Mappers
 
         private class ExistingObjectMappingStrategy : PropertyMapMappingStrategy
         {
-            public override bool IsMatch(ResolutionContext context, IMappingEngineRunner mapper)
+            public override bool IsMatch(ResolutionContext context)
             {
                 return true;
             }
 
-            protected override object GetMappedObject(ResolutionContext context, IMappingEngineRunner mapper)
+            protected override object GetMappedObject(ResolutionContext context)
             {
                 return context.DestinationValue;
             }

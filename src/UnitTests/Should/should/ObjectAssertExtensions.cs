@@ -1,10 +1,11 @@
-using System;
-using System.Collections.Generic;
 using Should.Core.Assertions;
 using Should.Core.Exceptions;
 
 namespace Should
 {
+    using System;
+    using System.Collections.Generic;
+
     /// <summary>
     /// Extensions which provide assertions to classes derived from <see cref="object"/>.
     /// </summary>
@@ -133,11 +134,12 @@ namespace Should
         /// </summary>
         /// <param name="actual">The actual object instance</param>
         /// <param name="expected">The expected object instance</param>
+        /// <returns>The <paramref name="actual"/> instance</returns>
         /// <exception cref="SameException">Thrown when the objects are not the same instance</exception>
-        public static void ShouldBeSameAs(this object actual,
-                                          object expected)
+        public static T ShouldBeSameAs<T>(this T actual, T expected)
         {
             Assert.Same(expected, actual);
+            return actual;
         }
 
         /// <summary>
@@ -295,7 +297,8 @@ namespace Should
         /// </summary>
         /// <param name="object">The object to be validated</param>
         /// <exception cref="NotNullException">Thrown when the object is not null</exception>
-        public static T ShouldNotBeNull<T>(this T @object) where T : class
+        public static T ShouldNotBeNull<T>(this T @object)
+            where T : class
         {
             Assert.NotNull(@object);
             return @object;
@@ -307,7 +310,8 @@ namespace Should
         /// <param name="object">The object to be validated</param>
         /// <param name="message">The message to show on failure</param>
         /// <exception cref="NotNullException">Thrown when the object reference is null</exception>
-        public static T ShouldNotBeNull<T>(this T @object, string message) where T : class
+        public static T ShouldNotBeNull<T>(this T @object, string message)
+            where T : class
         {
             Assert.NotNull(@object, message);
             return @object;
@@ -319,11 +323,12 @@ namespace Should
         /// </summary>
         /// <param name="actual">The actual object instance</param>
         /// <param name="expected">The expected object instance</param>
+        /// <returns>The <paramref name="actual"/> instance</returns>
         /// <exception cref="NotSameException">Thrown when the objects are the same instance</exception>
-        public static void ShouldNotBeSameAs(this object actual,
-                                             object expected)
+        public static T ShouldNotBeSameAs<T>(this T actual, T expected)
         {
             Assert.NotSame(expected, actual);
+            return actual;
         }
 
         /// <summary>

@@ -1,3 +1,4 @@
+// ReSharper disable InconsistentNaming
 namespace AutoMapper
 {
     using System;
@@ -13,7 +14,6 @@ namespace AutoMapper
     {
         private static readonly IDictionaryFactory DictionaryFactory = PlatformAdapter.Resolve<IDictionaryFactory>();
         private readonly ITypeMapFactory _typeMapFactory;
-        private readonly IEnumerable<IObjectMapper> _mappers;
         internal const string DefaultProfileName = "";
 
         private readonly Internal.IDictionary<TypePair, TypeMap> _userDefinedTypeMaps =
@@ -32,10 +32,22 @@ namespace AutoMapper
 
         private readonly List<string> _globalIgnore;
 
-        public ConfigurationStore(ITypeMapFactory typeMapFactory, IEnumerable<IObjectMapper> mappers)
+        /// <summary>
+        /// Gets the MapperContext.
+        /// </summary>
+        private IMapperContext MapperContext { get; }
+
+        /// <summary>
+        /// Gets the ObjectMappers.
+        /// </summary>
+        public IObjectMapperCollection ObjectMappers { get; }
+
+        public ConfigurationStore(IMapperContext mapperContext, ITypeMapFactory typeMapFactory,
+            IObjectMapperCollection objectMappers)
         {
+            MapperContext = mapperContext;
             _typeMapFactory = typeMapFactory;
-            _mappers = mappers;
+            ObjectMappers = objectMappers;
             _globalIgnore = new List<string>();
         }
 
@@ -50,7 +62,7 @@ namespace AutoMapper
 
         internal void ForAllMaps(string profileName, Action<TypeMap, IMappingExpression> configuration)
         {
-            foreach(var typeMap in _userDefinedTypeMaps.Values.Where(tm => tm.Profile == profileName))
+            foreach (var typeMap in _userDefinedTypeMaps.Values.Where(tm => tm.Profile == profileName))
             {
                 configuration(typeMap, CreateMappingExpression(typeMap, typeMap.DestinationType));
             }
@@ -105,13 +117,15 @@ namespace AutoMapper
 
         public IEnumerable<string> DestinationPostfixes => GetProfile(DefaultProfileName).DestinationPostfixes;
 
-        public IEnumerable<MemberNameReplacer> MemberNameReplacers => GetProfile(DefaultProfileName).MemberNameReplacers;
+        public IEnumerable<MemberNameReplacer> MemberNameReplacers => GetProfile(DefaultProfileName).MemberNameReplacers
+            ;
 
         public IEnumerable<AliasedMember> Aliases => GetProfile(DefaultProfileName).Aliases;
 
         public bool ConstructorMappingEnabled => GetProfile(DefaultProfileName).ConstructorMappingEnabled;
 
-        public bool DataReaderMapperYieldReturnEnabled => GetProfile(DefaultProfileName).DataReaderMapperYieldReturnEnabled;
+        public bool DataReaderMapperYieldReturnEnabled
+            => GetProfile(DefaultProfileName).DataReaderMapperYieldReturnEnabled;
 
         public IEnumerable<MethodInfo> SourceExtensionMethods => GetProfile(DefaultProfileName).SourceExtensionMethods;
 
@@ -239,7 +253,8 @@ namespace AutoMapper
             return CreateMap(sourceType, destinationType, memberList, DefaultProfileName);
         }
 
-        public IMappingExpression CreateMap(Type sourceType, Type destinationType, MemberList memberList, string profileName)
+        public IMappingExpression CreateMap(Type sourceType, Type destinationType, MemberList memberList,
+            string profileName)
         {
             if (sourceType.IsGenericTypeDefinition() && destinationType.IsGenericTypeDefinition())
             {
@@ -417,10 +432,17 @@ namespace AutoMapper
 
         private IEnumerable<TypePair> GetRelatedTypePairs(TypePair root)
         {
-            var includeOverrideTypePairs = 
+            var includeOverrideTypePairs =
                 GetAllTypeMaps()
-                    .Where(tm => tm.HasDerivedTypesToInclude() && tm.SourceType.IsAssignableFrom(root.SourceType) && (tm.DestinationTypeOverride ?? tm.DestinationType) != root.DestinationType && tm.DestinationType.IsAssignableFrom(root.DestinationType))
-                    .Select(tm => new TypePair(tm.SourceType,tm.DestinationTypeOverride ?? tm.GetDerivedTypeFor(root.SourceType))).ToList();
+                    .Where(
+                        tm =>
+                            tm.HasDerivedTypesToInclude() && tm.SourceType.IsAssignableFrom(root.SourceType) &&
+                            (tm.DestinationTypeOverride ?? tm.DestinationType) != root.DestinationType &&
+                            tm.DestinationType.IsAssignableFrom(root.DestinationType))
+                    .Select(
+                        tm =>
+                            new TypePair(tm.SourceType,
+                                tm.DestinationTypeOverride ?? tm.GetDerivedTypeFor(root.SourceType))).ToList();
             var subTypePairs =
                 from sourceType in GetAllTypes(root.SourceType)
                 from destinationType in GetAllTypes(root.DestinationType)
@@ -474,29 +496,33 @@ namespace AutoMapper
             AssertConfigurationIsValid(_userDefinedTypeMaps.Values);
         }
 
-        public IObjectMapper[] GetMappers()
-        {
-            return _mappers.ToArray();
-        }
+        ////TODO: this was unnecessary in the MapperContext work
+        //public IObjectMapper[] GetMappers()
+        //{
+        //    return _mappers.ToArray();
+        //}
 
         private IMappingExpression<TSource, TDestination> CreateMappingExpression<TSource, TDestination>(TypeMap typeMap)
         {
             var mappingExp = new MappingExpression<TSource, TDestination>(typeMap, _serviceCtor, this);
-            var type = (typeMap.ConfiguredMemberList == MemberList.Destination) ? typeof(TDestination) : typeof(TSource);
+            var type = (typeMap.ConfiguredMemberList == MemberList.Destination)
+                ? typeof (TDestination)
+                : typeof (TSource);
             return Ignore(mappingExp, type);
         }
 
-        private IMappingExpression<TSource, TDestination> Ignore<TSource, TDestination>(IMappingExpression<TSource, TDestination> mappingExp, Type destinationType)
+        private IMappingExpression<TSource, TDestination> Ignore<TSource, TDestination>(
+            IMappingExpression<TSource, TDestination> mappingExp, Type destinationType)
         {
             var destInfo = new TypeInfo(destinationType, ShouldMapProperty, ShouldMapField);
-            foreach(var destProperty in destInfo.PublicWriteAccessors)
+            foreach (var destProperty in destInfo.PublicWriteAccessors)
             {
                 var attrs = destProperty.GetCustomAttributes(true);
-                if(attrs.Any(x => x is IgnoreMapAttribute))
+                if (attrs.Any(x => x is IgnoreMapAttribute))
                 {
                     mappingExp = mappingExp.ForMember(destProperty.Name, y => y.Ignore());
                 }
-                if(_globalIgnore.Contains(destProperty.Name))
+                if (_globalIgnore.Contains(destProperty.Name))
                 {
                     mappingExp = mappingExp.ForMember(destProperty.Name, y => y.Ignore());
                 }
@@ -536,7 +562,7 @@ namespace AutoMapper
                 {
                     DryRunTypeMap(typeMapsChecked,
                         new ResolutionContext(typeMap, null, typeMap.SourceType, typeMap.DestinationType,
-                            new MappingOperationOptions(), Mapper.Engine));
+                            new MappingOperationOptions(), MapperContext));
                 }
                 catch (Exception e)
                 {
@@ -567,13 +593,13 @@ namespace AutoMapper
                 typeMapsChecked.Add(context.TypeMap);
             }
 
-            var mapperToUse = GetMappers().FirstOrDefault(mapper => mapper.IsMatch(context));
+            var mapperToUse = ObjectMappers.FirstOrDefault(mapper => mapper.IsMatch(context));
 
             if (mapperToUse == null && context.SourceType.IsNullableType())
             {
                 var nullableContext = context.CreateValueContext(null, Nullable.GetUnderlyingType(context.SourceType));
 
-                mapperToUse = GetMappers().FirstOrDefault(mapper => mapper.IsMatch(nullableContext));
+                mapperToUse = ObjectMappers.FirstOrDefault(mapper => mapper.IsMatch(nullableContext));
             }
 
             if (mapperToUse == null)
@@ -583,6 +609,7 @@ namespace AutoMapper
 
             if (mapperToUse is TypeMapMapper)
             {
+                // ReSharper disable once PossibleNullReferenceException
                 foreach (var propertyMap in context.TypeMap.GetPropertyMaps())
                 {
                     if (!propertyMap.IsIgnored())
@@ -610,9 +637,9 @@ namespace AutoMapper
             }
             else if (mapperToUse is ArrayMapper || mapperToUse is EnumerableMapper || mapperToUse is CollectionMapper)
             {
-                Type sourceElementType = TypeHelper.GetElementType(context.SourceType);
-                Type destElementType = TypeHelper.GetElementType(context.DestinationType);
-                TypeMap itemTypeMap = ((IConfigurationProvider) this).ResolveTypeMap(sourceElementType, destElementType);
+                var sourceElementType = TypeHelper.GetElementType(context.SourceType);
+                var destElementType = TypeHelper.GetElementType(context.DestinationType);
+                var itemTypeMap = ((IConfigurationProvider) this).ResolveTypeMap(sourceElementType, destElementType);
 
                 if (typeMapsChecked.Any(typeMap => Equals(typeMap, itemTypeMap)))
                     return;
@@ -620,6 +647,7 @@ namespace AutoMapper
                 var memberContext = context.CreateElementContext(itemTypeMap, null, sourceElementType, destElementType,
                     0);
 
+                // ReSharper disable once TailRecursiveCall
                 DryRunTypeMap(typeMapsChecked, memberContext);
             }
         }
@@ -631,8 +659,7 @@ namespace AutoMapper
 
         internal ProfileConfiguration GetProfile(string profileName)
         {
-            ProfileConfiguration expr = _formatterProfiles.GetOrAdd(profileName,
-                name => new ProfileConfiguration());
+            var expr = _formatterProfiles.GetOrAdd(profileName, name => new ProfileConfiguration());
 
             return expr;
         }
