@@ -1,7 +1,8 @@
 ﻿#if DNXCORE50
-using ms=System.Reflection.TypeExtensions;
+using ms = System.Reflection.TypeExtensions;
 #endif
 
+//TODO: consider flooding the System.Reflection namespace with new stuff, 'refactoring' into the AutoMapper (or a MicroMapper) namespace
 namespace System.Reflection
 {
     using System;

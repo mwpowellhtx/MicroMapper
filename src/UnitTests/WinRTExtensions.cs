@@ -2,6 +2,7 @@
 using System.Linq;
 
 #if NETFX_CORE
+
 namespace AutoMapper
 {
     using System.Reflection;
@@ -13,6 +14,7 @@ namespace AutoMapper
         }
     }
 }
+
 #endif
 
 namespace System.Reflection
@@ -46,19 +48,21 @@ namespace System.Reflection
 //        }
 
 #if NETFX_CORE
+
         public static PropertyInfo GetProperty(this Type type, string name, params Type[] parametertypes)
         {
             return type.GetTypeInfo().GetDeclaredProperty(name);
         }
+
         //public static FieldInfo GetField(this Type type, string name)
         //{
         //    return type.GetTypeInfo().GetDeclaredField(name);
         //}
+
         //public static MethodInfo GetMethod(this Type type, string name, params Type[] parametertypes)
         //{
         //    if (!parametertypes.Any())
         //        type.GetTypeInfo().GetDeclaredMethod(name);
-
         //    return type.GetTypeInfo().GetDeclaredMethods(name).Single(mi => mi.GetParameters().Select(pi => pi.ParameterType).SequenceEqual(parametertypes));
         //}
 
@@ -131,6 +135,8 @@ namespace System.Reflection
         //    }
         //    return false;
         //}
+
 #endif
+
     }
 }

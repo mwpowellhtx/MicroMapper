@@ -52,7 +52,8 @@ namespace AutoMapper.UnitTests.Bug
         {
             Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<Source, Destination>().ForMember(d=>d.Json, o=>o.ResolveUsing(s=>new JObject(s.JsonString)));
+                cfg.CreateMap<Source, Destination>()
+                    .ForMember(d => d.Json, o => o.ResolveUsing(s => new JObject(s.JsonString)));
             });
         }
 

@@ -28,7 +28,8 @@
             Mapper.Initialize(cfg =>
             {
                 cfg.CreateMap<Source, Dest>()
-                    .ForMember(dest => dest.Child, opt => opt.ResolveUsing(result => result.Context.Engine.Map<Source, ChildDest>((Source) result.Value)));
+                    .ForMember(dest => dest.Child, opt => opt.ResolveUsing(
+                        rr => rr.Context.MapperContext.Engine.Map<Source, ChildDest>((Source) rr.Value)));
                 cfg.CreateMap<Source, ChildDest>();
             });
         }
