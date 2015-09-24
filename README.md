@@ -1,4 +1,4 @@
-![&mu; Mapper](docs/micro-mapper-logo.png?raw=true "&mu; Mapper")
+![µ Mapper](docs/micro-mapper-logo.png?raw=true "µ Mapper")
 ================================
 
 What is MicroMapper?
