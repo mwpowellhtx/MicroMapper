@@ -3,9 +3,17 @@ namespace AutoMapper.Internal
     using System;
     using System.Threading;
 
+    //TODO: may make this one non-static, and give it an interface as well, ILazyFactory
     public static class LazyFactory
     {
-        public static ILazy<T> Create<T>(Func<T> valueFactory) where T : class
+        /// <summary>
+        /// Returns a lazily created instance via <see cref="ILazy{T}"/>.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="valueFactory"></param>
+        /// <returns></returns>
+        public static ILazy<T> Create<T>(Func<T> valueFactory)
+            where T : class
         {
             return new LazyImpl<T>(valueFactory);
         }
@@ -13,11 +21,11 @@ namespace AutoMapper.Internal
         private sealed class LazyImpl<T> : ILazy<T>
             where T : class
         {
-            private readonly Object _lockObj = new Object();
+            private readonly object _syncObj = new object();
             private readonly Func<T> _valueFactory;
-            private Boolean _isDelegateInvoked;
+            private bool _isDelegateInvoked;
 
-            private T m_value;
+            private T _value;
 
             public LazyImpl(Func<T> valueFactory)
             {
@@ -30,28 +38,28 @@ namespace AutoMapper.Internal
                 {
                     if (!_isDelegateInvoked)
                     {
-                        T temp = _valueFactory();
-                        Interlocked.CompareExchange(ref m_value, temp, null);
+                        var temp = _valueFactory();
+                        Interlocked.CompareExchange(ref _value, temp, null);
 
-                        Boolean lockTaken = false;
+                        var locked = false;
 
                         try
                         {
-                            Monitor.Enter(_lockObj);
-                            lockTaken = true;
+                            Monitor.Enter(_syncObj);
+                            locked = true;
 
                             _isDelegateInvoked = true;
                         }
                         finally
                         {
-                            if (lockTaken)
+                            if (locked)
                             {
-                                Monitor.Exit(_lockObj);
+                                Monitor.Exit(_syncObj);
                             }
                         }
                     }
 
-                    return m_value;
+                    return _value;
                 }
             }
         }
