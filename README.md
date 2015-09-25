@@ -50,11 +50,9 @@ Where can I get it?
 --------------------------------
 This is on my TODO list to pull a CI environment together around unit testing, deployments, etc.
 
-~~First, [install NuGet](http://docs.nuget.org/docs/start-here/installing-nuget). Then, install [MicroMapper](https://www.nuget.org/packages/MicroMapper/) from the package manager console:
+~~First, [install NuGet](http://docs.nuget.org/docs/start-here/installing-nuget). Then, install [MicroMapper](https://www.nuget.org/packages/MicroMapper/) from the package manager console:~~
 
-```
-PM> Install-Package MicroMapper
-```~~
+  ~~PM> Install-Package MicroMapper~~
 
 AutoMapper is Copyright &copy; 2008-2012 [Jimmy Bogard](http://jimmybogard.lostechies.com) and other contributors under the [MIT license](LICENSE.txt).
 MicroMapper is Copyright &copy; 2015 Michael W. Powell and other contributors under the [MIT license](LICENSE.txt).
