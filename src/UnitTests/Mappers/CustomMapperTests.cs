@@ -1,8 +1,8 @@
-﻿namespace AutoMapper.UnitTests.Mappers
+﻿namespace MicroMapper.UnitTests.Mappers
 {
     namespace CustomMapperTests
     {
-        using AutoMapper.Mappers;
+        using MicroMapper.Mappers;
         using Xunit;
 
         public class When_adding_a_custom_mapper : NonValidatingSpecBase
@@ -18,7 +18,7 @@
             [Fact]
             public void Should_have_valid_configuration()
             {
-                typeof (AutoMapperConfigurationException)
+                typeof (MicroMapperConfigurationException)
                     .ShouldNotBeThrownBy(Mapper.AssertConfigurationIsValid);
             }
 

@@ -2,7 +2,7 @@ using System;
 using Should;
 using Xunit;
 
-namespace AutoMapper.UnitTests.Bug
+namespace MicroMapper.UnitTests.Bug
 {
     namespace AddingConfigurationForNonMatchingDestinationMember
     {
@@ -30,7 +30,7 @@ namespace AutoMapper.UnitTests.Bug
             [Fact]
             public void Should_show_configuration_error()
             {
-                typeof (AutoMapperConfigurationException).ShouldBeThrownBy(Mapper.AssertConfigurationIsValid);
+                typeof (MicroMapperConfigurationException).ShouldBeThrownBy(Mapper.AssertConfigurationIsValid);
             }
         }
     }

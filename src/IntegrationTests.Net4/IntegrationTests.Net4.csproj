@@ -7,7 +7,7 @@
     <ProjectGuid>{906F2125-2AEC-44A3-A95F-CB79C0A745BB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AutoMapper.IntegrationTests.Net4</RootNamespace>
+    <RootNamespace>MicroMapper.IntegrationTests.Net4</RootNamespace>
     <AssemblyName>MicroMapper.IntegrationTests.Net4</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

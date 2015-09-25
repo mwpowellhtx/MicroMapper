@@ -1,4 +1,4 @@
-﻿namespace AutoMapper.Mappers
+﻿namespace MicroMapper.Mappers
 {
     public class StringMapper : IObjectMapper
     {

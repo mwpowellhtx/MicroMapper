@@ -1,7 +1,7 @@
-﻿using System.Linq;
-
-namespace AutoMapper.QueryableExtensions.Impl
+﻿namespace MicroMapper.QueryableExtensions.Impl
 {
+    using System.Linq;
+
     public interface IQueryDataSourceInjection<TSource>
     {
         IQueryable<TDestination> For<TDestination>(SourceInjectedQueryInspector inspector = null);

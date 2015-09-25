@@ -1,5 +1,5 @@
 ﻿
-namespace AutoMapper.UnitTests.Bug
+namespace MicroMapper.UnitTests.Bug
 {
     using Should;
     using Xunit;
@@ -32,7 +32,7 @@ namespace AutoMapper.UnitTests.Bug
         }
 
         [Fact]
-		public void AutoMapper_should_map_derived_types_properly()
+		public void Mapper_should_map_derived_types_properly()
 		{
             testEntity.Value1.ShouldEqual(testModel.Value2);
             testEntity.Value2.ShouldEqual(testModel.Value1);

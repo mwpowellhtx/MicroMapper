@@ -1,4 +1,4 @@
-namespace AutoMapper
+namespace MicroMapper
 {
     /// <summary>
     /// Member list to check for configuration validation

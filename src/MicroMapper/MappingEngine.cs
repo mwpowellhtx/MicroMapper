@@ -1,7 +1,7 @@
 using LambdaExpression = System.Linq.Expressions.LambdaExpression;
-using ExpressionRequest = AutoMapper.QueryableExtensions.ExpressionRequest;
+using ExpressionRequest = MicroMapper.QueryableExtensions.ExpressionRequest;
 
-namespace AutoMapper
+namespace MicroMapper
 {
     using System;
     using System.Collections.Generic;
@@ -357,7 +357,7 @@ namespace AutoMapper
                     var message =
                         $"Unable to create a map expression from {propertyMap.SourceMember?.DeclaringType?.Name}.{propertyMap.SourceMember?.Name} ({result.Type}) to {propertyMap.DestinationProperty.MemberInfo.DeclaringType?.Name}.{propertyMap.DestinationProperty.Name} ({propertyMap.DestinationPropertyType})";
 
-                    throw new AutoMapperMappingException(message);
+                    throw new MicroMapperMappingException(message);
                 }
 
                 var bindExpression = binder.Build(this, propertyMap, propertyTypeMap, propertyRequest, result, typePairCount);
@@ -426,7 +426,7 @@ namespace AutoMapper
                         mapperToUse = missFunc(contextTypePair);
                         if(mapperToUse == null)
                         {
-                            throw new AutoMapperMappingException(context, "Unsupported mapping.");
+                            throw new MicroMapperMappingException(context, "Unsupported mapping.");
                         }
                         ObjectMapperCache.AddOrUpdate(contextTypePair, mapperToUse, (tp, mapper) => mapperToUse);
                     }
@@ -434,7 +434,7 @@ namespace AutoMapper
                     {
                         if(context.SourceValue != null)
                         {
-                            throw new AutoMapperMappingException(context, "Missing type map configuration or unsupported mapping.");
+                            throw new MicroMapperMappingException(context, "Missing type map configuration or unsupported mapping.");
                         }
                         return ObjectCreator.CreateDefaultValue(context.DestinationType);
                     }
@@ -442,13 +442,13 @@ namespace AutoMapper
 
                 return mapperToUse.Map(context);
             }
-            catch (AutoMapperMappingException)
+            catch (MicroMapperMappingException)
             {
                 throw;
             }
             catch (Exception ex)
             {
-                throw new AutoMapperMappingException(context, ex);
+                throw new MicroMapperMappingException(context, ex);
             }
         }
 

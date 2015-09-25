@@ -4,7 +4,7 @@ using System.Reflection;
 using Should;
 using Xunit;
 
-namespace AutoMapper.UnitTests.Bug
+namespace MicroMapper.UnitTests.Bug
 {
     using QueryableExtensions;
 

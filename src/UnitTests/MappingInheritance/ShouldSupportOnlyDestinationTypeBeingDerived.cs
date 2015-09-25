@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using AutoMapper.Mappers;
+using MicroMapper.Mappers;
 using Should;
 using Xunit;
 
-namespace AutoMapper.UnitTests.MappingInheritance
+namespace MicroMapper.UnitTests.MappingInheritance
 {
     public class DestinationTypePolymorphismTest
     {

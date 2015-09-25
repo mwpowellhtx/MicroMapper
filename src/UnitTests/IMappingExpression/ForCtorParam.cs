@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using Xunit;
 using Should;
 
-namespace AutoMapper.UnitTests
+namespace MicroMapper.UnitTests
 {
     public class When_configuring__non_generic_ctor_param_members : AutoMapperSpecBase
     {

@@ -1,4 +1,4 @@
-namespace AutoMapper
+namespace MicroMapper
 {
     /// <summary>
     /// Generic-friendly implementation of <see cref="ITypeConverter{TSource,TDestination}"/>
@@ -11,7 +11,7 @@ namespace AutoMapper
         {
             if (context.SourceValue != null && !(context.SourceValue is TSource))
             {
-                throw new AutoMapperMappingException(context,
+                throw new MicroMapperMappingException(context,
                     $"Value supplied is of type {typeof (TSource)} but expected {context.SourceValue.GetType()}.\nChange the type converter source type, or redirect the source value supplied to the value resolver using FromMember.");
             }
 

@@ -1,11 +1,9 @@
-namespace AutoMapper.Mappers
+namespace MicroMapper.Mappers
 {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.Linq;
-    using System.Reflection;
     using Internal;
 
     // So IEnumerable<T> inherits IEnumerable
@@ -86,7 +84,7 @@ namespace AutoMapper.Mappers
             {
                 return (IEnumerator) enumerableKvpType.GetMethod("GetEnumerator").Invoke(sourceEnumerableValue, null);
             }
-            throw new AutoMapperMappingException(context, "Cannot map dictionary type " + context.SourceType);
+            throw new MicroMapperMappingException(context, "Cannot map dictionary type " + context.SourceType);
         }
 
         public bool IsMatch(ResolutionContext context)

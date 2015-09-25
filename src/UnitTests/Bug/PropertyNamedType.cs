@@ -2,7 +2,7 @@
 using Should;
 using System;
 
-namespace AutoMapper.UnitTests.Bug
+namespace MicroMapper.UnitTests.Bug
 {
     public class PropertyNamedType
     {
@@ -19,7 +19,7 @@ namespace AutoMapper.UnitTests.Bug
         public void Should_detect_unmapped_destination_property_named_type()
         {
             Mapper.Initialize(c=>c.CreateMap<Source, Destination>());
-            new Action(Mapper.AssertConfigurationIsValid).ShouldThrow<AutoMapperConfigurationException>(
+            new Action(Mapper.AssertConfigurationIsValid).ShouldThrow<MicroMapperConfigurationException>(
                 ex=>ex.Errors[0].UnmappedPropertyNames[0].ShouldEqual("Type"));
         }
     }

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Should;
-using AutoMapper.QueryableExtensions;
+using MicroMapper.QueryableExtensions;
 using Xunit;
 
-namespace AutoMapper.UnitTests.Query
+namespace MicroMapper.UnitTests.Query
 {
     public class SourceInjectedQuery : AutoMapperSpecBase
     {
@@ -157,7 +157,7 @@ namespace AutoMapper.UnitTests.Query
         [Fact]
         public void Map_select_method()
         {
-            SetupAutoMapper();
+            SetupMicroMapper();
             var result = _source2.AsQueryable()
               .UseAsDataSource().For<UserModel>().OrderBy(s => s.Id).ThenBy(s => s.FullName).Select(s => (object)s.AccountModel.ThingModels.Select(b => b.BarModel));
 
@@ -167,14 +167,14 @@ namespace AutoMapper.UnitTests.Query
         [Fact]
         public void Map_orderBy_thenBy_expression()
         {
-            SetupAutoMapper();
+            SetupMicroMapper();
             var result = _source2.AsQueryable()
               .UseAsDataSource().For<UserModel>().Select(s => (object)s.AccountModel.ThingModels);
 
             (result.First() as IEnumerable<Thing>).Last().Bar.ShouldEqual("Bar 2");
         }
 
-        private static void SetupAutoMapper()
+        private static void SetupMicroMapper()
         {
             Mapper.CreateMap<User, UserModel>()
             .ForMember(d => d.Id, opt => opt.MapFrom(s => s.UserId))

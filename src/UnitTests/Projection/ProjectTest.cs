@@ -1,13 +1,13 @@
 ﻿﻿using Xunit;
 ﻿using Should;
 
-namespace AutoMapper.UnitTests.Projection
+namespace MicroMapper.UnitTests.Projection
 {
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
 
-	using AutoMapper;
+	using MicroMapper;
 	using QueryableExtensions;
 
     public class ProjectTest

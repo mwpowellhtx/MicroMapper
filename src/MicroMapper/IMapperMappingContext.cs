@@ -1,7 +1,7 @@
-using System;
-
-namespace AutoMapper
+namespace MicroMapper
 {
+    using System;
+
     /// <summary>
     /// 
     /// </summary>

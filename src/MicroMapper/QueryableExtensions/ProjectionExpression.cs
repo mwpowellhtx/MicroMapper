@@ -1,4 +1,4 @@
-namespace AutoMapper.QueryableExtensions
+namespace MicroMapper.QueryableExtensions
 {
     using System;
     using IObjectDictionary = System.Collections.Generic.IDictionary<string, object>;

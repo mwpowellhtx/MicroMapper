@@ -1,4 +1,4 @@
-namespace AutoMapper
+namespace MicroMapper
 {
     /// <summary>
     /// Type-safe implementation of <see cref="IValueResolver"/>
@@ -11,7 +11,7 @@ namespace AutoMapper
         {
             if (source.Value != null && !(source.Value is TSource))
             {
-                throw new AutoMapperMappingException(
+                throw new MicroMapperMappingException(
                     $"Value supplied is of type {source.Value.GetType()} but expected {typeof (TSource)}.\nChange the value resolver source type, or redirect the source value supplied to the value resolver using FromMember.");
             }
 

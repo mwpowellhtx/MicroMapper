@@ -1,7 +1,7 @@
 using Xunit;
 using Should;
 
-namespace AutoMapper.UnitTests
+namespace MicroMapper.UnitTests
 {
     namespace ConversionOperators
     {

@@ -13,7 +13,7 @@
     }
 }
 
-namespace AutoMapper.UnitTests
+namespace MicroMapper.UnitTests
 {
     using System;
     using System.Collections.Generic;

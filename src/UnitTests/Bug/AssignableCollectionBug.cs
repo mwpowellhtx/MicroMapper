@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Xunit;
 using Should;
 
-namespace AutoMapper.UnitTests.Bug
+namespace MicroMapper.UnitTests.Bug
 {
     namespace AssignableCollectionBug
     {
@@ -76,8 +76,8 @@ namespace AutoMapper.UnitTests.Bug
                 // This is what I can't get to pass:
                 result.Addresses[0].ShouldBeType<AddressTwo>();
 
-                // Expected: instance of <AutomapperTest.AddressTwo>
-                // But was:  <AutomapperTest.AddressOne>
+                // Expected: instance of <MicroMapperTest.AddressTwo>
+                // But was:  <MicroMapperTest.AddressOne>
             }
         }
     }
@@ -123,7 +123,7 @@ namespace AutoMapper.UnitTests.Bug
 
     namespace AssignableLists
     {
-        public class AutoMapperTests
+        public class MicroMapperTests
         {
             [Fact]
             public void ListShouldNotMapAsReference()

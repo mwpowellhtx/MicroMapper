@@ -1,5 +1,5 @@
 // ReSharper disable InconsistentNaming
-namespace AutoMapper
+namespace MicroMapper
 {
     using System;
     using System.Collections.Generic;
@@ -406,7 +406,7 @@ namespace AutoMapper
 
             if (!_typeMapExpressionCache.TryGetValue(genericTypePair, out genericTypeMapExpression))
             {
-                throw new AutoMapperMappingException(context, "Missing type map configuration or unsupported mapping.");
+                throw new MicroMapperMappingException(context, "Missing type map configuration or unsupported mapping.");
             }
 
             var typeMap = CreateTypeMap(closedGenericTypePair.SourceType, closedGenericTypePair.DestinationType,
@@ -545,12 +545,12 @@ namespace AutoMapper
                     where ShouldCheckMap(typeMap)
                     let unmappedPropertyNames = typeMap.GetUnmappedPropertyNames()
                     where unmappedPropertyNames.Length > 0
-                    select new AutoMapperConfigurationException.TypeMapConfigErrors(typeMap, unmappedPropertyNames)
+                    select new MicroMapperConfigurationException.TypeMapConfigErrors(typeMap, unmappedPropertyNames)
                     ).ToArray();
 
             if (badTypeMaps.Any())
             {
-                throw new AutoMapperConfigurationException(badTypeMaps);
+                throw new MicroMapperConfigurationException(badTypeMaps);
             }
 
             var typeMapsChecked = new List<TypeMap>();
@@ -604,7 +604,7 @@ namespace AutoMapper
 
             if (mapperToUse == null)
             {
-                throw new AutoMapperConfigurationException(context);
+                throw new MicroMapperConfigurationException(context);
             }
 
             if (mapperToUse is TypeMapMapper)

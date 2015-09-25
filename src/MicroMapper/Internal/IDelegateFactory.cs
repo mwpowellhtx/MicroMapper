@@ -1,4 +1,4 @@
-namespace AutoMapper.Internal
+namespace MicroMapper.Internal
 {
     public delegate object LateBoundMethod(object target, object[] arguments);
 

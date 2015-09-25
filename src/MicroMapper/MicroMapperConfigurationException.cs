@@ -1,10 +1,10 @@
-namespace AutoMapper
+namespace MicroMapper
 {
     using System;
     using System.Linq;
     using System.Text;
 
-    public class AutoMapperConfigurationException : Exception
+    public class MicroMapperConfigurationException : Exception
     {
         public TypeMapConfigErrors[] Errors { get; }
         public ResolutionContext Context { get; }
@@ -21,22 +21,22 @@ namespace AutoMapper
             }
         }
 
-        public AutoMapperConfigurationException(string message)
+        public MicroMapperConfigurationException(string message)
             : base(message)
         {
         }
 
-        protected AutoMapperConfigurationException(string message, Exception inner)
+        protected MicroMapperConfigurationException(string message, Exception inner)
             : base(message, inner)
         {
         }
 
-        public AutoMapperConfigurationException(TypeMapConfigErrors[] errors)
+        public MicroMapperConfigurationException(TypeMapConfigErrors[] errors)
         {
             Errors = errors;
         }
 
-        public AutoMapperConfigurationException(ResolutionContext context)
+        public MicroMapperConfigurationException(ResolutionContext context)
         {
             Context = context;
         }
@@ -108,7 +108,7 @@ namespace AutoMapper
                     return string.Join(Environment.NewLine,
                         base.StackTrace
                             .Split(new[] {Environment.NewLine}, StringSplitOptions.None)
-                            .Where(str => !str.TrimStart().StartsWith("at AutoMapper."))
+                            .Where(str => !str.TrimStart().StartsWith("at MicroMapper."))
                             .ToArray());
 
                 return base.StackTrace;

@@ -3,10 +3,10 @@ using System.Collections.ObjectModel;
 using Should;
 using Xunit;
 
-namespace AutoMapper.UnitTests.Bug
+namespace MicroMapper.UnitTests.Bug
 {
     // Bug #511
-    // https://github.com/AutoMapper/AutoMapper/issues/511
+    // http://github.com/AutoMapper/AutoMapper/issues/511
     public class ReadOnlyCollectionMappingBug
     {
         class Source { public int X { get; set; } }

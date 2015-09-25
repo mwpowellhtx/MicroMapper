@@ -9,7 +9,7 @@
     <ProjectGuid>{C1D824CA-77B2-4BA7-A927-28A677213BA9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AutoMapper.UnitTests</RootNamespace>
+    <RootNamespace>MicroMapper.UnitTests</RootNamespace>
     <AssemblyName>MicroMapper.UnitTests.WinRT</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>

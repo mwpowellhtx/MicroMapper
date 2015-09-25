@@ -1,6 +1,6 @@
 #if NET4 || MONODROID || MONOTOUCH || __IOS__ || SILVERLIGHT
 
-namespace AutoMapper.Mappers
+namespace MicroMapper.Mappers
 {
     using System;
     using System.ComponentModel;

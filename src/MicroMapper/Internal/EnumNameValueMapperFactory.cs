@@ -1,5 +1,5 @@
 ﻿#if NET4 || NETFX_CORE || MONODROID || MONOTOUCH || __IOS__ || DNXCORE50
-namespace AutoMapper.Internal
+namespace MicroMapper.Internal
 {
     using System;
     using System.Linq;

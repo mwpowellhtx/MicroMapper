@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
-using AutoMapper.Mappers;
+using MicroMapper.Mappers;
 using Should;
 using Xunit;
 using System.Reflection;
 using System.Linq;
 
-namespace AutoMapper.UnitTests
+namespace MicroMapper.UnitTests
 {
 	namespace MemberResolution
 	{

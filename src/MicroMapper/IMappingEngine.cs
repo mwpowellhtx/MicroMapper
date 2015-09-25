@@ -1,7 +1,7 @@
 using LambdaExpression = System.Linq.Expressions.LambdaExpression;
-using ExpressionRequest = AutoMapper.QueryableExtensions.ExpressionRequest;
+using ExpressionRequest = MicroMapper.QueryableExtensions.ExpressionRequest;
 
-namespace AutoMapper
+namespace MicroMapper
 {
     using System;
     using System.Linq;

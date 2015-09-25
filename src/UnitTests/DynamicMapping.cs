@@ -2,7 +2,7 @@ using System;
 using Xunit;
 using Should;
 
-namespace AutoMapper.UnitTests
+namespace MicroMapper.UnitTests
 {
 	namespace DynamicMapping
 	{
@@ -110,7 +110,7 @@ namespace AutoMapper.UnitTests
 			[Fact]
 			public void Should_not_throw_any_configuration_errors()
 			{
-				typeof(AutoMapperConfigurationException).ShouldNotBeThrownBy(() => Mapper.DynamicMap<Source, Destination>(new Source { Value = 5 }));
+				typeof(MicroMapperConfigurationException).ShouldNotBeThrownBy(() => Mapper.DynamicMap<Source, Destination>(new Source { Value = 5 }));
 			}
 		}
 

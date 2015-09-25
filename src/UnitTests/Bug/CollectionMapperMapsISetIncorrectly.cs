@@ -1,10 +1,10 @@
 ﻿#if !WINDOWS_PHONE
 using System.Collections.Generic;
 using System.Linq;
-using AutoMapper.Mappers;
+using MicroMapper.Mappers;
 using Xunit;
 
-namespace AutoMapper.UnitTests.Bug
+namespace MicroMapper.UnitTests.Bug
 {
     public class CollectionMapperMapsIEnumerableToISetIncorrectly
     {

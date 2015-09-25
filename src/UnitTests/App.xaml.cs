@@ -2,7 +2,7 @@
 using System.Windows;
 using Microsoft.Silverlight.Testing;
 
-namespace AutoMapper.UnitTests
+namespace MicroMapper.UnitTests
 {
     public partial class App : Application
     {

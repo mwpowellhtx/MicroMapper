@@ -3,7 +3,7 @@ using Should;
 using System;
 using System.Collections.Generic;
 
-namespace AutoMapper.UnitTests.Bug
+namespace MicroMapper.UnitTests.Bug
 {
     public class TargetISet : AutoMapperSpecBase
     {

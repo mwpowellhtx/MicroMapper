@@ -1,9 +1,8 @@
-using System.Linq;
-
-namespace AutoMapper.Mappers
+namespace MicroMapper.Mappers
 {
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Refactored from static MapperRegistry allowing for flexible dependency injection

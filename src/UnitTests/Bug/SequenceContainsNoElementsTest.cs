@@ -6,7 +6,7 @@ using System.Collections;
 using Xunit;
 using Should;
 
-namespace AutoMapper.UnitTests.Bug
+namespace MicroMapper.UnitTests.Bug
 {
 	public class SequenceContainsNoElementsTest : AutoMapperSpecBase
 	{

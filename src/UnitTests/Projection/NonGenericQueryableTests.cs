@@ -1,6 +1,6 @@
-﻿namespace AutoMapper.UnitTests.Projection
+﻿namespace MicroMapper.UnitTests.Projection
 {
-    using AutoMapper.QueryableExtensions;
+    using MicroMapper.QueryableExtensions;
     using Should;
     using System.Collections.Generic;
     using System.Linq;

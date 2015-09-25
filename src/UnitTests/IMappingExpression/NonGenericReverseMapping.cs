@@ -2,7 +2,7 @@ using Xunit;
 using Should;
 using System.Linq;
 
-namespace AutoMapper.UnitTests
+namespace MicroMapper.UnitTests
 {
     namespace NonGenericReverseMapping
     {
@@ -72,7 +72,7 @@ namespace AutoMapper.UnitTests
             [Fact]
             public void Should_show_valid()
             {
-                typeof(AutoMapperConfigurationException).ShouldNotBeThrownBy(() => Mapper.AssertConfigurationIsValid());
+                typeof(MicroMapperConfigurationException).ShouldNotBeThrownBy(() => Mapper.AssertConfigurationIsValid());
             }
         }
 
@@ -128,14 +128,14 @@ namespace AutoMapper.UnitTests
             }
         }
 
-        public static class AutoMapperExtensions
+        public static class MicroMapperExtensions
         {
             // from http://stackoverflow.com/questions/954480/automapper-ignore-the-rest/6474397#6474397
             public static IMappingExpression IgnoreAllNonExisting(this IMappingExpression expression)
             {
                 var sourceType = expression.TypeMap.SourceType;
                 var destinationType = expression.TypeMap.DestinationType;
-                var existingMaps = AutoMapper.Mapper.GetAllTypeMaps().First(x => x.SourceType.Equals(sourceType) && x.DestinationType.Equals(destinationType));
+                var existingMaps = MicroMapper.Mapper.GetAllTypeMaps().First(x => x.SourceType.Equals(sourceType) && x.DestinationType.Equals(destinationType));
                 foreach(var property in existingMaps.GetUnmappedPropertyNames())
                 {
                     expression.ForMember(property, opt => opt.Ignore());
@@ -147,7 +147,7 @@ namespace AutoMapper.UnitTests
             {
                 var sourceType = expression.TypeMap.SourceType;
                 var destinationType = expression.TypeMap.DestinationType;
-                var existingMaps = AutoMapper.Mapper.GetAllTypeMaps().First(x => x.SourceType.Equals(sourceType) && x.DestinationType.Equals(destinationType));
+                var existingMaps = MicroMapper.Mapper.GetAllTypeMaps().First(x => x.SourceType.Equals(sourceType) && x.DestinationType.Equals(destinationType));
                 foreach(var property in existingMaps.GetUnmappedPropertyNames())
                 {
                     expression.ForSourceMember(property, opt => opt.Ignore());

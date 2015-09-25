@@ -1,4 +1,4 @@
-﻿namespace AutoMapper
+﻿namespace MicroMapper
 {
     public class AliasedMember
     {

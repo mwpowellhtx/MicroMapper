@@ -1,4 +1,4 @@
-namespace AutoMapper.Mappers
+namespace MicroMapper.Mappers
 {
     using System;
     using System.Collections.Generic;
@@ -131,14 +131,14 @@ namespace AutoMapper.Mappers
                 {
                     result = propertyMap.ResolveValue(context);
                 }
-                catch (AutoMapperMappingException)
+                catch (MicroMapperMappingException)
                 {
                     throw;
                 }
                 catch (Exception ex)
                 {
                     var errorContext = CreateErrorContext(context, propertyMap, null);
-                    resolvingExc = new AutoMapperMappingException(errorContext, ex);
+                    resolvingExc = new MicroMapperMappingException(errorContext, ex);
                     result = new ResolutionResult(context);
                 }
 
@@ -169,13 +169,13 @@ namespace AutoMapper.Mappers
                     var propertyValueToAssign = runner.Map(newContext);
                     AssignValue(propertyMap, mappedObject, propertyValueToAssign);
                 }
-                catch (AutoMapperMappingException)
+                catch (MicroMapperMappingException mmmex)
                 {
-                    throw;
+                    throw mmmex;
                 }
                 catch (Exception ex)
                 {
-                    throw new AutoMapperMappingException(newContext, ex);
+                    throw new MicroMapperMappingException(newContext, ex);
                 }
             }
 

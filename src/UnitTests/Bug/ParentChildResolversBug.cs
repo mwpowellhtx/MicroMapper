@@ -1,4 +1,4 @@
-﻿namespace AutoMapper.UnitTests.Bug
+﻿namespace MicroMapper.UnitTests.Bug
 {
     namespace ParentChildResolversBug
     {

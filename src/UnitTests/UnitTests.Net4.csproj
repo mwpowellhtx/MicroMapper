@@ -8,7 +8,7 @@
     <ProjectGuid>{ABF2F5A7-ABFA-4232-9008-B7EEC19ABA96}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AutoMapper.UnitTests</RootNamespace>
+    <RootNamespace>MicroMapper.UnitTests</RootNamespace>
     <AssemblyName>MicroMapper.UnitTests.Net4</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

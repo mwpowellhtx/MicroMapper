@@ -1,4 +1,4 @@
-namespace AutoMapper
+namespace MicroMapper
 {
     using System;
     using Mappers;
@@ -32,7 +32,7 @@ namespace AutoMapper
 
         /// <summary>
         /// Initializes the mapper with the supplied configuration. Runtime optimization complete
-        /// after this method is called. This is the preferred means to configure AutoMapper.
+        /// after this method is called. This is the preferred means to configure MicroMapper.
         /// </summary>
         /// <param name="action">Delegated initialization action</param>
         /// <see cref="IConfiguration"/>
@@ -135,9 +135,9 @@ namespace AutoMapper
 
         /// <summary>
         /// Dry run all configured type maps and throw
-        /// <see cref="AutoMapperConfigurationException"/> for each problem.
+        /// <see cref="MicroMapperConfigurationException"/> for each problem.
         /// </summary>
-        /// <exception cref="AutoMapperConfigurationException"></exception>
+        /// <exception cref="MicroMapperConfigurationException"></exception>
         void AssertConfigurationIsValid();
 
         /// <summary>

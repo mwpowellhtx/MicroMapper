@@ -1,4 +1,4 @@
-namespace AutoMapper.QueryableExtensions.Impl
+namespace MicroMapper.QueryableExtensions.Impl
 {
     using System;
     using System.Collections.Generic;
@@ -6,7 +6,7 @@ namespace AutoMapper.QueryableExtensions.Impl
     using System.Linq.Expressions;
     using System.Reflection;
 #if MONODROID
-    using Extensions = AutoMapper.QueryableExtensions.Extensions;
+    using Extensions = MicroMapper.QueryableExtensions.Extensions;
 #endif
 
     public class EnumerableExpressionBinder : IExpressionBinder

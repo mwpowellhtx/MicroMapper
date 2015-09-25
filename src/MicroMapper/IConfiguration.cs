@@ -1,4 +1,4 @@
-namespace AutoMapper
+namespace MicroMapper
 {
     using System;
     using Mappers;
@@ -43,7 +43,7 @@ namespace AutoMapper
         void ConstructServicesUsing(Func<Type, object> constructor);
 
         /// <summary>
-        /// Disable constructor mapping. Use this if you don't intend to have AutoMapper try to map to constructors
+        /// Disable constructor mapping. Use this if you don't intend to have MicroMapper try to map to constructors
         /// </summary>
         void DisableConstructorMapping();
 

@@ -1,5 +1,5 @@
 ﻿#if MONODROID || MONOTOUCH || __IOS__ || NET4
-namespace AutoMapper.Internal
+namespace MicroMapper.Internal
 {
     using System;
     using System.ComponentModel;

@@ -1,4 +1,4 @@
-namespace AutoMapper
+namespace MicroMapper
 {
     using System;
     using System.Collections.Generic;
@@ -8,7 +8,7 @@ namespace AutoMapper
 #if NET45
     [Serializable]
 #endif
-    public class AutoMapperMappingException : Exception
+    public class MicroMapperMappingException : Exception
     {
         private readonly string _message;
 
@@ -19,34 +19,34 @@ namespace AutoMapper
         //    http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dncscol/html/csharp07192001.asp
         //
 
-        public AutoMapperMappingException()
+        public MicroMapperMappingException()
         {
         }
 
-        public AutoMapperMappingException(string message)
+        public MicroMapperMappingException(string message)
             : base(message)
         {
             _message = message;
         }
 
-        public AutoMapperMappingException(string message, Exception inner)
+        public MicroMapperMappingException(string message, Exception inner)
             : base(null, inner)
         {
             _message = message;
         }
 
-        public AutoMapperMappingException(ResolutionContext context)
+        public MicroMapperMappingException(ResolutionContext context)
         {
             Context = context;
         }
 
-        public AutoMapperMappingException(ResolutionContext context, Exception inner)
+        public MicroMapperMappingException(ResolutionContext context, Exception inner)
             : base(null, inner)
         {
             Context = context;
         }
 
-        public AutoMapperMappingException(ResolutionContext context, string message)
+        public MicroMapperMappingException(ResolutionContext context, string message)
             : this(context)
         {
             _message = message;
@@ -126,7 +126,7 @@ namespace AutoMapper
                 return string.Join(Environment.NewLine,
                     base.StackTrace
                         .Split(new[] {Environment.NewLine}, StringSplitOptions.None)
-                        .Where(str => !str.TrimStart().StartsWith("at AutoMapper.")));
+                        .Where(str => !str.TrimStart().StartsWith("at MicroMapper.")));
             }
         }
 #endif

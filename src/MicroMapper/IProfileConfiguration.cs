@@ -1,4 +1,4 @@
-namespace AutoMapper
+namespace MicroMapper
 {
     /// <summary>
     /// Contains profile-specific configuration

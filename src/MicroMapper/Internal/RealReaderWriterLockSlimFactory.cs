@@ -1,7 +1,7 @@
 ﻿#if MONODROID || MONOTOUCH || __IOS__ || NETFX_CORE || NET4
 using System.Threading;
 
-namespace AutoMapper.Internal
+namespace MicroMapper.Internal
 {
     public class ReaderWriterLockSlimFactoryOverride : IReaderWriterLockSlimFactory
     {

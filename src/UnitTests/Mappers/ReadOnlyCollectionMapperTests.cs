@@ -6,7 +6,7 @@ using System.Text;
 using Should;
 using Xunit;
 
-namespace AutoMapper.UnitTests.Mappers
+namespace MicroMapper.UnitTests.Mappers
 {
 	public class ReadOnlyCollectionMapperTests
 	{

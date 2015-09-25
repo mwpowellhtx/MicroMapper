@@ -1,7 +1,7 @@
 //using System.Collections.Generic;
 
 ////TODO: refactored to IObjectMapperCollection which subsequently informs non-static IMapperContext
-//namespace AutoMapper.Mappers
+//namespace MicroMapper.Mappers
 //{
 //    public static class MapperRegistry
 //    {

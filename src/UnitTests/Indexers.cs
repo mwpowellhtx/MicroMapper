@@ -2,7 +2,7 @@ using System;
 using Should;
 using Xunit;
 
-namespace AutoMapper.UnitTests
+namespace MicroMapper.UnitTests
 {
 	namespace Indexers
 	{

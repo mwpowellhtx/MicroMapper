@@ -1,7 +1,6 @@
-namespace AutoMapper.UnitTests.Tests
+namespace MicroMapper.UnitTests.Tests
 {
     public class TypeInfoSpecs
     {
-        
     }
 }

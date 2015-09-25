@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Xunit;
 using Should;
 
-namespace AutoMapper.UnitTests
+namespace MicroMapper.UnitTests
 {
     public class IgnoreAllTests
     {

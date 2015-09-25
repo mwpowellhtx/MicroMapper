@@ -1,7 +1,7 @@
-using System.Text.RegularExpressions;
-
-namespace AutoMapper
+namespace MicroMapper
 {
+    using System.Text.RegularExpressions;
+
     /// <summary>
     /// Defines a naming convention strategy
     /// </summary>

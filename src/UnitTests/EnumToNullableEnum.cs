@@ -1,7 +1,7 @@
 ﻿using Should;
 using Xunit;
 
-namespace AutoMapper.UnitTests
+namespace MicroMapper.UnitTests
 {
     public class EnumToNullableEnum : AutoMapperSpecBase
     {

@@ -1,4 +1,6 @@
-namespace AutoMapper.UnitTests.BeforeAfterMapping
+using MicroMapper;
+
+namespace MicroMapper.UnitTests.BeforeAfterMapping
 {
     using System;
     using Should;

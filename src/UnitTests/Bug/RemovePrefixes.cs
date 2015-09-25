@@ -1,4 +1,4 @@
-﻿namespace AutoMapper.UnitTests.Bug
+﻿namespace MicroMapper.UnitTests.Bug
 {
     using System;
     using Should;
@@ -29,7 +29,7 @@
         public void Should_not_map_with_default_postfix()
         {
             new Action(_context.AssertConfigurationIsValid)
-                .ShouldThrow<AutoMapperConfigurationException>();
+                .ShouldThrow<MicroMapperConfigurationException>();
         }
     }
 }

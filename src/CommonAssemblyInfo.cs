@@ -13,8 +13,8 @@ using System.Runtime.InteropServices;
 //------------------------------------------------------------------------------
 
 [assembly: CLSCompliant(true)]
-[assembly: AssemblyVersionAttribute("5.0.0")]
-[assembly: AssemblyFileVersionAttribute("5.0.0")]
+[assembly: AssemblyVersionAttribute("5.1.0")]
+[assembly: AssemblyFileVersionAttribute("5.1.0")]
 [assembly: AssemblyCopyrightAttribute("Copyright © Michael Powell 2015")]
 [assembly: AssemblyProductAttribute("AutoMapper")]
 [assembly: AssemblyTrademarkAttribute("AutoMapper")]

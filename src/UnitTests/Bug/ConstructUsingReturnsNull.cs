@@ -2,7 +2,7 @@
 using Should;
 using System;
 
-namespace AutoMapper.UnitTests.Bug
+namespace MicroMapper.UnitTests.Bug
 {
     public class ConstructUsingReturnsNull : AutoMapperSpecBase
     {
@@ -27,7 +27,7 @@ namespace AutoMapper.UnitTests.Bug
         public void Should_throw_when_construct_using_returns_null()
         {
             new Action(() => Mapper.Map<Source, Destination>(new Source()))
-                .ShouldThrow<AutoMapperMappingException>(ex=>ex.InnerException.ShouldBeType<InvalidOperationException>());
+                .ShouldThrow<MicroMapperMappingException>(ex=>ex.InnerException.ShouldBeType<InvalidOperationException>());
         }
     }
 }

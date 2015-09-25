@@ -1,5 +1,5 @@
 #if MONODROID || MONOTOUCH || __IOS__ || NET4
-namespace AutoMapper.Mappers
+namespace MicroMapper.Mappers
 {
     using System;
     using System.Collections;

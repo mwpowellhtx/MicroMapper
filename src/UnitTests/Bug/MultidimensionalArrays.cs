@@ -1,11 +1,11 @@
 ﻿using Xunit;
 using Should;
-using AutoMapper.Mappers;
+using MicroMapper.Mappers;
 using System.Collections.Generic;
 using System;
 using System.Linq;
 
-namespace AutoMapper.UnitTests.Bug
+namespace MicroMapper.UnitTests.Bug
 {
     public class MultidimensionalArrays : AutoMapperSpecBase
     {

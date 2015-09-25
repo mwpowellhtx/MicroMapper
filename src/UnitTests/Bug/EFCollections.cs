@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using Xunit;
 using Should;
 
-namespace AutoMapper.UnitTests.Bug
+namespace MicroMapper.UnitTests.Bug
 {
     public class EFCollections : AutoMapperSpecBase
     {

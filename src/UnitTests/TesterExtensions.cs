@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Should;
 
-namespace AutoMapper.UnitTests
+namespace MicroMapper.UnitTests
 {
 	public static class StopgapNBehaveExtensions
 	{

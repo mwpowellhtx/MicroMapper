@@ -1,4 +1,4 @@
-namespace AutoMapper
+namespace MicroMapper
 {
     using System;
     using Impl;
@@ -68,7 +68,7 @@ namespace AutoMapper
 
 
         /// <summary>
-        /// Dry run all configured type maps and throw <see cref="AutoMapperConfigurationException"/> for each problem
+        /// Dry run all configured type maps and throw <see cref="MicroMapperConfigurationException"/> for each problem
         /// </summary>
         void AssertConfigurationIsValid();
 

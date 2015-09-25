@@ -1,4 +1,4 @@
-﻿namespace AutoMapper.Mappers
+﻿namespace MicroMapper.Mappers
 {
     using System;
     using System.Collections.Generic;
@@ -17,7 +17,7 @@
             var expression = (LambdaExpression) context.SourceValue;
 
             if (sourceDelegateType.GetGenericTypeDefinition() != destDelegateType.GetGenericTypeDefinition())
-                throw new AutoMapperMappingException("Source and destination expressions must be of the same type.");
+                throw new MicroMapperMappingException("Source and destination expressions must be of the same type.");
 
             var destArgType = destDelegateType.GetGenericArguments()[0];
             if (destArgType.IsGenericType())
@@ -156,7 +156,7 @@
                     newRight = Expression.Constant((right as ConstantExpression).Value,
                         typeof (Nullable<>).MakeGenericType(right.Type));
                 else
-                    throw new AutoMapperMappingException(
+                    throw new MicroMapperMappingException(
                         "Mapping a BinaryExpression where one side is nullable and the other isn't");
             }
 
@@ -168,7 +168,7 @@
                 else if (right is UnaryExpression)
                     newRight = (right as UnaryExpression).Operand;
                 else
-                    throw new AutoMapperMappingException(
+                    throw new MicroMapperMappingException(
                         "Mapping a BinaryExpression where one side is nullable and the other isn't");
             }
 

@@ -1,11 +1,11 @@
 ﻿using System.Data.Entity;
 using System.Linq;
-using AutoMapper.QueryableExtensions;
-using AutoMapper.UnitTests;
+using MicroMapper.QueryableExtensions;
+using MicroMapper.UnitTests;
 using Should;
 using Xunit;
 
-namespace AutoMapper.IntegrationTests.Net4
+namespace MicroMapper.IntegrationTests.Net4
 {
     public class ProjectToAbstractType : AutoMapperSpecBase
     {

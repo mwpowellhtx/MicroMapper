@@ -1,9 +1,9 @@
 ﻿#if NET4 || MONODROID || MONOTOUCH || __IOS__ || DNXCORE50
 
-namespace AutoMapper.UnitTests.Mappers
+namespace MicroMapper.UnitTests.Mappers
 {
     using System.Collections.Specialized;
-    using AutoMapper.Mappers;
+    using MicroMapper.Mappers;
     using Should;
     using Xunit;
 

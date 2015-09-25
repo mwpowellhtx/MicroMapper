@@ -1,4 +1,4 @@
-namespace AutoMapper.Internal
+namespace MicroMapper.Internal
 {
     using System;
     using System.Reflection;

@@ -2,7 +2,7 @@
 using Should;
 using Xunit;
 
-namespace AutoMapper.UnitTests.Bug
+namespace MicroMapper.UnitTests.Bug
 {
     public class ConstructorParameterNamedType
     {
@@ -24,7 +24,7 @@ namespace AutoMapper.UnitTests.Bug
         public void Should_handle_constructor_parameter_named_type()
         {
             Mapper.Initialize(c => c.CreateMap<SourceClass, DestinationClass>());
-            new Action(Mapper.AssertConfigurationIsValid).ShouldThrow<AutoMapperConfigurationException>(ex=>ex.Errors[0].UnmappedPropertyNames[0].ShouldEqual("Type"));
+            new Action(Mapper.AssertConfigurationIsValid).ShouldThrow<MicroMapperConfigurationException>(ex=>ex.Errors[0].UnmappedPropertyNames[0].ShouldEqual("Type"));
         }
     }
 }

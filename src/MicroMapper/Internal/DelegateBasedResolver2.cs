@@ -1,5 +1,4 @@
-namespace AutoMapper
-{
-    using System;
-
-}
+// namespace MicroMapper
+// {
+//     using System;
+// }

@@ -1,7 +1,7 @@
 namespace Benchmark.Flattening
 {
     using System;
-    using AutoMapper;
+    using MicroMapper;
 
     public class CtorMapper : IObjectToObjectMapper
     {

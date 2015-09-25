@@ -1,4 +1,4 @@
-﻿namespace AutoMapper.QueryableExtensions.Impl
+﻿namespace MicroMapper.QueryableExtensions.Impl
 {
     using System;
     using System.Collections;

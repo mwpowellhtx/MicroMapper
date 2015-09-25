@@ -1,7 +1,7 @@
 ﻿using Should.Core.Assertions;
 using Xunit;
 
-namespace AutoMapper.UnitTests.Bug
+namespace MicroMapper.UnitTests.Bug
 {
     public class BaseMapWithIncludesAndUnincludedMappings
     {

@@ -3,7 +3,7 @@ using Xunit;
 using Should;
 using System.Reflection;
 
-namespace AutoMapper.UnitTests
+namespace MicroMapper.UnitTests
 {
 	namespace ExtensionMethods
 	{

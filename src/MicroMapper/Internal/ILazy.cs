@@ -1,4 +1,4 @@
-namespace AutoMapper.Internal
+namespace MicroMapper.Internal
 {
     /// <summary>
     /// Represents a lazily created instance <see cref="Value"/>.

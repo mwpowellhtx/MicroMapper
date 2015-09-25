@@ -1,10 +1,10 @@
-namespace AutoMapper.Internal
+namespace MicroMapper.Internal
 {
     using System;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
-    using TypeInfo = AutoMapper.TypeInfo;
+    using TypeInfo = MicroMapper.TypeInfo;
 
     public class MappingExpression : MappingExpression<object, object>, IMappingExpression, IMemberConfigurationExpression
     {
@@ -71,10 +71,10 @@ namespace AutoMapper.Internal
         {
             var members = TypeMap.SourceType.GetMember(sourceMember);
             if(!members.Any())
-                throw new AutoMapperConfigurationException(
+                throw new MicroMapperConfigurationException(
 $"Unable to find source member {sourceMember} on type {TypeMap.SourceType.FullName}");
             if(members.Skip(1).Any())
-                throw new AutoMapperConfigurationException(
+                throw new MicroMapperConfigurationException(
 $"Source member {sourceMember} is ambiguous on type {TypeMap.SourceType.FullName}");
             var member = members.Single();
             PropertyMap.SourceMember = member;

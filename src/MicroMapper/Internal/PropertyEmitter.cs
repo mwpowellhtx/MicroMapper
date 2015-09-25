@@ -1,5 +1,5 @@
 #if NET4 || MONODROID
-namespace AutoMapper.Internal
+namespace MicroMapper.Internal
 {
     using System;
     using System.ComponentModel;

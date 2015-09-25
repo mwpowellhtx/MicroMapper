@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using AutoMapper.Mappers;
+using MicroMapper.Mappers;
 using Should;
 using Xunit;
 
-namespace AutoMapper.UnitTests.Mappers
+namespace MicroMapper.UnitTests.Mappers
 {
     public class TypeHelperTests
     {

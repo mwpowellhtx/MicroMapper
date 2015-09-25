@@ -1,5 +1,5 @@
 #if MONODROID || NET4
-namespace AutoMapper.Internal
+namespace MicroMapper.Internal
 {
     using System;
     using System.Collections.Generic;

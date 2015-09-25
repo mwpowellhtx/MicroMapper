@@ -4,11 +4,11 @@ using System.Linq;
 using Xunit;
 using Should;
 
-namespace AutoMapper.IntegrationTests.Net4
+namespace MicroMapper.IntegrationTests.Net4
 {
     namespace ChildClassTests
     {
-        using AutoMapper.UnitTests;
+        using MicroMapper.UnitTests;
         using QueryableExtensions;
 
         public class Base
@@ -91,7 +91,7 @@ namespace AutoMapper.IntegrationTests.Net4
             }
 
             [Fact]
-            public void AutoMapperEFRelationsTest()
+            public void MicroMapperEFRelationsTest()
             {
                 using (var context = new Context())
                 {

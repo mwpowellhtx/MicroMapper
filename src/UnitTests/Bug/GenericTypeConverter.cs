@@ -1,9 +1,9 @@
 ﻿using System;
 using Should;
 using Xunit;
-using AutoMapper;
+using MicroMapper;
 
-namespace AutoMapper.UnitTests.Bug
+namespace MicroMapper.UnitTests.Bug
 {
     public class GenericTypeConverter : AutoMapperSpecBase
     {

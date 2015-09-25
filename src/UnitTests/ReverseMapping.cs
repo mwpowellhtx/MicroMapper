@@ -2,7 +2,7 @@ using Xunit;
 using Should;
 using System.Linq;
 
-namespace AutoMapper.UnitTests
+namespace MicroMapper.UnitTests
 {
     namespace ReverseMapping
     {
@@ -135,7 +135,7 @@ namespace AutoMapper.UnitTests
             [Fact]
             public void Should_not_throw_any_configuration_validation_errors()
             {
-                typeof(AutoMapperConfigurationException).ShouldNotBeThrownBy(Mapper.AssertConfigurationIsValid);
+                typeof(MicroMapperConfigurationException).ShouldNotBeThrownBy(Mapper.AssertConfigurationIsValid);
             }
         }
 
@@ -162,7 +162,7 @@ namespace AutoMapper.UnitTests
             [Fact]
             public void Should_throw_a_configuration_validation_error()
             {
-                typeof(AutoMapperConfigurationException).ShouldBeThrownBy(Mapper.AssertConfigurationIsValid);
+                typeof(MicroMapperConfigurationException).ShouldBeThrownBy(Mapper.AssertConfigurationIsValid);
             }
         }
 
@@ -191,7 +191,7 @@ namespace AutoMapper.UnitTests
             [Fact]
             public void Should_not_throw_a_configuration_validation_error()
             {
-                typeof(AutoMapperConfigurationException).ShouldNotBeThrownBy(Mapper.AssertConfigurationIsValid);
+                typeof(MicroMapperConfigurationException).ShouldNotBeThrownBy(Mapper.AssertConfigurationIsValid);
             }
         }
 
@@ -221,7 +221,7 @@ namespace AutoMapper.UnitTests
             [Fact]
             public void Should_not_throw_a_configuration_validation_error()
             {
-                typeof(AutoMapperConfigurationException).ShouldNotBeThrownBy(Mapper.AssertConfigurationIsValid);
+                typeof(MicroMapperConfigurationException).ShouldNotBeThrownBy(Mapper.AssertConfigurationIsValid);
             }
         }
 
@@ -251,7 +251,7 @@ namespace AutoMapper.UnitTests
             [Fact]
             public void Should_show_valid()
             {
-                typeof(AutoMapperConfigurationException).ShouldNotBeThrownBy(() => Mapper.AssertConfigurationIsValid());
+                typeof(MicroMapperConfigurationException).ShouldNotBeThrownBy(() => Mapper.AssertConfigurationIsValid());
             }
         }
 
@@ -308,14 +308,14 @@ namespace AutoMapper.UnitTests
 
         }
 
-        public static class AutoMapperExtensions
+        public static class MicroMapperExtensions
         {
             // from http://stackoverflow.com/questions/954480/automapper-ignore-the-rest/6474397#6474397
-public static IMappingExpression<TSource, TDestination> IgnoreAllNonExisting<TSource, TDestination>(this AutoMapper.IMappingExpression<TSource, TDestination> expression)
+public static IMappingExpression<TSource, TDestination> IgnoreAllNonExisting<TSource, TDestination>(this MicroMapper.IMappingExpression<TSource, TDestination> expression)
 {
     var sourceType = typeof(TSource);
     var destinationType = typeof(TDestination);
-    var existingMaps = AutoMapper.Mapper.GetAllTypeMaps().First(x => x.SourceType.Equals(sourceType) && x.DestinationType.Equals(destinationType));
+    var existingMaps = MicroMapper.Mapper.GetAllTypeMaps().First(x => x.SourceType.Equals(sourceType) && x.DestinationType.Equals(destinationType));
     foreach (var property in existingMaps.GetUnmappedPropertyNames())
     {
         expression.ForMember(property, opt => opt.Ignore());
@@ -323,11 +323,11 @@ public static IMappingExpression<TSource, TDestination> IgnoreAllNonExisting<TSo
     return expression;
 }
 
-            public static IMappingExpression<TSource, TDestination> IgnoreAllNonExistingSource<TSource, TDestination>(this AutoMapper.IMappingExpression<TSource, TDestination> expression)
+            public static IMappingExpression<TSource, TDestination> IgnoreAllNonExistingSource<TSource, TDestination>(this MicroMapper.IMappingExpression<TSource, TDestination> expression)
             {
                 var sourceType = typeof(TSource);
                 var destinationType = typeof(TDestination);
-                var existingMaps = AutoMapper.Mapper.GetAllTypeMaps().First(x => x.SourceType.Equals(sourceType) && x.DestinationType.Equals(destinationType));
+                var existingMaps = MicroMapper.Mapper.GetAllTypeMaps().First(x => x.SourceType.Equals(sourceType) && x.DestinationType.Equals(destinationType));
                 foreach (var property in existingMaps.GetUnmappedPropertyNames())
                 {
                     expression.ForSourceMember(property, opt => opt.Ignore());

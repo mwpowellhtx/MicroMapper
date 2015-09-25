@@ -1,4 +1,4 @@
-namespace AutoMapper.Internal
+namespace MicroMapper.Internal
 {
     using System;
     using System.Linq;
@@ -58,7 +58,7 @@ namespace AutoMapper.Internal
                 }
             }
 
-            throw new AutoMapperConfigurationException(
+            throw new MicroMapperConfigurationException(
                 "Custom configuration for members is only supported for top-level individual members on a type.");
         }
 

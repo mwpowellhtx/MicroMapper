@@ -1,4 +1,4 @@
-﻿namespace AutoMapper.UnitTests
+﻿namespace MicroMapper.UnitTests
 {
     using Should;
     using Xunit;

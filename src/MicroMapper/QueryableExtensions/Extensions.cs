@@ -1,4 +1,4 @@
-namespace AutoMapper.QueryableExtensions
+namespace MicroMapper.QueryableExtensions
 {
     using System;
     using System.Collections.Generic;
@@ -9,7 +9,7 @@ namespace AutoMapper.QueryableExtensions
     using ObjectDictionary = System.Collections.Generic.IDictionary<string, object>;
 
     /// <summary>
-    /// Queryable extensions for AutoMapper
+    /// Queryable extensions for MicroMapper
     /// </summary>
     public static class Extensions
     {

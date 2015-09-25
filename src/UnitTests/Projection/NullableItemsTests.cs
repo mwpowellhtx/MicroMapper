@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AutoMapper.UnitTests.Projection
+namespace MicroMapper.UnitTests.Projection
 {
     namespace NullableItemsTests
     {

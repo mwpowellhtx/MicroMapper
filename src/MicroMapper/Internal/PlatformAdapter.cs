@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AutoMapper.Internal
+namespace MicroMapper.Internal
 {
     using IAdapterDictionary = System.Collections.Generic.IDictionary<Type, Func<object>>;
     using AdapterDictionary = System.Collections.Generic.Dictionary<Type, Func<object>>;
