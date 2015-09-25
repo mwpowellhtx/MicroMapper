@@ -48,6 +48,8 @@ Check out the [getting started guide](http://github.com/mwpowellhtx/MicroMapper/
 
 Where can I get it?
 --------------------------------
+This is on my TODO list to pull a CI environment together around unit testing, deployments, etc.
+
 ~~First, [install NuGet](http://docs.nuget.org/docs/start-here/installing-nuget). Then, install [MicroMapper](https://www.nuget.org/packages/MicroMapper/) from the package manager console:
 
 ```
