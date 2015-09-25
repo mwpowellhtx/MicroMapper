@@ -48,9 +48,11 @@ Check out the [getting started guide](http://github.com/mwpowellhtx/MicroMapper/
 
 Where can I get it?
 --------------------------------
-First, [install NuGet](http://docs.nuget.org/docs/start-here/installing-nuget). Then, install [MicroMapper](https://www.nuget.org/packages/MicroMapper/) from the package manager console:
+~~First, [install NuGet](http://docs.nuget.org/docs/start-here/installing-nuget). Then, install [MicroMapper](https://www.nuget.org/packages/MicroMapper/) from the package manager console:
 
-    PM> Install-Package MicroMapper
+```
+PM> Install-Package MicroMapper
+```~~
 
 AutoMapper is Copyright &copy; 2008-2012 [Jimmy Bogard](http://jimmybogard.lostechies.com) and other contributors under the [MIT license](LICENSE.txt).
 MicroMapper is Copyright &copy; 2015 Michael W. Powell and other contributors under the [MIT license](LICENSE.txt).
