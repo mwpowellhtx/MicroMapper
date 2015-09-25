@@ -3,7 +3,7 @@
 
 What is MicroMapper?
 --------------------------------
-MicroMapper is a spinoff project based on [AutoMapper]( http://github.com/AutoMapper/AutoMapper/). The problem of mapping is a deceptively complex one, whose aim of this library is the getting rid of code that mapped one object to another. This type of code is rather tedious and boring to write, which provides the motivation to solve the problem in concice manner.
+MicroMapper is a spinoff project based on [AutoMapper]( http://github.com/AutoMapper/AutoMapper/). The problem of mapping is a deceptively complex one, whose aim of this library is the getting rid of code that mapped one object to another. This type of code is rather tedious and boring to write, which provides the motivation to solve the problem in a concice manner.
 
 Additionally, MicroMapper makes permits extensible use of different mapper contexts. Let's say you have ``Controller A`` and ``Controller B`` each with its own set of mapping concerns, neither of which with shared mapping concerns.
 
