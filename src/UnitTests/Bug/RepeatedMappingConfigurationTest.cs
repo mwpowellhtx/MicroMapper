@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace AutoMapper.UnitTests.Bug
+namespace MicroMapper.UnitTests.Bug
 {
 	public class When_mapping_for_derived_class_is_duplicated : AutoMapperSpecBase
 	{

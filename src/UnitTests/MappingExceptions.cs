@@ -2,7 +2,7 @@ using System;
 using Xunit;
 using Should;
 
-namespace AutoMapper.UnitTests
+namespace MicroMapper.UnitTests
 {
 	namespace MappingExceptions
 	{
@@ -27,19 +27,19 @@ namespace AutoMapper.UnitTests
             public void Should_provide_a_contextual_exception()
             {
                 var source = new Source { Value = "adsf" };
-                typeof(AutoMapperMappingException).ShouldBeThrownBy(() => Mapper.Map<Source, Dest>(source));
+                typeof(MicroMapperMappingException).ShouldBeThrownBy(() => Mapper.Map<Source, Dest>(source));
             }
 
             [Fact]
             public void Should_have_contextual_mapping_information()
             {
                 var source = new Source { Value = "adsf" };
-                AutoMapperMappingException thrown = null;
+                MicroMapperMappingException thrown = null;
                 try
                 {
                     Mapper.Map<Source, Dest>(source);
                 }
-                catch (AutoMapperMappingException ex)
+                catch (MicroMapperMappingException ex)
                 {
                     thrown = ex;
                 }

@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using AutoMapper;
-using AutoMapper.Mappers;
+using MicroMapper;
+using MicroMapper.Mappers;
 using Should;
 using Xunit;
 
-namespace AutoMapper.UnitTests.Bug
+namespace MicroMapper.UnitTests.Bug
 {
 	public class DestinationValueInitializedByCtorBug : AutoMapperSpecBase
 	{
@@ -62,7 +62,7 @@ namespace AutoMapper.UnitTests.Bug
             }
 
 		    Mapper.Map<List<ItemToMap>, List<ItemToMapDto>>(entities);
-            typeof(AutoMapperMappingException).ShouldNotBeThrownBy(() => Mapper.Map<List<ItemToMap>, List<ItemToMapDto>>(entities));
+            typeof(MicroMapperMappingException).ShouldNotBeThrownBy(() => Mapper.Map<List<ItemToMap>, List<ItemToMapDto>>(entities));
 		}
 	}
 }

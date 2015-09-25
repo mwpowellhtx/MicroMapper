@@ -4,7 +4,7 @@ using System.Reflection;
 using Xunit;
 using Should;
 
-namespace AutoMapper.UnitTests.Tests
+namespace MicroMapper.UnitTests.Tests
 {
     public abstract class using_generic_configuration : AutoMapperSpecBase
     {

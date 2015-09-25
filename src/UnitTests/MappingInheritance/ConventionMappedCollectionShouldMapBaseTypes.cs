@@ -5,7 +5,7 @@ using System.Text;
 using Should;
 using Xunit;
 
-namespace AutoMapper.UnitTests.Bug
+namespace MicroMapper.UnitTests.Bug
 {
     public class ConventionMappedCollectionShouldMapBaseTypes
     {

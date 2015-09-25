@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Should;
-using AutoMapper;
+using MicroMapper;
 using Xunit;
 
-namespace AutoMapper.UnitTests.Bug
+namespace MicroMapper.UnitTests.Bug
 {
     public class CollectionBaseClassGetConvention : AutoMapperSpecBase
     {

@@ -4,7 +4,7 @@ using System.Reflection;
 using Xunit;
 using Should;
 
-namespace AutoMapper.UnitTests
+namespace MicroMapper.UnitTests
 {
     namespace ConditionalMapping
     {
@@ -198,7 +198,7 @@ namespace AutoMapper.UnitTests
             [Fact]
             public void Should_consider_the_configuration_valid_even_if_some_properties_with_an_inaccessible_setter_are_unmapped()
             {
-                typeof(AutoMapperConfigurationException).ShouldNotBeThrownBy(Mapper.AssertConfigurationIsValid);
+                typeof(MicroMapperConfigurationException).ShouldNotBeThrownBy(Mapper.AssertConfigurationIsValid);
             }
 
             [Fact]
@@ -281,7 +281,7 @@ namespace AutoMapper.UnitTests
             [Fact]
             public void Should_consider_the_configuration_valid_even_if_some_properties_with_an_inaccessible_setter_are_unmapped()
             {
-                typeof(AutoMapperConfigurationException).ShouldNotBeThrownBy(Mapper.AssertConfigurationIsValid);
+                typeof(MicroMapperConfigurationException).ShouldNotBeThrownBy(Mapper.AssertConfigurationIsValid);
             }
 
             [Fact]

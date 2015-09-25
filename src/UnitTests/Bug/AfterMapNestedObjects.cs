@@ -1,8 +1,8 @@
-﻿using AutoMapper.Mappers;
+﻿using MicroMapper.Mappers;
 using Should;
 using Xunit;
 
-namespace AutoMapper.UnitTests.Bug
+namespace MicroMapper.UnitTests.Bug
 {
     public class AfterMapNestedObjects : AutoMapperSpecBase
     {

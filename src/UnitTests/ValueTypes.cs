@@ -2,7 +2,7 @@ using System;
 using Xunit;
 using Should;
 
-namespace AutoMapper.UnitTests
+namespace MicroMapper.UnitTests
 {
 	namespace ValueTypes
 	{

@@ -2,7 +2,7 @@
 using Should;
 using System;
 
-namespace AutoMapper.UnitTests.Bug
+namespace MicroMapper.UnitTests.Bug
 {
     public class ForAllMaps : AutoMapperSpecBase
     {

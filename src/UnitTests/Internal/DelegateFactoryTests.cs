@@ -5,7 +5,7 @@ using System.Reflection.Emit;
 using Should;
 using Xunit;
 
-namespace AutoMapper.UnitTests
+namespace MicroMapper.UnitTests
 {
     using Internal;
 

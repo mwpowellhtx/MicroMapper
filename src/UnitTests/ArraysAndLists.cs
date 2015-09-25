@@ -7,7 +7,7 @@ using Xunit;
 using Should;
 using System.Linq;
 
-namespace AutoMapper.UnitTests
+namespace MicroMapper.UnitTests
 {
 	namespace ArraysAndLists
 	{

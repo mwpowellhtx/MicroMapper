@@ -6,11 +6,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{19CF22A3-AA57-458B-9D72-1D8AD069F428}</ProjectGuid>
+    <ProjectGuid>{C1D824CA-77B2-4BA7-A927-28A677213BA9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AutoMapper.UnitTests</RootNamespace>
-    <AssemblyName>AutoMapper.UnitTests.WinRT</AssemblyName>
+    <RootNamespace>MicroMapper.UnitTests</RootNamespace>
+    <AssemblyName>MicroMapper.UnitTests.WinRT</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -142,7 +142,7 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\AutoMapper\Internal\TypeExtensions.cs">
+    <Compile Include="..\MicroMapper\Internal\TypeExtensions.cs">
       <Link>TypeExtensions.cs</Link>
     </Compile>
     <Compile Include="ArraysAndLists.cs" />
@@ -293,9 +293,9 @@
     <Compile Include="ValueTypes.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AutoMapper.WinRT\AutoMapper.WinRT.csproj">
-      <Project>{b80d950d-cc8d-4287-96b1-eea037825e90}</Project>
-      <Name>AutoMapper.WinRT</Name>
+    <ProjectReference Include="..\MicroMapper.WinRT\MicroMapper.WinRT.csproj">
+      <Project>{90d4f081-2b9f-418b-b4fa-316a3379cc48}</Project>
+      <Name>MicroMapper.WinRT</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,7 @@
 using Xunit;
 using Should;
 
-namespace AutoMapper.UnitTests.Bug
+namespace MicroMapper.UnitTests.Bug
 {
     namespace RecognizeIxesBug
     {

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
-using AutoMapper.QueryableExtensions;
+using MicroMapper.QueryableExtensions;
 using Should;
 using Xunit;
 
-namespace AutoMapper.UnitTests.Bug
+namespace MicroMapper.UnitTests.Bug
 {
     public class NestedMappingProjectionsExplicitExpanding : AutoMapperSpecBase
     {

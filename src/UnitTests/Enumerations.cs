@@ -1,9 +1,9 @@
 using System;
-using AutoMapper.UnitTests;
+using MicroMapper.UnitTests;
 using Should;
 using Xunit;
 
-namespace AutoMapper.Tests
+namespace MicroMapper.Tests
 {
 	public class EnumMappingFixture
 	{

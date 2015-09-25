@@ -1,12 +1,12 @@
 ﻿﻿using Should;
 ﻿using Xunit;
 
-namespace AutoMapper.UnitTests.Projection
+namespace MicroMapper.UnitTests.Projection
 {
 	using System.Collections.Generic;
 	using System.Linq;
 
-	using AutoMapper;
+	using MicroMapper;
 	using QueryableExtensions;
 
     public class ProjectCollectionEnumerableTest

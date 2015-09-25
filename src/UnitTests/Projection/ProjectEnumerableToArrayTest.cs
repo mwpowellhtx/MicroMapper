@@ -5,7 +5,7 @@ using System.Text;
 using Xunit;
 using Should;
 
-namespace AutoMapper.UnitTests.Projection
+namespace MicroMapper.UnitTests.Projection
 {
     using QueryableExtensions;
 

@@ -5,12 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{70D99BDC-6B9E-49AD-96FD-AEC193D27B55}</ProjectGuid>
+    <ProjectGuid>{CF6A20A9-4A45-4F64-86B4-09268FA67BAB}</ProjectGuid>
     <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AutoMapper.UnitTests.WP8</RootNamespace>
-    <AssemblyName>AutoMapper.UnitTests.WP8</AssemblyName>
+    <RootNamespace>MicroMapper.UnitTests.WP8</RootNamespace>
+    <AssemblyName>MicroMapper.UnitTests.WP8</AssemblyName>
     <TargetFrameworkVersion>v8.0</TargetFrameworkVersion>
     <SilverlightVersion>
     </SilverlightVersion>
@@ -94,7 +94,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\AutoMapper\Internal\TypeExtensions.cs">
+    <Compile Include="..\MicroMapper\Internal\TypeExtensions.cs">
       <Link>TypeExtensions.cs</Link>
     </Compile>
     <Compile Include="ArraysAndLists.cs" />
@@ -253,9 +253,9 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AutoMapper.WP8\AutoMapper.WP8.csproj">
-      <Project>{b95f2eb2-519e-4bab-b6b3-6dbbea7879a6}</Project>
-      <Name>AutoMapper.WP8</Name>
+    <ProjectReference Include="..\MicroMapper.WP8\MicroMapper.WP8.csproj">
+      <Project>{f1721380-a29f-428f-9d08-72903a23db4e}</Project>
+      <Name>MicroMapper.WP8</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />

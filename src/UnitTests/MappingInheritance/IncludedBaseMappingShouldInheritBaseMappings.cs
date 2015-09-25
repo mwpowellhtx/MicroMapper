@@ -1,13 +1,12 @@
 ﻿using Should;
 using Xunit;
 
-namespace AutoMapper.UnitTests.Bug
+namespace MicroMapper.UnitTests.Bug
 {
     using CustomMapping;
 
     public class IncludedMappingShouldInheritBaseMappings : NonValidatingSpecBase
     {
-
         public class ModelObject
         {
             public string DifferentBaseString { get; set; }
@@ -34,7 +33,7 @@ namespace AutoMapper.UnitTests.Bug
         }
 
         [Fact]
-        public void included_mapping_should_inherit_base_mappings_should_not_throw()
+        public void Included_mapping_should_inherit_base_mappings_should_not_throw()
         {
             Mapper.Initialize(cfg =>
             {
@@ -47,7 +46,7 @@ namespace AutoMapper.UnitTests.Bug
         }
 
         [Fact]
-        public void included_mapping_should_inherit_base_ignore_mappings_should_not_throw()
+        public void Included_mapping_should_inherit_base_ignore_mappings_should_not_throw()
         {
             Mapper.Initialize(cfg =>
             {
@@ -60,7 +59,7 @@ namespace AutoMapper.UnitTests.Bug
         }
 
         [Fact]
-        public void more_specific_map_should_override_base_ignore_passes_validation()
+        public void More_specific_map_should_override_base_ignore_passes_validation()
         {
             Mapper.Initialize(cfg =>
             {
@@ -74,7 +73,7 @@ namespace AutoMapper.UnitTests.Bug
         }
 
         [Fact]
-        public void more_specific_map_should_override_base_ignore_with_one_parameter()
+        public void More_specific_map_should_override_base_ignore_with_one_parameter()
         {
             Mapper.Initialize(cfg =>
             {
@@ -96,7 +95,7 @@ namespace AutoMapper.UnitTests.Bug
         }
 
         [Fact]
-        public void more_specific_map_should_override_base_ignore()
+        public void More_specific_map_should_override_base_ignore()
         {
             Mapper.Initialize(cfg =>
             {
@@ -117,7 +116,7 @@ namespace AutoMapper.UnitTests.Bug
         }
 
         [Fact]
-        public void more_specific_map_should_override_base_mapping_passes_validation()
+        public void More_specific_map_should_override_base_mapping_passes_validation()
         {
             Mapper.Initialize(cfg =>
             {
@@ -130,7 +129,7 @@ namespace AutoMapper.UnitTests.Bug
             Mapper.AssertConfigurationIsValid();
         }
         [Fact]
-        public void more_specific_map_should_override_base_mapping_with_one_parameter()
+        public void More_specific_map_should_override_base_mapping_with_one_parameter()
         {
             Mapper.Initialize(cfg =>
             {
@@ -152,7 +151,7 @@ namespace AutoMapper.UnitTests.Bug
         }
         
         [Fact]
-        public void more_specific_map_should_override_base_mapping()
+        public void More_specific_map_should_override_base_mapping()
         {
             Mapper.Initialize(cfg =>
             {
@@ -173,7 +172,7 @@ namespace AutoMapper.UnitTests.Bug
         }
 
         [Fact]
-        public void included_mapping_should_not_inherit_base_mappings_for_other_with_one_parameter()
+        public void Included_mapping_should_not_inherit_base_mappings_for_other_with_one_parameter()
         {
             Mapper.Initialize(cfg =>
             {
@@ -194,7 +193,7 @@ namespace AutoMapper.UnitTests.Bug
         }
 
         [Fact]
-        public void included_mapping_should_not_inherit_base_mappings_for_other()
+        public void Included_mapping_should_not_inherit_base_mappings_for_other()
         {
             Mapper.Initialize(cfg =>
             {
@@ -214,7 +213,7 @@ namespace AutoMapper.UnitTests.Bug
         }
 
         [Fact]
-        public void included_mapping_should_not_inherit_base_mappings_for_other_should_not_throw()
+        public void Included_mapping_should_not_inherit_base_mappings_for_other_should_not_throw()
         {
             Mapper.Initialize(cfg =>
             {
@@ -227,7 +226,7 @@ namespace AutoMapper.UnitTests.Bug
             Mapper.AssertConfigurationIsValid();
         }
         [Fact]
-        public void include_should_allow_automapper_to_select_more_specific_included_type_with_one_parameter()
+        public void Include_should_allow_mapper_to_select_more_specific_included_type_with_one_parameter()
         {
             Mapper.Initialize(cfg =>
             {
@@ -247,7 +246,7 @@ namespace AutoMapper.UnitTests.Bug
         }
         
         [Fact]
-        public void include_should_allow_automapper_to_select_more_specific_included_type()
+        public void Include_should_allow_mapper_to_select_more_specific_included_type()
         {
             Mapper.Initialize(cfg =>
             {
@@ -267,7 +266,7 @@ namespace AutoMapper.UnitTests.Bug
         }
 
         [Fact]
-        public void include_should_apply_condition()
+        public void Include_should_apply_condition()
         {
             Mapper.Initialize(cfg =>
             {
@@ -294,7 +293,7 @@ namespace AutoMapper.UnitTests.Bug
         }
 
         [Fact]
-        public void include_should_apply_null_substitute()
+        public void Include_should_apply_null_substitute()
         {
             Mapper.Initialize(cfg =>
             {

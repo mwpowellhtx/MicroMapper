@@ -4,7 +4,7 @@ using Should;
 using Xunit;
 using System.Linq;
 
-namespace AutoMapper.UnitTests
+namespace MicroMapper.UnitTests
 {
 	namespace General
 	{
@@ -188,7 +188,7 @@ namespace AutoMapper.UnitTests
 				var model = new ModelObject();
 				model.NullableDate = "Lorem Ipsum";
 				
-				typeof(AutoMapperMappingException).ShouldBeThrownBy(() => Mapper.Map<ModelObject, ModelDto>(model));
+				typeof(MicroMapperMappingException).ShouldBeThrownBy(() => Mapper.Map<ModelObject, ModelDto>(model));
 			}
 		}
 

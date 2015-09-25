@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using AutoMapper.Internal;
+using MicroMapper.Internal;
 using Xunit;
 using Should;
 
-namespace AutoMapper.UnitTests
+namespace MicroMapper.UnitTests
 {
 	public class PrimitiveExtensionsTester
 	{

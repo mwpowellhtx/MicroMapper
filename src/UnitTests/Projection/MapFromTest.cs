@@ -2,7 +2,7 @@
 using Should;
 using Xunit;
 
-namespace AutoMapper.UnitTests.Projection
+namespace MicroMapper.UnitTests.Projection
 {
     namespace MapFromTest
     {

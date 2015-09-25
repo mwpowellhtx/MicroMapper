@@ -7,11 +7,11 @@ using Xunit;
 using Assert = Should.Core.Assertions.Assert;
 using Should;
 
-namespace AutoMapper.IntegrationTests.Net4
+namespace MicroMapper.IntegrationTests.Net4
 {
     namespace CustomMapFromTest
     {
-        using AutoMapper.UnitTests;
+        using MicroMapper.UnitTests;
         using QueryableExtensions;
 
         public class Customer
@@ -76,7 +76,7 @@ namespace AutoMapper.IntegrationTests.Net4
             }
         }
         
-        public class AutoMapperQueryableExtensionsThrowsNullReferenceExceptionSpec : AutoMapperSpecBase
+        public class MicroMapperQueryableExtensionsThrowsNullReferenceExceptionSpec : AutoMapperSpecBase
         {
             protected override void Establish_context()
             {

@@ -5,7 +5,7 @@ using System.Text;
 using Should;
 using Xunit;
 
-namespace AutoMapper.UnitTests
+namespace MicroMapper.UnitTests
 {
     public class MaxDepthTests
     {

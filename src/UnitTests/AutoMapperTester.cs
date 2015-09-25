@@ -2,9 +2,9 @@ using System;
 using Should;
 using Xunit;
 
-namespace AutoMapper.UnitTests
+namespace MicroMapper.UnitTests
 {
-    public class AutoMapperTester : IDisposable
+    public class MicroMapperTester : IDisposable
 	{
 		[Fact]
 		public void Should_be_able_to_handle_derived_proxy_types()

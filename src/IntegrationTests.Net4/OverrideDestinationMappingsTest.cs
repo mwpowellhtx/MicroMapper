@@ -1,11 +1,11 @@
-﻿using AutoMapper;
+﻿using MicroMapper;
 using Xunit;
 using System.Linq;
 using Should;
 using System.Data.Entity;
-using AutoMapper.UnitTests;
+using MicroMapper.UnitTests;
 
-namespace AutoMapper.IntegrationTests.Net4
+namespace MicroMapper.IntegrationTests.Net4
 {
     public class OverrideDestinationMappingsTest : AutoMapperSpecBase
     {

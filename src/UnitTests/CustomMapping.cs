@@ -3,7 +3,7 @@ using System.Collections;
 using Should;
 using Xunit;
 
-namespace AutoMapper.UnitTests
+namespace MicroMapper.UnitTests
 {
     namespace CustomMapping
     {
@@ -1144,7 +1144,7 @@ namespace AutoMapper.UnitTests
 
         public class Dest
         {
-            // AutoMapper tries to map Source.Value to this constructor's parameter,
+            // MicroMapper tries to map Source.Value to this constructor's parameter,
             // but does not take its member configuration into account
             public Dest(int value)
             {

@@ -1,5 +1,4 @@
-﻿
-namespace AutoMapper.UnitTests
+﻿namespace MicroMapper.UnitTests
 {
     using System;
     using System.Linq;
@@ -87,13 +86,13 @@ namespace AutoMapper.UnitTests
         }
 
         [Fact]
-        public void Throw_AutoMapperMappingException_if_expression_types_dont_match()
+        public void Throw_MicroMapperMappingException_if_expression_types_dont_match()
         {
             Mapper.Initialize(cfg => cfg.CreateMap<Source, Dest>());
 
             Expression<Func<Dest, bool>> expr = d => d.Bar == 10;
 
-            Assert.Throws<AutoMapperMappingException>(() => Mapper.Map<Expression<Func<Dest, bool>>, Expression<Action<Source, bool>>>(expr));
+            Assert.Throws<MicroMapperMappingException>(() => Mapper.Map<Expression<Func<Dest, bool>>, Expression<Action<Source, bool>>>(expr));
         }
 
         [Fact]

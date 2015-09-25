@@ -1,6 +1,6 @@
 ﻿using Xunit;
 
-namespace AutoMapper.UnitTests.Bug
+namespace MicroMapper.UnitTests.Bug
 {
     using System;
     using Should;
@@ -13,7 +13,7 @@ namespace AutoMapper.UnitTests.Bug
         {
             public DestinationClass() { }
 
-            // Since the name of the parameter is 'type', Automapper.TypeMapFactory chooses SourceClass.GetType()
+            // Since the name of the parameter is 'type', MicroMapper.TypeMapFactory chooses SourceClass.GetType()
             // to fulfill the dependency, causing an InvalidCastException during Mapper.Map()
             public DestinationClass(Int32 type)
             {

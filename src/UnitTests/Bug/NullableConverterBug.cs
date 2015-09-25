@@ -1,15 +1,15 @@
 ﻿using Xunit;
 using Should;
 
-namespace AutoMapper.UnitTests.Bug
+namespace MicroMapper.UnitTests.Bug
 {
     namespace NullableConverterBug
     {
-        namespace AutoMapperIssue
+        namespace MicroMapperIssue
         {
             using System;
             using System.Collections.Generic;
-            using AutoMapper;
+            using MicroMapper;
             public class TestProblem
             {
                 [Fact]

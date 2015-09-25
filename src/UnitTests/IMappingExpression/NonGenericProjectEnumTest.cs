@@ -1,4 +1,4 @@
-﻿namespace AutoMapper.UnitTests.Projection
+﻿namespace MicroMapper.UnitTests.Projection
 {
     using QueryableExtensions;
     using Should;
@@ -112,7 +112,7 @@
         [Fact]
         public void Should_validate_because_of_overridden_projection()
         {
-            typeof(AutoMapperConfigurationException).ShouldNotBeThrownBy(Mapper.AssertConfigurationIsValid);
+            typeof(MicroMapperConfigurationException).ShouldNotBeThrownBy(Mapper.AssertConfigurationIsValid);
         }
     }
 }

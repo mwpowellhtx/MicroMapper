@@ -1,9 +1,9 @@
 ﻿using System;
 using Should;
-using AutoMapper;
+using MicroMapper;
 using Xunit;
 
-namespace AutoMapper.UnitTests.Bug
+namespace MicroMapper.UnitTests.Bug
 {
     public class NullableIntToNullableEnum : AutoMapperSpecBase
     {

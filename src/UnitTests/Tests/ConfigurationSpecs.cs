@@ -1,8 +1,8 @@
-using AutoMapper.Mappers;
+using MicroMapper.Mappers;
 using NBehave.Spec.NUnit;
 using NUnit.Framework;
 
-namespace AutoMapper.UnitTests.Tests
+namespace MicroMapper.UnitTests.Tests
 {
 	namespace ConfigurationSpecs
 	{
@@ -18,7 +18,6 @@ namespace AutoMapper.UnitTests.Tests
 			{
 				_configuration = new Configuration(new TypeMapFactory(), MapperRegistry.AllMappers());
 				_configuration.CreateMap<Source, Destination>();
-
 				_expected = _configuration.FindTypeMapFor(null, typeof(Source), typeof(Destination));
 			}
 
@@ -31,10 +30,8 @@ namespace AutoMapper.UnitTests.Tests
 			public void Should_not_redefine_the_map()
 			{
 				TypeMap actual = _configuration.FindTypeMapFor(null, typeof (Source), typeof (Destination));
-
 				actual.ShouldBeTheSameAs(_expected);
 			}
 		}
-
 	}
 }

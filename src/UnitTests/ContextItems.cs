@@ -1,4 +1,4 @@
-﻿namespace AutoMapper.UnitTests
+﻿namespace MicroMapper.UnitTests
 {
     namespace ContextItems
     {

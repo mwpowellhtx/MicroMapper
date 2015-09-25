@@ -1,4 +1,4 @@
-﻿namespace AutoMapper.UnitTests.Bug
+﻿namespace MicroMapper.UnitTests.Bug
 {
     using System;
     using Xunit;
@@ -46,7 +46,7 @@
         [Fact]
         public void Should_pass_specific_profile_assertion()
         {
-            typeof(AutoMapperConfigurationException)
+            typeof(MicroMapperConfigurationException)
                 .ShouldNotBeThrownBy(Mapper.AssertConfigurationIsValid<GoodProfile>);
         }
     }

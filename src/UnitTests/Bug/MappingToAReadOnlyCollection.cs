@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using Should;
 using Xunit;
 
-namespace AutoMapper.UnitTests.Bug
+namespace MicroMapper.UnitTests.Bug
 {
     public class MappingToAReadOnlyCollection : AutoMapperSpecBase
     {

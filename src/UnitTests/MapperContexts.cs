@@ -1,6 +1,6 @@
-﻿using AutoMapper.Mappers;
+﻿using MicroMapper.Mappers;
 
-namespace AutoMapper.UnitTests
+namespace MicroMapper.UnitTests
 {
     using Internal;
     using Should;

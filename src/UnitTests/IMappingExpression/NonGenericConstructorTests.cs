@@ -1,4 +1,4 @@
-﻿namespace AutoMapper.UnitTests.Projection
+﻿namespace MicroMapper.UnitTests.Projection
 {
     using System;
     using System.Linq;

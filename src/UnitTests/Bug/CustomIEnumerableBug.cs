@@ -4,7 +4,7 @@ using System.Linq;
 using Should;
 using Xunit;
 
-namespace AutoMapper.UnitTests.Bug
+namespace MicroMapper.UnitTests.Bug
 {
 	public class One
 	{
@@ -33,7 +33,7 @@ namespace AutoMapper.UnitTests.Bug
 		}
 	}
 
-    public class AutoMapperBugTest
+    public class MicroMapperBugTest
     {
         [Fact]
         public void ShouldMapOneToTwo()

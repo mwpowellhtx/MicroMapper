@@ -3,7 +3,7 @@ using System.Linq;
 
 #if NETFX_CORE
 
-namespace AutoMapper
+namespace MicroMapper
 {
     using System.Reflection;
     public static class Assembly

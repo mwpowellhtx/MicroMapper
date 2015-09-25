@@ -1,6 +1,6 @@
 ﻿using Xunit;
 
-namespace AutoMapper.UnitTests.Bug
+namespace MicroMapper.UnitTests.Bug
 {
     public class SubclassMappings : AutoMapperSpecBase
     {
@@ -21,7 +21,7 @@ namespace AutoMapper.UnitTests.Bug
 
         protected override void Establish_context()
         {
-            AutoMapper.Mapper.CreateMap<Source, Destination>();
+            MicroMapper.Mapper.CreateMap<Source, Destination>();
         }
 
         [Fact]
@@ -31,11 +31,11 @@ namespace AutoMapper.UnitTests.Bug
             var source = new Source() { Name = "Test" };
             var destination = new Destination();
 
-            AutoMapper.Mapper.Map<Source, Destination>(source, destination); // Works
+            MicroMapper.Mapper.Map<Source, Destination>(source, destination); // Works
 
             var subDestination = new SubDestination();
 
-            AutoMapper.Mapper.Map<Source, Destination>(source, subDestination); // Fails
+            MicroMapper.Mapper.Map<Source, Destination>(source, subDestination); // Fails
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Reflection;
 using Should;
 using Xunit;
 
-namespace AutoMapper.UnitTests
+namespace MicroMapper.UnitTests
 {
 	namespace CustomMapping
 	{
@@ -58,7 +58,7 @@ namespace AutoMapper.UnitTests
 				{
 					Value1 = "5",
 					Value2 = "01/01/2000",
-					Value3 = "AutoMapper.UnitTests.CustomMapping.When_specifying_type_converters+Destination"
+					Value3 = "MicroMapper.UnitTests.CustomMapping.When_specifying_type_converters+Destination"
 				};
 
 				_result = Mapper.Map<Source, Destination>(source);

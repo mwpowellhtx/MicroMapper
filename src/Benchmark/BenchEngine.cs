@@ -2,35 +2,35 @@ using System;
 
 namespace Benchmark
 {
-	public class BenchEngine
-	{
-		private readonly IObjectToObjectMapper _mapper;
-		private readonly string _mode;
+    public class BenchEngine
+    {
+        private readonly IObjectToObjectMapper _mapper;
+        private readonly string _mode;
 
-		public BenchEngine(IObjectToObjectMapper mapper, string mode)
-		{
-			_mapper = mapper;
-			_mode = mode;
-		}
+        public BenchEngine(IObjectToObjectMapper mapper, string mode)
+        {
+            _mapper = mapper;
+            _mode = mode;
+        }
 
+        public void Start()
+        {
+            var timer = new HiPerfTimer();
 
-		public void Start()
-		{
-			var timer = new HiPerfTimer();
+            _mapper.Initialize();
 
-			_mapper.Initialize();
-			_mapper.Map();
+            _mapper.Map();
 
-			timer.Start();
+            timer.Start();
 
-			for (int i = 0; i < 1000000; i++)
-			{
-				_mapper.Map();
-			}
+            for (var i = 0; i < 1000000; i++)
+            {
+                _mapper.Map();
+            }
 
-			timer.Stop();
+            timer.Stop();
 
-			Console.WriteLine("{0}: - {1} - Mapping time: \t{2}s", _mapper.Name, _mode, timer.Duration);
-		}
-	}
+            Console.WriteLine($"{_mapper.Name}: - {_mode} - Mapping time: \t{timer.Duration}s");
+        }
+    }
 }

@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using AutoMapper.Internal;
+using MicroMapper.Internal;
 using Xunit;
 using Should;
 
-namespace AutoMapper.UnitTests.Tests
+namespace MicroMapper.UnitTests.Tests
 {
     using System;
     using Assembly = System.Reflection.Assembly;

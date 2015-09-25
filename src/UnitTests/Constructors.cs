@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using Xunit;
 using Should;
 
-namespace AutoMapper.UnitTests
+namespace MicroMapper.UnitTests
 {
     namespace Constructors
     {

@@ -1,14 +1,14 @@
 ﻿#if !SILVERLIGHT && !NETFX_CORE
-using System ;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics ;
+using System.Diagnostics;
 using System.Linq;
-using System.Threading ;
-using System.Threading.Tasks ;
-using AutoMapper.Mappers;
+using System.Threading;
+using System.Threading.Tasks;
+using MicroMapper.Mappers;
 using Xunit;
 
-namespace AutoMapper.UnitTests.Bug
+namespace MicroMapper.UnitTests.Bug
 {
     using Should;
 
@@ -256,7 +256,7 @@ namespace AutoMapper.UnitTests.Bug
 
 // The three exceptions I saw while running the multithreading tests for DynamicMap (lbargaoanu)
 
-//Unhandled Exception: System.AggregateException: One or more errors occurred. ---> AutoMapper.AutoMapperMappingException:
+//Unhandled Exception: System.AggregateException: One or more errors occurred. ---> MicroMapper.AutoMapperMappingException:
 
 //Mapping types:
 //SomeDtoB -> SomeDtoA

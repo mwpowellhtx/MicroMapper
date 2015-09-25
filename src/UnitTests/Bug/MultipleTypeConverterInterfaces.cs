@@ -1,7 +1,7 @@
 using Should;
 using Xunit;
 
-namespace AutoMapper.UnitTests.Bug
+namespace MicroMapper.UnitTests.Bug
 {
 		public class When_specifying_a_type_converter_implementing_multiple_type_converter_interfaces : SpecBase
 		{
