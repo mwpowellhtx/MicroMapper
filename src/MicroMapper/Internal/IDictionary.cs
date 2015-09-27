@@ -2,6 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
+#if NETFX_CORE
+    // For purposes of Universal Windows (Window 10 SDK)
+    using System.Reflection;
+#endif
 
     /// <summary>
     /// Represents the hybrid between the concurrent dictionary and read-only dictionary.

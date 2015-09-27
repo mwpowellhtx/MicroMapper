@@ -248,7 +248,8 @@ namespace System.Reflection
         }
 
 
-#if !SILVERLIGHT && !NET40
+#if !(SILVERLIGHT || NET40)
+
         public static bool IsInstanceOfType(this Type type, object o)
         {
             return o != null && type.IsAssignableFrom(o.GetType());
@@ -259,7 +260,11 @@ namespace System.Reflection
             return type.GetTypeInfo().DeclaredConstructors.ToArray();
         }
 
-#if !DNXCORE50 && !WINCORE
+#if !(DNXCORE50 || WINCORE)
+
+#if !NETFX_CORE
+
+        // For purposes of Universal Windows (Windows 10 SDK)
         public static Type[] GetTypes(this Assembly assembly)
         {
             return assembly.ExportedTypes.ToArray();
@@ -283,10 +288,15 @@ namespace System.Reflection
         public static MemberInfo[] GetMember(this Type type, string name)
         {
             return type.GetTypeInfo().DeclaredMembers
-                .Where(m => m.Name == name).ToArray()
-            ;
+                .Where(m => m.Name == name).ToArray();
         }
 
+#endif
+
+        //TODO: may better factor these in better region/defined section
+#if !NETFX_CORE
+
+        // For purposes of Universal Windows support (Windows 10 SDK)
         public static MethodInfo[] GetAccessors(this PropertyInfo propertyInfo)
         {
             return new[] { propertyInfo.GetMethod, propertyInfo.SetMethod };
@@ -321,6 +331,9 @@ namespace System.Reflection
         {
             return type.GetTypeInfo().ImplementedInterfaces;
         }
+
+#endif
+
 #endif
 
 #endif

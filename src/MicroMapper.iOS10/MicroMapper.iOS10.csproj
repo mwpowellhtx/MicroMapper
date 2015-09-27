@@ -8,7 +8,7 @@
     <ProjectGuid>{9C1330EE-9298-42EF-BDF4-652F102CABB1}</ProjectGuid>
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>AutoMapper</RootNamespace>
+    <RootNamespace>MicroMapper</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
     <AssemblyName>MicroMapper</AssemblyName>
   </PropertyGroup>

@@ -4,6 +4,9 @@ namespace MicroMapper.Mappers
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+#if NETFX_CORE
+    using System.Reflection;
+#endif
     using Internal;
 
     // So IEnumerable<T> inherits IEnumerable
@@ -93,4 +96,4 @@ namespace MicroMapper.Mappers
                    && context.DestinationType.IsDictionaryType();
         }
     }
-}
+} 

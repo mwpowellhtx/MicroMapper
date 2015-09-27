@@ -7,7 +7,7 @@
     <ProjectGuid>{014501E8-C706-46DA-9FC3-8A9B853E7EE4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AutoMapper</RootNamespace>
+    <RootNamespace>MicroMapper</RootNamespace>
     <AssemblyName>MicroMapper</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -30,7 +30,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;NET4</DefineConstants>
+    <DefineConstants>TRACE;NET4;NOT_PCL</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\MicroMapper.xml</DocumentationFile>

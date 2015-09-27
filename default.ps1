@@ -9,7 +9,7 @@ properties {
     $test_dir = "$build_dir\Test"
     $result_dir = "$build_dir\Results"
     $lib_dir = "$base_dir\lib"
-    $pkgVersion = if ($env:build_number -ne $NULL) { $env:build_number } else { '5.1.0' }
+    $pkgVersion = if ($env:build_number -ne $NULL) { $env:build_number } else { '5.2.0' }
     $assemblyVersion = $pkgVersion -replace "\-.*$", ".0"
     $assemblyFileVersion = $pkgVersion -replace "-[^0-9]*", "."
     $global:config = "debug"
@@ -59,6 +59,7 @@ task test-lite {
 task dist {
     create_directory $build_dir
     create_directory $dist_dir
+    copy_files "$source_dir\artifacts\bin\MicroMapper\$config\net46" "$dist_dir\net46"
     copy_files "$source_dir\artifacts\bin\MicroMapper\$config\net45" "$dist_dir\net45"
     copy_files "$source_dir\artifacts\bin\MicroMapper\$config\net40" "$dist_dir\net40"
     copy_files "$source_dir\artifacts\bin\MicroMapper\$config\portable-net45+win+wpa81+wp80+MonoAndroid10+Xamarin.iOS10+MonoTouch10" "$dist_dir\Portable"
@@ -210,6 +211,8 @@ function global:create-nuspec($version, $fileName)
     <dependencies>
       <group targetFramework=""portable-net45+win+wpa81+wp80+MonoAndroid10+Xamarin.iOS10+MonoTouch10"">
       </group>
+      <group targetFramework=""net46"">
+      </group>
       <group targetFramework=""net45"">
       </group>
       <group targetFramework=""net40"">
@@ -235,6 +238,9 @@ function global:create-nuspec($version, $fileName)
     <file src=""$dist_dir\Portable\MicroMapper.dll"" target=""lib\portable-net45+win+wpa81+wp80+MonoAndroid10+Xamarin.iOS10+MonoTouch10"" />
     <file src=""$dist_dir\Portable\MicroMapper.pdb"" target=""lib\portable-net45+win+wpa81+wp80+MonoAndroid10+Xamarin.iOS10+MonoTouch10"" />
     <file src=""$dist_dir\Portable\MicroMapper.xml"" target=""lib\portable-net45+win+wpa81+wp80+MonoAndroid10+Xamarin.iOS10+MonoTouch10"" />
+    <file src=""$dist_dir\net46\MicroMapper.dll"" target=""lib\net46"" />
+    <file src=""$dist_dir\net46\MicroMapper.pdb"" target=""lib\net46"" />
+    <file src=""$dist_dir\net46\MicroMapper.xml"" target=""lib\net46"" />
     <file src=""$dist_dir\net45\MicroMapper.dll"" target=""lib\net45"" />
     <file src=""$dist_dir\net45\MicroMapper.pdb"" target=""lib\net45"" />
     <file src=""$dist_dir\net45\MicroMapper.xml"" target=""lib\net45"" />

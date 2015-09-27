@@ -9,7 +9,7 @@
     <ProjectGuid>{90D4F081-2B9F-418B-B4FA-316A3379CC48}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AutoMapper</RootNamespace>
+    <RootNamespace>MicroMapper</RootNamespace>
     <AssemblyName>MicroMapper</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
